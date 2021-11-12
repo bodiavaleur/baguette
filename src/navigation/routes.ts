@@ -6,4 +6,9 @@ export enum AuthRoutes {
 
 export enum DashboardRoutes {
   Root = 'DashboardRoot',
+  Home = 'DashboardHome',
+  Dictionary = 'DashboardDictionary',
+  Training = 'DashboardTraining',
+  Account = 'DashboardAccount',
+  AddWord = 'DashboardAddWord',
 }

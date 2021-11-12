@@ -3,6 +3,7 @@ import {SafeAreaView, ScrollView, View} from 'react-native';
 import styles from './styles';
 import Header from '~components/Header';
 import type {StyleProp, ViewStyle} from 'react-native';
+import AvoidKeyboard from '~containers/AvoidKeyboard';
 
 interface LayoutProps {
   style?: StyleProp<ViewStyle>;
