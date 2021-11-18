@@ -11,7 +11,9 @@ export const theme = {
     text: '#333333',
 
     white: '#FFFFFF',
+    shadow: '#000000',
 
+    primaryGray: '#ccc',
     disabledGray: '#a7a7a7',
   },
   spacing: {

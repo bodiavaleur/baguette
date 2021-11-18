@@ -12,6 +12,7 @@ import DictionaryIcon from '~assets/icons/book.svg';
 import TrainingIcon from '~assets/icons/bullseye.svg';
 import AccountIcon from '~assets/icons/account.svg';
 import TabPlusButton from '~components/TabPlusButton';
+import Dictionary from '~screens/Dashboard/Dictionary';
 
 const Tab = createBottomTabNavigator();
 
@@ -42,7 +43,7 @@ const DashboardNavigator: React.FC = () => {
       />
       <Tab.Screen
         name={DashboardRoutes.Dictionary}
-        component={Home}
+        component={Dictionary}
         options={makeTabIcon(DashboardRoutes.Dictionary, DictionaryIcon)}
       />
       <Tab.Screen
