@@ -1,9 +1,11 @@
 import React from 'react';
-import styles from './styles';
-import {Text} from 'react-native';
+import {Button} from 'react-native';
+import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
 
 const BackButton: React.FC = () => {
-  return <Text>back</Text>;
+  const navigation = useAppNavigation();
+
+  return <Button title="back" onPress={navigation.goBack} />;
 };
 
 export default BackButton;

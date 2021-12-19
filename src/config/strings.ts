@@ -5,4 +5,6 @@ export enum RouteStrings {
   Dictionary = 'Dictionary',
   Training = 'Training',
   Account = 'Account',
+
+  WordDetails = 'Word details',
 }

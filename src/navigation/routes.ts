@@ -4,11 +4,17 @@ export enum AuthRoutes {
   Registration = 'AuthRegistration',
 }
 
-export enum DashboardRoutes {
-  Root = 'DashboardRoot',
-  Home = 'DashboardHome',
-  Dictionary = 'DashboardDictionary',
-  Training = 'DashboardTraining',
-  Account = 'DashboardAccount',
-  AddWord = 'DashboardAddWord',
+export enum DictionaryRoutes {
+  Root = 'DictionaryRoot',
+  Dictionary = 'DictionaryDictionary',
+  WordDetails = 'DictionaryWordDetails',
 }
+
+export const DashboardRoutes = {
+  Root: 'DashboardRoot',
+  Home: 'DashboardHome',
+  Dictionary: DictionaryRoutes.Root,
+  Training: 'DashboardTraining',
+  Account: 'DashboardAccount',
+  AddWord: 'DashboardAddWord',
+};

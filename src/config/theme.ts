@@ -1,8 +1,10 @@
 import {DefaultTheme} from '@react-navigation/native';
 
 export const DEFAULT_SPACING = 4;
+export const ROOT_FONT_SIZE = 16;
 
 export const makeSpacing = (multiplier: number) => DEFAULT_SPACING * multiplier;
+export const makeFontSize = (multiplier = 1) => ROOT_FONT_SIZE * multiplier;
 
 export const theme = {
   colors: {

@@ -16,6 +16,7 @@ module.exports = {
           '~helpers': './src/helpers',
           '~types': './src/types',
           '~hooks': './src/hooks',
+          '~utils': './src/utils',
         },
       },
     ],

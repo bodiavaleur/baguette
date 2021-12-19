@@ -1,7 +1,6 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-import styles from './styles';
-import Layout from '~containers/Layout/Layout';
+import {Text} from 'react-native';
+import Layout from '~containers/Layout';
 
 interface HomeProps {}
 

@@ -3,10 +3,19 @@ import {FlatList, ListRenderItem} from 'react-native';
 import styles from './styles';
 import Layout from '~containers/Layout/Layout';
 import WordListItem from '~components/WordListItem';
+import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
+import {DictionaryRoutes} from '~navigation/routes';
 
 const Dictionary: React.FC = () => {
+  const navigation = useAppNavigation();
+
+  const openWordDetails = (word: string) =>
+    navigation.navigate(DictionaryRoutes.WordDetails, {word});
+
   const renderWord = useCallback(
-    ({item}): ListRenderItem<any> => <WordListItem word={item} />,
+    ({item}): ListRenderItem<string> => (
+      <WordListItem word={item} onPress={() => openWordDetails(item)} />
+    ),
     [],
   );
 
@@ -14,7 +23,7 @@ const Dictionary: React.FC = () => {
     <Layout withoutPaddings>
       <FlatList
         style={styles.container}
-        data={[1, 2, 3, 4, 5]}
+        data={['Bonjour', 'Musique', 'Fenêtre', 'Livre', 'Bonne nuit']}
         renderItem={renderWord}
       />
     </Layout>

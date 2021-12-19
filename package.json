@@ -16,6 +16,7 @@
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
     "@reduxjs/toolkit": "^1.6.2",
+    "axios": "^0.24.0",
     "date-fns": "^2.25.0",
     "formik": "^2.2.9",
     "react": "17.0.2",
@@ -26,6 +27,7 @@
     "react-native-screens": "^3.9.0",
     "react-native-svg": "^12.1.1",
     "react-native-svg-transformer": "^0.14.3",
+    "react-native-tts": "^4.1.0",
     "react-native-ui-lib": "^6.3.0",
     "react-redux": "^7.2.6",
     "yup": "^0.32.11"

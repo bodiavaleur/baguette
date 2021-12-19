@@ -1,12 +1,12 @@
 import React, {useMemo} from 'react';
 import {SafeAreaView, ScrollView, View} from 'react-native';
+import type {StyleProp, ViewStyle} from 'react-native';
 import styles from './styles';
 import Header from '~components/Header';
-import type {StyleProp, ViewStyle} from 'react-native';
-import AvoidKeyboard from '~containers/AvoidKeyboard';
 
 interface LayoutProps {
   style?: StyleProp<ViewStyle>;
+  safeAreaStyle?: StyleProp<ViewStyle>;
   withScroll?: boolean;
   withoutPaddings?: boolean;
   customHeader?: React.ReactNode;
@@ -15,6 +15,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({
   style,
+  safeAreaStyle,
   withScroll,
   withoutPaddings,
   customHeader,
@@ -29,13 +30,17 @@ const Layout: React.FC<LayoutProps> = ({
     [withoutPaddings, style],
   );
 
+  const defaultHeader = <Header />;
+
   return (
-    <SafeAreaView style={styles.container}>
-      {customHeader ? customHeader : <Header />}
+    <SafeAreaView style={[styles.container, safeAreaStyle]}>
+      {customHeader !== undefined ? customHeader : defaultHeader}
       {withScroll ? (
-        <ScrollView style={containerStyle}>{children}</ScrollView>
+        <ScrollView contentContainerStyle={containerStyle}>
+          {children}
+        </ScrollView>
       ) : (
-        <View style={containerStyle}>{children}</View>
+        <View style={[containerStyle, styles.withFlex]}>{children}</View>
       )}
     </SafeAreaView>
   );

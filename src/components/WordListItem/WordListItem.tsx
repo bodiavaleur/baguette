@@ -6,17 +6,18 @@ import CaretIcon from '~assets/icons/caret-right.svg';
 import {theme} from '~config/theme';
 
 interface WordListItemProps {
-  word: any;
+  word: string;
+  onPress: () => void;
 }
 
-const WordListItem: React.FC<WordListItemProps> = ({word}) => {
+const WordListItem: React.FC<WordListItemProps> = ({word, onPress}) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <View style={styles.item}>
         <View style={styles.avatar}>
-          <Avatar size={48} label="Me" />
+          <Avatar size={48} label={word.charAt(0)} />
         </View>
-        <Text style={styles.text}>word</Text>
+        <Text style={styles.text}>{word}</Text>
         <View style={styles.icon}>
           <CaretIcon color={theme.colors.primaryGray} />
         </View>
