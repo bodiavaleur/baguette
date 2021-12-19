@@ -56,6 +56,7 @@ const Login: React.FC = ({}) => {
         floatingPlaceholder
         placeholder="Email"
         keyboardType="email-address"
+        value={formik.values[Email]}
         onChangeText={formik.handleChange(Email)}
         error={emailError}
       />
@@ -63,6 +64,7 @@ const Login: React.FC = ({}) => {
         floatingPlaceholder
         secureTextEntry
         placeholder="Password"
+        value={formik.values[Password]}
         onChangeText={formik.handleChange(Password)}
         error={passwordError}
       />

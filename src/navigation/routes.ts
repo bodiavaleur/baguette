@@ -10,11 +10,17 @@ export enum DictionaryRoutes {
   WordDetails = 'DictionaryWordDetails',
 }
 
+export enum TrainingRoutes {
+  Root = 'TrainingRoot',
+  Menu = 'TrainingMenu',
+  Flashcards = 'TrainingFlashcards',
+}
+
 export const DashboardRoutes = {
   Root: 'DashboardRoot',
   Home: 'DashboardHome',
   Dictionary: DictionaryRoutes.Root,
-  Training: 'DashboardTraining',
+  Training: TrainingRoutes.Root,
   Account: 'DashboardAccount',
   AddWord: 'DashboardAddWord',
 };
