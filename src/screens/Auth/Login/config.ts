@@ -11,8 +11,8 @@ export interface LogInValues {
 }
 
 export const initialValues: LogInValues = {
-  [LogInFields.Email]: '',
-  [LogInFields.Password]: '',
+  [LogInFields.Email]: 'Email@example.com',
+  [LogInFields.Password]: '123123123',
 };
 
 export const validationSchema = Yup.object().shape({

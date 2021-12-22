@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {BOTTOM_BAR_HEIGHT} from '~config/device';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,6 +13,12 @@ const styles = StyleSheet.create({
   },
   noPadding: {
     paddingHorizontal: 0,
+  },
+  ignoreBottomBar: {
+    paddingBottom: 0,
+  },
+  safeBottomBar: {
+    paddingBottom: BOTTOM_BAR_HEIGHT,
   },
 });
 

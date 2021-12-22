@@ -8,8 +8,7 @@ const styles = StyleSheet.create({
     height: 64,
     padding: theme.spacing.medium,
 
-    position: 'absolute',
-    top: -25,
+    top: -16,
 
     shadowColor: theme.colors.primary,
     shadowOffset: {
