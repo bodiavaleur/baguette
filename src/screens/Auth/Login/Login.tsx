@@ -11,9 +11,9 @@ import {
   LogInFields,
 } from './config';
 import {useAppDispatch} from '~hooks/redux/useAppDispatch';
-import {authLogIn} from '~redux/auth/thunks';
+import {authLogIn} from '~redux/auth/auth.thunks';
 import {useSelector} from 'react-redux';
-import {getAuthStatuses} from '~redux/auth/selectors';
+import {getAuthStatuses} from '~redux/auth/auth.selectors';
 import {useStatusAlert} from '~hooks/useStatusAlert';
 import styles from './styles';
 

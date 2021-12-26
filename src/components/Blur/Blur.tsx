@@ -6,18 +6,26 @@ import {
   VibrancyViewProperties,
 } from '@react-native-community/blur';
 import {IOS_DEVICE} from '~config/device';
+import styles from './styles';
+import {StyleProp, ViewStyle} from 'react-native';
 
 interface BlurProps extends BlurViewProperties, VibrancyViewProperties {
+  style?: StyleProp<ViewStyle>;
   children?: React.ReactNode;
 }
 
-const Blur: React.FC<BlurProps> = ({children, ...props}) => {
+const Blur: React.FC<BlurProps> = ({style, children, ...props}) => {
   return IOS_DEVICE ? (
-    <VibrancyView blurType="xlight" {...props}>
+    <VibrancyView
+      blurType="xlight"
+      style={[styles.container, style]}
+      {...props}>
       {children}
     </VibrancyView>
   ) : (
-    <BlurView {...props}>{children}</BlurView>
+    <BlurView style={[styles.container, style]} {...props}>
+      {children}
+    </BlurView>
   );
 };
 

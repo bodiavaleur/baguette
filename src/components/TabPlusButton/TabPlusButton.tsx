@@ -3,12 +3,19 @@ import styles from './styles';
 import PlusIcon from '~assets/icons/plus.svg';
 import {View} from 'react-native-ui-lib';
 import {theme} from '~config/theme';
+import {TouchableWithoutFeedback} from 'react-native';
 
-const TabPlusButton: React.FC = () => {
+interface TabPlusButtonProps {
+  onPress: () => void;
+}
+
+const TabPlusButton: React.FC<TabPlusButtonProps> = ({onPress}) => {
   return (
-    <View style={styles.container}>
-      <PlusIcon color={theme.colors.white} />
-    </View>
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={styles.container}>
+        <PlusIcon color={theme.colors.white} />
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

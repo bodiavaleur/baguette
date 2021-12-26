@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import StatusGenerator from '~helpers/StatusGenerator';
 import {SliceStatuses, StatusesCollection} from '~types/statuses';
-import {authLogIn, authRegister} from '~redux/auth/thunks';
+import {authLogIn, authRegister} from '~redux/auth/auth.thunks';
 
 const {Pending, Rejected, Fulfilled} = SliceStatuses;
 
