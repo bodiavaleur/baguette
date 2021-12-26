@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {Alert, Text, View} from 'react-native';
+import {View} from 'react-native';
 import styles from './styles';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import NavigationTab from '~components/NavigationTab/NavigationTab';
@@ -8,15 +8,11 @@ import DictionaryIcon from '~assets/icons/book.svg';
 import TrainingIcon from '~assets/icons/bullseye.svg';
 import AccountIcon from '~assets/icons/account.svg';
 import {DashboardRoutes} from '~navigation/routes';
-import TabPlusButton from '~components/TabPlusButton';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Blur from '~components/Blur';
-import useToggle from '~hooks/useToggle';
-import AddWordModal from '~components/AddWordModal';
 
-const NavigationBar: React.FC<BottomTabBarProps> = ({navigation}) => {
+const NavigationBar: React.FC<BottomTabBarProps> = ({navigation, children}) => {
   const [tab, setTab] = useState(DashboardRoutes.Home);
-  const [isAddWordModalOpen, toggleAddWordModal] = useToggle();
   const insets = useSafeAreaInsets();
 
   useEffect(() => {
@@ -46,7 +42,7 @@ const NavigationBar: React.FC<BottomTabBarProps> = ({navigation}) => {
             onSelectTab={setTab}
             isSelected={tab === DashboardRoutes.Dictionary}
           />
-          <TabPlusButton onPress={toggleAddWordModal} />
+          {children}
           <NavigationTab
             icon={TrainingIcon}
             route={DashboardRoutes.Training}
@@ -60,11 +56,6 @@ const NavigationBar: React.FC<BottomTabBarProps> = ({navigation}) => {
             isSelected={tab === DashboardRoutes.Account}
           />
         </View>
-
-        <AddWordModal
-          isOpen={isAddWordModalOpen}
-          onCancel={toggleAddWordModal}
-        />
       </View>
     </>
   );

@@ -16,6 +16,7 @@ import {useSelector} from 'react-redux';
 import {getAuthStatuses} from '~redux/auth/auth.selectors';
 import {useStatusAlert} from '~hooks/useStatusAlert';
 import styles from './styles';
+import {fetchUserDictionary} from '~redux/dictionary/dictionary.thunks';
 
 const {Email, Password} = LogInFields;
 
@@ -34,9 +35,8 @@ const Login: React.FC = ({}) => {
   }, []);
 
   const handleSubmit = useCallback(async ({email, password}: LogInValues) => {
-    const user = await dispatch(authLogIn({email, password})).unwrap();
-
-    console.log('[*] user: ', user);
+    await dispatch(authLogIn({email, password})).unwrap();
+    await dispatch(fetchUserDictionary());
 
     navigation.navigate(DashboardRoutes.Root);
   }, []);

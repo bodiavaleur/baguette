@@ -5,11 +5,27 @@ import Home from '~screens/Home';
 import DictionaryNavigator from '~navigation/navigators/Dictionary';
 import TrainingNavigator from '~navigation/navigators/Training';
 import NavigationBar from '~components/NavigationBar';
+import useToggle from '~hooks/useToggle';
+import TabPlusButton from '~components/TabPlusButton';
+import AddWordModal from '~components/AddWordModal';
 
 const Tab = createBottomTabNavigator();
 
 const DashboardNavigator: React.FC = () => {
-  const showTabBar = useCallback(props => <NavigationBar {...props} />, []);
+  const [showAddWordModal, toggleAddWordModal] = useToggle();
+
+  const showTabBar = useCallback(
+    props => (
+      <>
+        <NavigationBar {...props}>
+          <TabPlusButton onPress={toggleAddWordModal} />
+        </NavigationBar>
+
+        <AddWordModal isOpen={showAddWordModal} onCancel={toggleAddWordModal} />
+      </>
+    ),
+    [showAddWordModal],
+  );
 
   return (
     <Tab.Navigator screenOptions={{headerShown: false}} tabBar={showTabBar}>
