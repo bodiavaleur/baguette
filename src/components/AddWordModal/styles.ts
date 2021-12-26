@@ -2,7 +2,10 @@ import {StyleSheet} from 'react-native';
 import {theme} from '~config/theme';
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+    justifyContent: 'flex-start',
+  },
   content: {
     paddingHorizontal: theme.spacing.medium,
     paddingBottom: theme.spacing.medium,
@@ -11,19 +14,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.white,
   },
   header: {
-    paddingVertical: theme.spacing.small,
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'center',
-  },
-  headerTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    lineHeight: 19,
-    color: theme.colors.text,
-  },
-  closeIcon: {
-    position: 'absolute',
-    right: 0,
   },
   inputs: {
     paddingVertical: theme.spacing.medium,
