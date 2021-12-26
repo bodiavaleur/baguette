@@ -1,5 +1,5 @@
 import {AuthRoutes, DashboardRoutes, DictionaryRoutes} from './routes';
-import {RouteStrings} from '~config/strings';
+import {RouteStrings} from '~config/strings/routes';
 
 interface RouteTitle {
   [key: string]: RouteStrings;

@@ -17,11 +17,6 @@ const styles = StyleSheet.create({
     elevation: 0,
   },
   blur: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-    top: 0,
-    left: 0,
     borderRadius: 32,
   },
 });

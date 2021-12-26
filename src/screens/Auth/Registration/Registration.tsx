@@ -8,9 +8,9 @@ import {
 import {useAppDispatch} from '~hooks/redux/useAppDispatch';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
 import {useSelector} from 'react-redux';
-import {getAuthStatuses} from '~redux/auth/selectors';
+import {getAuthStatuses} from '~redux/auth/auth.selectors';
 import {useStatusAlert} from '~hooks/useStatusAlert';
-import {authRegister} from '~redux/auth/thunks';
+import {authRegister} from '~redux/auth/auth.thunks';
 import {AuthRoutes, DashboardRoutes} from '~navigation/routes';
 import {useFormik} from 'formik';
 import Layout from '~containers/Layout';

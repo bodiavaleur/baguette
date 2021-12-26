@@ -1,35 +1,43 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {Text, View} from 'react-native';
 import styles from './styles';
 import Layout from '~containers/Layout';
-import Tts from 'react-native-tts';
-import {useRoute} from '@react-navigation/native';
+import {useFocusEffect, useRoute} from '@react-navigation/native';
 import Header from '~components/Header';
 import BackButton from '~components/Header/plugins/BackButton';
+import {useAppDispatch} from '~hooks/redux/useAppDispatch';
+import {useSelector} from 'react-redux';
+import {getCurrentWord} from '~redux/word/word.selectors';
+import {fetchWordById} from '~redux/word/word.thunks';
+import {clearCurrentWord} from '~redux/word/word.slice';
+import useTextToSpeech from '~hooks/useTextToSpeech';
 
-interface WordDetailsProps {}
-
-const WordDetails: React.FC<WordDetailsProps> = ({}) => {
+const WordDetails: React.FC = () => {
+  const dispatch = useAppDispatch();
   const route = useRoute();
-  const {word} = route.params;
+  const currentWord = useSelector(getCurrentWord);
+  const tts = useTextToSpeech();
+  const {wordId} = route.params;
+
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(fetchWordById({wordId}));
+
+      return () => {
+        dispatch(clearCurrentWord());
+      };
+    }, [wordId]),
+  );
 
   useEffect(() => {
-    Tts.speak(word, {
-      iosVoiceId: 'com.apple.ttsbundle.Thomas-compact',
-      rate: 0.5,
-      androidParams: {
-        KEY_PARAM_PAN: -1,
-        KEY_PARAM_VOLUME: 0.5,
-        KEY_PARAM_STREAM: 'STREAM_MUSIC',
-      },
-    });
-  }, [word]);
+    tts.speak(currentWord?.word);
+  }, [currentWord]);
 
   const header = <Header left={<BackButton />} />;
 
   return (
     <Layout customHeader={header}>
-      <Text>word</Text>
+      <Text>{currentWord?.word}</Text>
     </Layout>
   );
 };
