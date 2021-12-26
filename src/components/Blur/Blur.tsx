@@ -11,21 +11,17 @@ import {StyleProp, ViewStyle} from 'react-native';
 
 interface BlurProps extends BlurViewProperties, VibrancyViewProperties {
   style?: StyleProp<ViewStyle>;
-  children?: React.ReactNode;
 }
 
-const Blur: React.FC<BlurProps> = ({style, children, ...props}) => {
+const Blur: React.FC<BlurProps> = ({style, ...props}) => {
   return IOS_DEVICE ? (
     <VibrancyView
       blurType="xlight"
       style={[styles.container, style]}
-      {...props}>
-      {children}
-    </VibrancyView>
+      {...props}
+    />
   ) : (
-    <BlurView style={[styles.container, style]} {...props}>
-      {children}
-    </BlurView>
+    <BlurView style={[styles.container, style]} {...props} />
   );
 };
 

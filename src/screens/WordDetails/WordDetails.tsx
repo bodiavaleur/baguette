@@ -36,8 +36,10 @@ const WordDetails: React.FC = () => {
   const header = <Header left={<BackButton />} />;
 
   return (
-    <Layout customHeader={header}>
-      <Text>{currentWord?.word}</Text>
+    <Layout style={styles.container} customHeader={header}>
+      <Text style={styles.word}>{currentWord?.word}</Text>
+      <Text style={styles.translation}>{currentWord?.translation}</Text>
+      <Text style={styles.example}>{currentWord?.example}</Text>
     </Layout>
   );
 };

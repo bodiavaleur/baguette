@@ -1,17 +1,22 @@
 import {StyleSheet} from 'react-native';
+import {theme} from '~config/theme';
 
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: 57,
+    height: 54,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 16,
+    paddingHorizontal: theme.spacing.medium,
   },
   leftPlugins: {
     flex: 1,
     alignItems: 'flex-start',
+  },
+  middlePlugins: {
+    flex: 5,
+    alignItems: 'center',
   },
   rightPlugins: {
     flex: 1,

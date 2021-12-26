@@ -3,7 +3,8 @@ import {theme} from '~config/theme';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 5,
+    flex: 1,
+    justifyContent: 'center',
   },
   title: {
     fontSize: 16,

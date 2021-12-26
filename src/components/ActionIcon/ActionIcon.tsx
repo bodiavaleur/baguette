@@ -1,26 +1,25 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import Svg from 'react-native-svg/lib/typescript';
 import type {TouchableOpacityProps} from 'react-native';
 import type {SvgProps} from 'react-native-svg';
 import styles from './styles';
 import {theme} from '~config/theme';
-
-const ICON_DEFAULT_SIZE = 24;
+import Blur from '~components/Blur';
 
 interface ActionIconProps extends TouchableOpacityProps {
   icon: new (props: SvgProps) => Svg;
-  size?: number;
 }
 
-const ActionIcon: React.FC<ActionIconProps> = ({
-  icon: Icon,
-  size = ICON_DEFAULT_SIZE,
-  ...props
-}) => {
+const ActionIcon: React.FC<ActionIconProps> = ({icon: Icon, ...props}) => {
   return (
-    <TouchableOpacity style={styles.container} {...props}>
-      <Icon width={size} height={size} color={theme.colors.text} />
+    <TouchableOpacity {...props}>
+      <View>
+        <Blur style={styles.blur} />
+        <View style={styles.iconContainer}>
+          <Icon style={styles.icon} color={theme.colors.text} />
+        </View>
+      </View>
     </TouchableOpacity>
   );
 };

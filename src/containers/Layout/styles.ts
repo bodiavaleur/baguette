@@ -1,9 +1,11 @@
 import {StyleSheet} from 'react-native';
 import {BOTTOM_BAR_HEIGHT} from '~config/device';
+import {theme} from '~config/theme';
 
 const styles = StyleSheet.create({
   container: {
     height: '100%',
+    backgroundColor: theme.colors.white,
   },
   withFlex: {
     flex: 1,

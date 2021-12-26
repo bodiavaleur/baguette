@@ -1,11 +1,12 @@
 import React from 'react';
-import {Button} from 'react-native';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
+import ActionIcon from '~components/ActionIcon';
+import CaretLeftIcon from '~assets/icons/caret-left.svg';
 
 const BackButton: React.FC = () => {
   const navigation = useAppNavigation();
 
-  return <Button title="back" onPress={navigation.goBack} />;
+  return <ActionIcon icon={CaretLeftIcon} onPress={navigation.goBack} />;
 };
 
 export default BackButton;

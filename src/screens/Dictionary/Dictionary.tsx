@@ -1,5 +1,4 @@
 import React, {useCallback} from 'react';
-import {FlatList} from 'react-native';
 import styles from './styles';
 import Layout from '~containers/Layout/Layout';
 import WordListItem from '~components/WordListItem';
@@ -10,6 +9,7 @@ import {useAppDispatch} from '~hooks/redux/useAppDispatch';
 import {useSelector} from 'react-redux';
 import {getUserDictionary} from '~redux/dictionary/dictionary.selectors';
 import {fetchUserDictionary} from '~redux/dictionary/dictionary.thunks';
+import ScreenList from '~containers/ScreenList';
 
 const Dictionary: React.FC = () => {
   const navigation = useAppNavigation();
@@ -35,8 +35,12 @@ const Dictionary: React.FC = () => {
   const data = dictionary?.dictionary ?? [];
 
   return (
-    <Layout withoutPaddings>
-      <FlatList style={styles.container} data={data} renderItem={renderWord} />
+    <Layout withoutPaddings withoutSafeBottom>
+      <ScreenList
+        style={styles.container}
+        data={data}
+        renderItem={renderWord}
+      />
     </Layout>
   );
 };

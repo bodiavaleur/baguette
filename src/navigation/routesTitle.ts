@@ -1,4 +1,9 @@
-import {AuthRoutes, DashboardRoutes, DictionaryRoutes} from './routes';
+import {
+  AuthRoutes,
+  DashboardRoutes,
+  DictionaryRoutes,
+  TrainingRoutes,
+} from './routes';
 import {RouteStrings} from '~config/strings/routes';
 
 interface RouteTitle {
@@ -10,9 +15,11 @@ export const ROUTES_TITLE: RouteTitle = {
   [AuthRoutes.Registration]: RouteStrings.AppName,
 
   [DashboardRoutes.Home]: RouteStrings.Home,
-  [DashboardRoutes.Dictionary]: RouteStrings.Dictionary,
-  [DashboardRoutes.Training]: RouteStrings.Training,
   [DashboardRoutes.Account]: RouteStrings.Account,
+
+  [DictionaryRoutes.Dictionary]: RouteStrings.Dictionary,
+  [TrainingRoutes.Menu]: RouteStrings.TrainingMenu,
+  [TrainingRoutes.Flashcards]: RouteStrings.Flashcards,
 
   [DictionaryRoutes.WordDetails]: RouteStrings.WordDetails,
 };
