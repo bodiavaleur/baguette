@@ -1,6 +1,8 @@
 import axios from 'axios';
 import {API_URL} from '~config/api';
 import {tokenStorage} from '~helpers/storage';
+import {Navigation} from '~helpers/Navigation';
+import {AuthRoutes} from '~navigation/routes';
 
 const defaultConfig = {
   baseURL: API_URL,
@@ -9,10 +11,10 @@ const defaultConfig = {
 export const api = axios.create(defaultConfig);
 
 api.interceptors.request.use(async config => {
-  const token = await tokenStorage.get();
+  const tokens = await tokenStorage.get();
 
-  if (token) {
-    config.headers!.authorization = `JWT ${token}`;
+  if (tokens) {
+    config.headers!.authorization = `Bearer ${tokens.accessToken}`;
   }
 
   return config;
@@ -21,6 +23,12 @@ api.interceptors.request.use(async config => {
 api.interceptors.response.use(
   res => res,
   err => {
+    if (err.response.status === 401) {
+      tokenStorage.clear();
+
+      Navigation.reset(AuthRoutes.Root);
+    }
+
     return Promise.reject(err.response?.data ?? err.message);
   },
 );

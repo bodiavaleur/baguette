@@ -1,4 +1,4 @@
-export const API_URL = 'http://172.20.10.3:6565/api/v1/';
+export const API_URL = 'http://207.154.244.29:6565/api/v1/';
 
 export const AUTH_ENDPOINTS = {
   LOGIN: `${API_URL}auth/login/`,
