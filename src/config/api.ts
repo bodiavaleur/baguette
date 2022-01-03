@@ -11,5 +11,8 @@ export const WORD_ENDPOINTS = {
 };
 
 export const DICTIONARY_ENDPOINTS = {
-  USER_DICTIONARY: `${API_URL}dictionary/user/`,
+  MY_DICTIONARIES: `${API_URL}dictionary/user/`,
+  CREATE: `${API_URL}dictionary/create/`,
+  EDIT: `${API_URL}dictionary/edit/`,
+  GET_BY_ID: `${API_URL}dictionary/`,
 };

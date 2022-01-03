@@ -7,15 +7,20 @@ import AuthNavigator from '~navigation/navigators/Auth';
 import DashboardNavigator from '~navigation/navigators/Dashboard';
 import {tokenStorage} from '~helpers/storage';
 import {Navigation, navigationRef} from '~helpers/Navigation';
+import {useAppDispatch} from '~hooks/redux/useAppDispatch';
+import {fetchMyDictionaries} from '~redux/dictionary/dictionary.thunks';
 
 const Stack = createNativeStackNavigator();
 
 const RootNavigator: React.FC = () => {
+  const dispatch = useAppDispatch();
+
   const checkAuth = useCallback(async () => {
     const tokens = await tokenStorage.get();
 
     if (tokens) {
       Navigation.reset(DashboardRoutes.Root);
+      dispatch(fetchMyDictionaries());
     }
   }, []);
 

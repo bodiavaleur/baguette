@@ -2,10 +2,14 @@ export enum RouteStrings {
   AppName = 'Baguette',
 
   Home = 'Home',
+
   Dictionary = 'Dictionary',
-  Training = 'Training',
+  MyDictionaries = 'My dictionaries',
+  NewDictionary = 'Create new dictionary',
+
   Account = 'Account',
 
+  Training = 'Training',
   TrainingMenu = 'Menu',
   Flashcards = 'Flashcards',
 

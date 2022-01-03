@@ -11,6 +11,10 @@ export interface FetchWordArgs {
   wordId: string;
 }
 
+export interface NewWordArgs extends Partial<Word> {
+  dictionaryId: string;
+}
+
 export interface ThunkState {
   state: RootState;
 }

@@ -18,6 +18,9 @@ export const ROUTES_TITLE: RouteTitle = {
   [DashboardRoutes.Account]: RouteStrings.Account,
 
   [DictionaryRoutes.Dictionary]: RouteStrings.Dictionary,
+  [DictionaryRoutes.MyDictionaries]: RouteStrings.MyDictionaries,
+  [DictionaryRoutes.NewDictionary]: RouteStrings.NewDictionary,
+
   [TrainingRoutes.Menu]: RouteStrings.TrainingMenu,
   [TrainingRoutes.Flashcards]: RouteStrings.Flashcards,
 

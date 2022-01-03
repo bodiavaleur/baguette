@@ -3,5 +3,10 @@ import {Dictionary} from '~types/dictionary';
 
 export interface DictionarySliceState {
   statuses: StatusesCollection;
-  dictionary: Dictionary | null;
+  myDictionaries: Dictionary[];
+  currentDictionary: Dictionary | null;
+}
+
+export interface EditDictionaryArgs extends Dictionary {
+  dictionaryId: string;
 }

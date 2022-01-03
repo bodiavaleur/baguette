@@ -3,7 +3,12 @@ import {RootState} from '../index';
 
 const dictionaryState = (state: RootState) => state.dictionary;
 
-export const getUserDictionary = createSelector(
+export const getMyDictionaries = createSelector(
   dictionaryState,
-  ({dictionary}) => dictionary,
+  ({myDictionaries}) => myDictionaries,
+);
+
+export const getCurrentDictionary = createSelector(
+  dictionaryState,
+  ({currentDictionary}) => currentDictionary,
 );

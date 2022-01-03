@@ -3,7 +3,9 @@ import {theme} from '~config/theme';
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: theme.spacing.medium,
+    width: '100%',
+    height: 1,
+    backgroundColor: theme.colors.divider,
   },
 });
 

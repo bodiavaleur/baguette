@@ -16,7 +16,7 @@ import {useFormik} from 'formik';
 import Layout from '~containers/Layout';
 import {Button, TextField, Text, View} from 'react-native-ui-lib';
 import styles from './styles';
-import {fetchUserDictionary} from '~redux/dictionary/dictionary.thunks';
+import {fetchMyDictionaries} from '~redux/dictionary/dictionary.thunks';
 
 const {Username, Email, Password} = RegistrationFields;
 
@@ -36,7 +36,7 @@ const Registration: React.FC = ({}) => {
 
   const handleSubmit = useCallback(async (values: RegistrationValues) => {
     await dispatch(authRegister(values)).unwrap();
-    await dispatch(fetchUserDictionary());
+    await dispatch(fetchMyDictionaries());
 
     navigation.navigate(DashboardRoutes.Root);
   }, []);

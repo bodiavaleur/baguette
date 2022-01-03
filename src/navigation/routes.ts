@@ -1,20 +1,28 @@
-export enum AuthRoutes {
-  Root = 'AuthRoot',
-  Login = 'AuthLogin',
-  Registration = 'AuthRegistration',
-}
+export const AuthRoutes = {
+  Root: 'AuthRoot',
+  Login: 'AuthLogin',
+  Registration: 'AuthRegistration',
+};
 
-export enum DictionaryRoutes {
-  Root = 'DictionaryRoot',
-  Dictionary = 'DictionaryDictionary',
-  WordDetails = 'DictionaryWordDetails',
-}
+export const WordRoutes = {
+  Root: 'WordRoot',
+  Word: 'WordRootWord',
+  EditWord: 'WordRootEditWord',
+};
 
-export enum TrainingRoutes {
-  Root = 'TrainingRoot',
-  Menu = 'TrainingMenu',
-  Flashcards = 'TrainingFlashcards',
-}
+export const DictionaryRoutes = {
+  Root: 'DictionaryRoot',
+  MyDictionaries: 'DictionaryMyDictionaries',
+  NewDictionary: 'DictionaryNewDictionary',
+  Dictionary: 'DictionaryDictionary',
+  WordDetails: WordRoutes.Root,
+};
+
+export const TrainingRoutes = {
+  Root: 'TrainingRoot',
+  Menu: 'TrainingMenu',
+  Flashcards: 'TrainingFlashcards',
+};
 
 export const DashboardRoutes = {
   Root: 'DashboardRoot',

@@ -3,10 +3,10 @@ import {TextInputProps} from 'react-native';
 import styles from './styles';
 import {TextInput} from 'react-native';
 
-interface WordInputProps extends TextInputProps {}
+interface InputProps extends TextInputProps {}
 
-const WordInput: React.FC<WordInputProps> = props => {
+const Input: React.FC<InputProps> = props => {
   return <TextInput style={styles.container} returnKeyType="done" {...props} />;
 };
 
-export default WordInput;
+export default Input;

@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from '~utils/api';
 import {WORD_ENDPOINTS} from '~config/api';
-import {FetchWordArgs, ThunkState} from './types';
+import {FetchWordArgs, NewWordArgs, ThunkState} from './types';
 import {Word} from '~types/word';
 
 const {ADD_WORD, WORD} = WORD_ENDPOINTS;
@@ -19,14 +19,11 @@ export const fetchWordById = createAsyncThunk<Word, FetchWordArgs>(
   },
 );
 
-export const createNewWord = createAsyncThunk<Word, Partial<Word>, ThunkState>(
+export const createNewWord = createAsyncThunk<Word, NewWordArgs>(
   'word/createNewWord',
-  async (word, {rejectWithValue, getState}) => {
+  async (newWord, {rejectWithValue}) => {
     try {
-      const {dictionary} = getState().dictionary;
-      const dictionaryId = dictionary?._id ?? '';
-
-      const {data} = await api.post(ADD_WORD, {...word, dictionaryId});
+      const {data} = await api.post(ADD_WORD, newWord);
 
       return data;
     } catch (err) {
