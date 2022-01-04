@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {ScrollView, View} from 'react-native';
 import Blur from '~components/Blur';
 import styles from './styles';
@@ -26,6 +26,7 @@ import AvoidKeyboard from '~containers/AvoidKeyboard';
 import TranslationInputs from '~components/TranslationInputs';
 import useMultipleInputs from '~hooks/useMultipleInputs';
 import Button from '~components/Button';
+import {useFocusEffect} from '@react-navigation/native';
 
 const {DictionaryId, Word, Example} = NewWordFields;
 
@@ -39,6 +40,10 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
   const insets = useSafeAreaInsets();
   const dictionaries = useSelector(getMyDictionaries);
   const translations = useMultipleInputs();
+
+  const handleHideModal = () => {
+    translations.clear();
+  };
 
   const handleSubmitWord = async (values: NewWordValues) => {
     await dispatch(
@@ -56,7 +61,11 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
   });
 
   return (
-    <Modal deviceWidth={1} deviceHeight={1} isVisible={isOpen}>
+    <Modal
+      deviceWidth={1}
+      deviceHeight={1}
+      isVisible={isOpen}
+      onModalHide={handleHideModal}>
       <Blur blurType="dark" />
       <AvoidKeyboard>
         <ScrollView

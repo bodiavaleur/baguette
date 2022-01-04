@@ -19,7 +19,11 @@ function useMultipleInputs(): MultipleInputs {
     setInputs(newInputs);
   };
 
-  return {inputs, onChange, add, remove};
+  const clear = () => {
+    setInputs(['']);
+  };
+
+  return {inputs, onChange, add, remove, clear};
 }
 
 export default useMultipleInputs;
