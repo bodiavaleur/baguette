@@ -1,5 +1,5 @@
 export enum InputPlaceholderStrings {
-  AddWord = 'Word in your language',
-  WordTranslation = 'Word in french',
+  AddWord = 'Word in french',
+  WordTranslation = 'Translation',
   WordExample = 'Example (optional)',
 }

@@ -1,6 +1,6 @@
 export interface Word {
   word: string;
-  translation: string;
+  translations: string[];
   image: string;
   example: string;
   knowledgeLevel: number;

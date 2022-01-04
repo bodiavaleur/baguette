@@ -9,15 +9,22 @@ import Blur from '~components/Blur';
 
 interface ActionIconProps extends TouchableOpacityProps {
   icon: new (props: SvgProps) => Svg;
+  color?: string;
 }
 
-const ActionIcon: React.FC<ActionIconProps> = ({icon: Icon, ...props}) => {
+const ActionIcon: React.FC<ActionIconProps> = ({
+  icon: Icon,
+  color,
+  ...props
+}) => {
+  const iconColor = color ?? theme.colors.text;
+
   return (
     <TouchableOpacity {...props}>
       <View>
         <Blur style={styles.blur} />
         <View style={styles.iconContainer}>
-          <Icon style={styles.icon} color={theme.colors.text} />
+          <Icon style={styles.icon} color={iconColor} />
         </View>
       </View>
     </TouchableOpacity>

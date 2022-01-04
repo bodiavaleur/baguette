@@ -18,11 +18,14 @@ export const theme = {
     primaryGray: '#ccc',
     disabledGray: '#a7a7a7',
     divider: 'rgba(217,217,217,0.65)',
+
+    dangerRed: '#ff2931',
   },
   spacing: {
     none: 0,
     xs: makeSpacing(1),
     small: makeSpacing(2),
+    regular: makeSpacing(3),
     medium: makeSpacing(4),
     large: makeSpacing(8),
   },
