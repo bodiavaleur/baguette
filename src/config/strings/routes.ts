@@ -14,4 +14,5 @@ export enum RouteStrings {
   Flashcards = 'Flashcards',
 
   WordDetails = 'Word details',
+  EditWord = 'Edit word',
 }

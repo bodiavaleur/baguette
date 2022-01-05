@@ -20,6 +20,7 @@ export const theme = {
     divider: 'rgba(217,217,217,0.65)',
 
     dangerRed: '#ff2931',
+    warning: '#ff792b',
   },
   spacing: {
     none: 0,

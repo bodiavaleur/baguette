@@ -3,6 +3,7 @@ import {
   DashboardRoutes,
   DictionaryRoutes,
   TrainingRoutes,
+  WordRoutes,
 } from './routes';
 import {RouteStrings} from '~config/strings/routes';
 
@@ -24,5 +25,6 @@ export const ROUTES_TITLE: RouteTitle = {
   [TrainingRoutes.Menu]: RouteStrings.TrainingMenu,
   [TrainingRoutes.Flashcards]: RouteStrings.Flashcards,
 
-  [DictionaryRoutes.WordDetails]: RouteStrings.WordDetails,
+  [WordRoutes.Word]: RouteStrings.WordDetails,
+  [WordRoutes.EditWord]: RouteStrings.EditWord,
 };

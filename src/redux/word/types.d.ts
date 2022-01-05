@@ -15,6 +15,10 @@ export interface NewWordArgs extends Partial<Word> {
   dictionaryId: string;
 }
 
+export interface EditWordArgs extends Partial<Word> {
+  wordId: string;
+}
+
 export interface ThunkState {
   state: RootState;
 }

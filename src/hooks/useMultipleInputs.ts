@@ -1,8 +1,9 @@
 import {useState} from 'react';
 import {MultipleInputs} from '~types/hooks';
 
-function useMultipleInputs(): MultipleInputs {
-  const [inputs, setInputs] = useState<string[]>(['']);
+const DEFAULT_INPUTS = [''];
+function useMultipleInputs(customInputs = DEFAULT_INPUTS): MultipleInputs {
+  const [inputs, setInputs] = useState<string[]>(customInputs);
 
   const onChange = (index: number, text: string) => {
     const prevInputs = [...inputs];
@@ -20,7 +21,7 @@ function useMultipleInputs(): MultipleInputs {
   };
 
   const clear = () => {
-    setInputs(['']);
+    setInputs(DEFAULT_INPUTS);
   };
 
   return {inputs, onChange, add, remove, clear};

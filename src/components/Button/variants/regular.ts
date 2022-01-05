@@ -18,6 +18,9 @@ const regular = StyleSheet.create({
   disabled: {
     backgroundColor: theme.colors.disabledGray,
   },
+  blur: {
+    borderRadius: 16,
+  },
 });
 
 export default regular;

@@ -1,5 +1,6 @@
 export enum ButtonStrings {
   AddWord = 'Add word',
   Create = 'Create',
-  Plus = '+',
+  Cancel = 'Cancel',
+  Delete = 'Delete',
 }

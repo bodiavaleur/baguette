@@ -2,8 +2,8 @@ import React, {useCallback, useEffect, useMemo} from 'react';
 import Layout from '~containers/Layout/Layout';
 import WordListItem from '~components/WordListItem';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
-import {DictionaryRoutes} from '~navigation/routes';
-import {useRoute} from '@react-navigation/native';
+import {DictionaryRoutes, WordRoutes} from '~navigation/routes';
+import {useFocusEffect, useRoute} from '@react-navigation/native';
 import {useAppDispatch} from '~hooks/redux/useAppDispatch';
 import {useSelector} from 'react-redux';
 import {getCurrentDictionary} from '~redux/dictionary/dictionary.selectors';
@@ -22,8 +22,16 @@ const Dictionary: React.FC = () => {
   const dispatch = useAppDispatch();
   const dictionary = useSelector(getCurrentDictionary);
 
+  const loadDictionary = () => dispatch(fetchDictionaryById(dictionaryId));
+
+  useFocusEffect(
+    useCallback(() => {
+      loadDictionary();
+    }, []),
+  );
+
   useEffect(() => {
-    dispatch(fetchDictionaryById(dictionaryId));
+    loadDictionary();
 
     return () => {
       dispatch(clearCurrentDictionary());
@@ -31,7 +39,10 @@ const Dictionary: React.FC = () => {
   }, []);
 
   const openWordDetails = (wordId: string) =>
-    navigation.navigate(DictionaryRoutes.WordDetails, {wordId});
+    navigation.navigate(WordRoutes.Root, {
+      screen: WordRoutes.Word,
+      params: {wordId},
+    });
 
   const renderWord = useCallback(
     ({item}) => (

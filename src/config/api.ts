@@ -6,8 +6,10 @@ export const AUTH_ENDPOINTS = {
 };
 
 export const WORD_ENDPOINTS = {
-  ADD_WORD: `${API_URL}word/add/`,
+  ADD: `${API_URL}word/add/`,
   WORD: `${API_URL}word/`,
+  EDIT: `${API_URL}word/edit/`,
+  DELETE: `${API_URL}word/delete/`,
 };
 
 export const DICTIONARY_ENDPOINTS = {

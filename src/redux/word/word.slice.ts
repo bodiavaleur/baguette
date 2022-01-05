@@ -1,12 +1,22 @@
 import {createSlice} from '@reduxjs/toolkit';
 import StatusGenerator from '~helpers/StatusGenerator';
 import {SliceStatuses} from '~types/statuses';
-import {fetchWordById, createNewWord} from './word.thunks';
+import {
+  fetchWordById,
+  createNewWord,
+  editWord,
+  deleteWord,
+} from './word.thunks';
 import {WordSliceState} from './types';
 
 const {Pending, Rejected, Fulfilled} = SliceStatuses;
 
-const statuses = [fetchWordById.typePrefix, createNewWord.typePrefix];
+const statuses = [
+  fetchWordById.typePrefix,
+  createNewWord.typePrefix,
+  editWord.typePrefix,
+  deleteWord.typePrefix,
+];
 
 const initialState: WordSliceState = {
   statuses: StatusGenerator.generateStatuses(statuses),
@@ -53,6 +63,40 @@ const wordSlice = createSlice({
       .addCase(createNewWord.fulfilled, state => {
         state.statuses[createNewWord.typePrefix] =
           StatusGenerator.setStatus(Fulfilled);
+      })
+
+      .addCase(editWord.pending, state => {
+        state.statuses[editWord.typePrefix] =
+          StatusGenerator.setStatus(Pending);
+      })
+      .addCase(editWord.rejected, (state, {payload}) => {
+        state.statuses[editWord.typePrefix] = StatusGenerator.setStatus(
+          Rejected,
+          payload,
+        );
+      })
+      .addCase(editWord.fulfilled, (state, {payload}) => {
+        state.statuses[editWord.typePrefix] =
+          StatusGenerator.setStatus(Fulfilled);
+
+        state.currentWord = payload;
+      })
+
+      .addCase(deleteWord.pending, state => {
+        state.statuses[deleteWord.typePrefix] =
+          StatusGenerator.setStatus(Pending);
+      })
+      .addCase(deleteWord.rejected, (state, {payload}) => {
+        state.statuses[deleteWord.typePrefix] = StatusGenerator.setStatus(
+          Rejected,
+          payload,
+        );
+      })
+      .addCase(deleteWord.fulfilled, state => {
+        state.statuses[deleteWord.typePrefix] =
+          StatusGenerator.setStatus(Fulfilled);
+
+        state.currentWord = null;
       });
   },
 });

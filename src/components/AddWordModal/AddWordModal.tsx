@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React from 'react';
 import {ScrollView, View} from 'react-native';
 import Blur from '~components/Blur';
 import styles from './styles';
@@ -13,20 +13,25 @@ import {useAppDispatch} from '~hooks/redux/useAppDispatch';
 import {useFormik} from 'formik';
 import {
   initialValues,
-  validationSchema,
-  NewWordValues,
   NewWordFields,
+  NewWordValues,
+  validationSchema,
 } from './config';
 import Modal from 'react-native-modal';
 import {createNewWord} from '~redux/word/word.thunks';
-import {fetchMyDictionaries} from '~redux/dictionary/dictionary.thunks';
+import {
+  fetchDictionaryById,
+  fetchMyDictionaries,
+} from '~redux/dictionary/dictionary.thunks';
 import {useSelector} from 'react-redux';
-import {getMyDictionaries} from '~redux/dictionary/dictionary.selectors';
+import {
+  getCurrentDictionary,
+  getMyDictionaries,
+} from '~redux/dictionary/dictionary.selectors';
 import AvoidKeyboard from '~containers/AvoidKeyboard';
 import TranslationInputs from '~components/TranslationInputs';
 import useMultipleInputs from '~hooks/useMultipleInputs';
 import Button from '~components/Button';
-import {useFocusEffect} from '@react-navigation/native';
 
 const {DictionaryId, Word, Example} = NewWordFields;
 
@@ -39,6 +44,7 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
   const dispatch = useAppDispatch();
   const insets = useSafeAreaInsets();
   const dictionaries = useSelector(getMyDictionaries);
+  const currentDictionary = useSelector(getCurrentDictionary);
   const translations = useMultipleInputs();
 
   const handleHideModal = () => {
@@ -46,10 +52,17 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
   };
 
   const handleSubmitWord = async (values: NewWordValues) => {
+    const isCurrentDictionaryOpen =
+      currentDictionary?._id === values[DictionaryId];
     await dispatch(
       createNewWord({...values, translations: translations.inputs}),
     );
     dispatch(fetchMyDictionaries());
+
+    if (isCurrentDictionaryOpen) {
+      dispatch(fetchDictionaryById(values[DictionaryId]));
+    }
+
     formik.resetForm();
     onCancel();
   };

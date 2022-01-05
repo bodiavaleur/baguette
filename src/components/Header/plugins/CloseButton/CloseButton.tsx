@@ -1,12 +1,13 @@
 import React from 'react';
-import {Text} from 'react-native';
+import CloseIcon from '~assets/icons/close.svg';
+import ActionIcon from '~components/ActionIcon';
 
 interface CloseButtonProps {
   onClose: () => void;
 }
 
 const CloseButton: React.FC<CloseButtonProps> = ({onClose}) => {
-  return <Text>close</Text>;
+  return <ActionIcon icon={CloseIcon} onPress={onClose} />;
 };
 
 export default CloseButton;
