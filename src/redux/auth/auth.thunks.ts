@@ -39,3 +39,9 @@ export const authRegister = createAsyncThunk(
     }
   },
 );
+
+export const authLogout = createAsyncThunk('auth/logout', async () => {
+  try {
+    await tokenStorage.clear();
+  } catch (err) {}
+});
