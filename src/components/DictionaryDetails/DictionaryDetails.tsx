@@ -3,9 +3,9 @@ import {Text, View} from 'react-native';
 import styles from './styles';
 import {useSelector} from 'react-redux';
 import {getCurrentDictionary} from '~redux/dictionary/dictionary.selectors';
-import {Button} from 'react-native-ui-lib';
 import Divider from '~components/Divider';
 import Avatar from '~components/Avatar';
+import Button from '~components/Button';
 
 const DictionaryDetails: React.FC = () => {
   const dictionary = useSelector(getCurrentDictionary);
@@ -27,8 +27,18 @@ const DictionaryDetails: React.FC = () => {
       </View>
       <Divider />
       <View style={styles.buttons}>
-        <Button label="Train" style={[styles.button, styles.buttonLeft]} />
-        <Button label="Test" style={styles.button} />
+        <Button
+          variant="action"
+          action="text"
+          title="Train"
+          style={[styles.button, styles.buttonLeft]}
+        />
+        <Button
+          variant="action"
+          action="text"
+          title="Test"
+          style={styles.button}
+        />
       </View>
       <Divider />
     </View>

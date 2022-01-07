@@ -41,13 +41,12 @@ const Button: React.FC<ButtonProps> = ({
   const containerStyle = [
     buttonStyle.container,
     isDisabled ? buttonStyle.disabled : null,
-    style,
   ];
 
   const titleStyle = [buttonStyle.title, {color: titleColors[action]}];
 
   return (
-    <TouchableOpacity onPress={onPress} disabled={isDisabled}>
+    <TouchableOpacity style={style} onPress={onPress} disabled={isDisabled}>
       {isAction && <Blur style={buttonStyle.blur} />}
       <View style={containerStyle}>
         {loading ? (

@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {makeFontSize, theme} from '~config/theme';
+import {theme} from '~config/theme';
 
 const styles = StyleSheet.create({
   container: {},
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     paddingVertical: theme.spacing.medium,
   },
   toggleAuthText: {
-    fontSize: makeFontSize(),
+    fontSize: 16,
     marginRight: theme.spacing.xs,
   },
 });

@@ -4,16 +4,14 @@ import styles from './styles';
 
 interface HeaderTitleProps {
   title: string;
-  subtitle?: string;
 }
 
-const HeaderTitle: React.FC<HeaderTitleProps> = ({title, subtitle}) => {
+const HeaderTitle: React.FC<HeaderTitleProps> = ({title}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title} ellipsizeMode="tail" numberOfLines={1}>
         {title}
       </Text>
-      {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
     </View>
   );
 };

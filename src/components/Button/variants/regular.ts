@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {theme} from '~config/theme';
+import {fontSize, typography} from '~config/typography';
 
 const regular = StyleSheet.create({
   container: {
@@ -10,9 +11,9 @@ const regular = StyleSheet.create({
     backgroundColor: theme.colors.primary,
   },
   title: {
-    fontSize: 16,
-    fontWeight: '700',
-    lineHeight: 20,
+    ...typography.text,
+    fontSize: fontSize.h4,
+    fontWeight: '600',
     color: theme.colors.white,
   },
   disabled: {

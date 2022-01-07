@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {theme} from '~config/theme';
+import {fontSize, typography} from '~config/typography';
 
 const styles = StyleSheet.create({
   container: {
@@ -27,24 +28,17 @@ const styles = StyleSheet.create({
   },
 
   word: {
-    fontSize: 24,
-    fontWeight: '700',
-    lineHeight: 28,
-    color: theme.colors.text,
+    ...typography.title,
+    fontSize: fontSize.h2,
   },
   translation: {
-    fontSize: 16,
-    fontWeight: '400',
-    lineHeight: 18,
-    color: theme.colors.text,
+    ...typography.text,
   },
   example: {
+    ...typography.description,
     alignSelf: 'center',
     marginVertical: theme.spacing.medium,
-    fontSize: 14,
     fontWeight: '500',
-    lineHeight: 20,
-    color: theme.colors.disabledGray,
   },
 });
 

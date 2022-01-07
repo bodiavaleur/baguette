@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {theme} from '~config/theme';
+import {fontSize, typography} from '~config/typography';
 
 const styles = StyleSheet.create({
   container: {
@@ -7,14 +8,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: theme.colors.text,
-  },
-  subtitle: {
-    fontSize: 12,
-    fontWeight: '400',
-    color: theme.colors.text,
+    ...typography.title,
+    fontSize: fontSize.h4,
   },
 });
 

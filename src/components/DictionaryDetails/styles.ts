@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {theme} from '~config/theme';
+import {fontSize, typography} from '~config/typography';
 
 const styles = StyleSheet.create({
   container: {},
@@ -11,17 +12,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   name: {
+    ...typography.title,
     marginBottom: theme.spacing.small,
-    fontSize: 18,
-    fontWeight: '700',
-    lineHeight: 24,
-    color: theme.colors.text,
   },
   description: {
-    fontSize: 12,
-    fontWeight: '400',
-    lineHeight: 18,
-    color: theme.colors.disabledGray,
+    ...typography.description,
+    fontSize: fontSize.h5,
   },
   buttons: {
     flexDirection: 'row',
