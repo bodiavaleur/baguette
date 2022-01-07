@@ -15,6 +15,14 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'center',
   },
+  pickerPanel: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  picker: {
+    flex: 1,
+    marginLeft: theme.spacing.medium,
+  },
   inputs: {
     paddingVertical: theme.spacing.medium,
   },

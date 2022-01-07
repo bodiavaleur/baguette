@@ -1,12 +1,12 @@
 import React, {useMemo} from 'react';
-import {Alert, View} from 'react-native';
+import {Alert, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
 import Layout from '~containers/Layout';
 import Header from '~components/Header';
 import CloseButton from '~components/Header/plugins/CloseButton';
 import SaveButton from '~components/Header/plugins/SaveButton';
 import {useSelector} from 'react-redux';
-import {getCurrentWord} from '~redux/word/word.selectors';
+import {getCurrentWord, getWordStatuses} from '~redux/word/word.selectors';
 import {useFormik} from 'formik';
 import {
   EditWordFields,
@@ -18,11 +18,10 @@ import useMultipleInputs from '~hooks/useMultipleInputs';
 import TranslationInputs from '~components/TranslationInputs';
 import Input from '~components/Input';
 import {InputPlaceholderStrings} from '~config/strings/inputs';
-import {Avatar} from 'react-native-ui-lib';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
 import {getCurrentDictionary} from '~redux/dictionary/dictionary.selectors';
 import {useAppDispatch} from '~hooks/redux/useAppDispatch';
-import {deleteWord, editWord} from '~redux/word/word.thunks';
+import {deleteWord, editWord, uploadWordImage} from '~redux/word/word.thunks';
 import {
   ModalMessageStrings,
   ModalStatusStrings,
@@ -31,6 +30,8 @@ import {
 import Button from '~components/Button';
 import {DictionaryRoutes} from '~navigation/routes';
 import {ButtonStrings} from '~config/strings/buttons';
+import useImagePicker from '~hooks/useImagePicker';
+import Avatar from '~components/Avatar';
 
 const {Word, Example} = EditWordFields;
 
@@ -39,7 +40,9 @@ const EditWord: React.FC = () => {
   const dispatch = useAppDispatch();
   const dictionary = useSelector(getCurrentDictionary);
   const word = useSelector(getCurrentWord);
+  const statuses = useSelector(getWordStatuses);
   const translations = useMultipleInputs(word?.translations);
+  const imagePicker = useImagePicker();
 
   const handleSaveWord = async (values: EditWordValues) => {
     const updatedWord = {
@@ -47,6 +50,11 @@ const EditWord: React.FC = () => {
       translations: translations.inputs,
       wordId: word?._id,
     };
+
+    if (imagePicker.image) {
+      const args = {wordId: word?._id, image: imagePicker.image};
+      await dispatch(uploadWordImage(args));
+    }
 
     await dispatch(editWord(updatedWord));
 
@@ -93,16 +101,18 @@ const EditWord: React.FC = () => {
     [formik],
   );
 
+  const isImageUploading = statuses[uploadWordImage.typePrefix].pending;
+
   return (
     <Layout withScroll customHeader={screenHeader}>
       <View style={styles.container}>
         <Avatar
-          containerStyle={styles.avatar}
+          style={styles.avatar}
+          src={imagePicker.image?.path ?? word?.image}
+          onPress={imagePicker.pickFromGallery}
           size={128}
-          label={word?.word.charAt(0)}
-          source={{
-            uri: word?.image,
-          }}
+          loading={isImageUploading}
+          label={word?.word}
         />
 
         <Input

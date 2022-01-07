@@ -6,6 +6,7 @@ import {
   editDictionary,
   fetchDictionaryById,
   fetchMyDictionaries,
+  uploadDictionaryImage,
 } from './dictionary.thunks';
 import {DictionarySliceState} from '~redux/dictionary/types';
 
@@ -16,6 +17,7 @@ const statuses = [
   createDictionary.typePrefix,
   editDictionary.typePrefix,
   fetchDictionaryById.typePrefix,
+  uploadDictionaryImage.typePrefix,
 ];
 
 const initialState: DictionarySliceState = {
@@ -92,6 +94,19 @@ const dictionarySlice = createSlice({
           StatusGenerator.setStatus(Fulfilled);
 
         state.currentDictionary = payload;
+      })
+
+      .addCase(uploadDictionaryImage.pending, state => {
+        state.statuses[uploadDictionaryImage.typePrefix] =
+          StatusGenerator.setStatus(Pending);
+      })
+      .addCase(uploadDictionaryImage.rejected, (state, {payload}) => {
+        state.statuses[uploadDictionaryImage.typePrefix] =
+          StatusGenerator.setStatus(Rejected, payload);
+      })
+      .addCase(uploadDictionaryImage.fulfilled, (state, {payload}) => {
+        state.statuses[uploadDictionaryImage.typePrefix] =
+          StatusGenerator.setStatus(Fulfilled);
       });
   },
 });

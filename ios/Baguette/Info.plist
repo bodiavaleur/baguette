@@ -35,8 +35,49 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Upload avatar</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Upload avatar</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Lato-Black.ttf</string>
+		<string>Lato-BlackItalic.ttf</string>
+		<string>Lato-Bold.ttf</string>
+		<string>Lato-BoldItalic.ttf</string>
+		<string>Lato-Italic.ttf</string>
+		<string>Lato-Light.ttf</string>
+		<string>Lato-LightItalic.ttf</string>
+		<string>Lato-Regular.ttf</string>
+		<string>Lato-Thin.ttf</string>
+		<string>Lato-ThinItalic.ttf</string>
+		<string>NotoSerif-Bold.ttf</string>
+		<string>NotoSerif-BoldItalic.ttf</string>
+		<string>NotoSerif-Italic.ttf</string>
+		<string>NotoSerif-Regular.ttf</string>
+		<string>Martel-Black.ttf</string>
+		<string>Martel-Bold.ttf</string>
+		<string>Martel-ExtraBold.ttf</string>
+		<string>Martel-ExtraLight.ttf</string>
+		<string>Martel-Light.ttf</string>
+		<string>Martel-Regular.ttf</string>
+		<string>Martel-SemiBold.ttf</string>
+		<string>SplineSans-Bold.ttf</string>
+		<string>SplineSans-Light.ttf</string>
+		<string>SplineSans-Medium.ttf</string>
+		<string>SplineSans-Regular.ttf</string>
+		<string>SplineSans-SemiBold.ttf</string>
+		<string>Merriweather-Black.ttf</string>
+		<string>Merriweather-BlackItalic.ttf</string>
+		<string>Merriweather-Bold.ttf</string>
+		<string>Merriweather-BoldItalic.ttf</string>
+		<string>Merriweather-Italic.ttf</string>
+		<string>Merriweather-Light.ttf</string>
+		<string>Merriweather-LightItalic.ttf</string>
+		<string>Merriweather-Regular.ttf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

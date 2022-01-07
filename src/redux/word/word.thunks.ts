@@ -1,10 +1,15 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from '~utils/api';
 import {WORD_ENDPOINTS} from '~config/api';
-import {EditWordArgs, FetchWordArgs, NewWordArgs} from './types';
+import {
+  EditWordArgs,
+  FetchWordArgs,
+  NewWordArgs,
+  UploadWordImageArgs,
+} from './types';
 import {Word} from '~types/word';
 
-const {ADD, WORD, EDIT, DELETE} = WORD_ENDPOINTS;
+const {ADD, WORD, EDIT, DELETE, UPLOAD_IMAGE} = WORD_ENDPOINTS;
 
 export const fetchWordById = createAsyncThunk<Word, FetchWordArgs>(
   'word/fetchWordById',
@@ -50,6 +55,30 @@ export const deleteWord = createAsyncThunk<Word, EditWordArgs>(
   async (wordId, {rejectWithValue}) => {
     try {
       const {data} = await api.delete(DELETE, {data: {wordId}});
+
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.error);
+    }
+  },
+);
+
+export const uploadWordImage = createAsyncThunk<Word, UploadWordImageArgs>(
+  'word/uploadWordImage',
+  async ({wordId, image}, {rejectWithValue}) => {
+    try {
+      const form = new FormData();
+
+      form.append('wordId', wordId);
+      form.append('image', {
+        uri: image.path,
+        type: image.mime,
+        name: image.filename,
+      });
+
+      const {data} = await api.post(UPLOAD_IMAGE, form, {
+        headers: {'Content-Type': 'multipart/form-data'},
+      });
 
       return data;
     } catch (err) {

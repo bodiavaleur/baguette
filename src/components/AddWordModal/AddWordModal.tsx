@@ -18,7 +18,7 @@ import {
   validationSchema,
 } from './config';
 import Modal from 'react-native-modal';
-import {createNewWord} from '~redux/word/word.thunks';
+import {createNewWord, uploadWordImage} from '~redux/word/word.thunks';
 import {
   fetchDictionaryById,
   fetchMyDictionaries,
@@ -32,6 +32,9 @@ import AvoidKeyboard from '~containers/AvoidKeyboard';
 import TranslationInputs from '~components/TranslationInputs';
 import useMultipleInputs from '~hooks/useMultipleInputs';
 import Button from '~components/Button';
+import useImagePicker from '~hooks/useImagePicker';
+import {getWordStatuses} from '~redux/word/word.selectors';
+import Avatar from '~components/Avatar';
 
 const {DictionaryId, Word, Example} = NewWordFields;
 
@@ -45,18 +48,26 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
   const insets = useSafeAreaInsets();
   const dictionaries = useSelector(getMyDictionaries);
   const currentDictionary = useSelector(getCurrentDictionary);
+  const statuses = useSelector(getWordStatuses);
   const translations = useMultipleInputs();
+  const imagePicker = useImagePicker();
 
   const handleHideModal = () => {
+    imagePicker.clearImage();
     translations.clear();
   };
 
   const handleSubmitWord = async (values: NewWordValues) => {
     const isCurrentDictionaryOpen =
       currentDictionary?._id === values[DictionaryId];
-    await dispatch(
-      createNewWord({...values, translations: translations.inputs}),
-    );
+    const newWordArgs = {...values, translations: translations.inputs};
+    const word = await dispatch(createNewWord(newWordArgs)).unwrap();
+
+    if (imagePicker.image) {
+      const uploadArgs = {wordId: word._id, image: imagePicker.image};
+      await dispatch(uploadWordImage(uploadArgs));
+    }
+
     dispatch(fetchMyDictionaries());
 
     if (isCurrentDictionaryOpen) {
@@ -72,6 +83,8 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
     validationSchema,
     onSubmit: handleSubmitWord,
   });
+
+  const isImageUploading = statuses[uploadWordImage.typePrefix].pending;
 
   return (
     <Modal
@@ -89,22 +102,35 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
               <ActionIcon icon={CloseIcon} onPress={onCancel} />
             </View>
             <View style={styles.inputs}>
-              <Picker
-                placeholder="Dictionary"
-                floatingPlaceholder
-                value={formik.values[DictionaryId]}
-                enableModalBlur={false}
-                onChange={item =>
-                  formik.setFieldValue(DictionaryId, item.value)
-                }>
-                {dictionaries?.map(dictionary => (
-                  <Picker.Item
-                    key={dictionary._id}
-                    value={dictionary._id}
-                    label={dictionary.name}
-                  />
-                ))}
-              </Picker>
+              <View style={styles.pickerPanel}>
+                <Avatar
+                  size={64}
+                  onPress={imagePicker.pickFromGallery}
+                  loading={isImageUploading}
+                  src={imagePicker.image?.path}
+                  label="+"
+                />
+
+                <View style={styles.picker}>
+                  <Picker
+                    placeholder="Dictionary"
+                    floatingPlaceholder
+                    value={formik.values[DictionaryId]}
+                    enableModalBlur={false}
+                    onChange={item =>
+                      formik.setFieldValue(DictionaryId, item.value)
+                    }>
+                    {dictionaries?.map(dictionary => (
+                      <Picker.Item
+                        key={dictionary._id}
+                        value={dictionary._id}
+                        label={dictionary.name}
+                      />
+                    ))}
+                  </Picker>
+                </View>
+              </View>
+
               <Input
                 autoFocus
                 placeholder={InputPlaceholderStrings.AddWord}

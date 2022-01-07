@@ -16,6 +16,7 @@ export const theme = {
     shadow: '#000000',
 
     primaryGray: '#ccc',
+    placeholderGray: '#b8b5b5',
     disabledGray: '#a7a7a7',
     divider: 'rgba(217,217,217,0.65)',
 

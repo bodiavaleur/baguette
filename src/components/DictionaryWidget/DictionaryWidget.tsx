@@ -1,11 +1,11 @@
 import React from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
-import {Avatar} from 'react-native-ui-lib';
 import Blur from '~components/Blur';
 import {Dictionary} from '~types/dictionary';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
 import {DictionaryRoutes} from '~navigation/routes';
+import Avatar from '~components/Avatar';
 
 interface DictionaryWidgetProps {
   fullWidth?: boolean;
@@ -36,10 +36,10 @@ const DictionaryWidget: React.FC<DictionaryWidgetProps> = ({
       <Blur style={styles.blur} />
       <View style={styles.content}>
         <Avatar
-          containerStyle={styles.image}
+          style={styles.image}
           size={avatarSize}
-          label="A"
-          source={{uri: dictionary?.image}}
+          label={dictionary?.name}
+          src={dictionary?.image}
         />
         <Text style={nameStyle}>{dictionary?.name}</Text>
         {!!dictionary.description && (

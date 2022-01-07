@@ -5,7 +5,6 @@ import Layout from '~containers/Layout';
 import Input from '~components/Input';
 import Header from '~components/Header';
 import BackButton from '~components/Header/plugins/BackButton';
-import {Button} from 'react-native-ui-lib';
 import {ButtonStrings} from '~config/strings/buttons';
 import {useFormik} from 'formik';
 import {
@@ -16,16 +15,31 @@ import {
 } from './config';
 import {useAppDispatch} from '~hooks/redux/useAppDispatch';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
-import {createDictionary} from '~redux/dictionary/dictionary.thunks';
+import {
+  createDictionary,
+  uploadDictionaryImage,
+} from '~redux/dictionary/dictionary.thunks';
+import useImagePicker from '~hooks/useImagePicker';
+import Button from '~components/Button';
+import Avatar from '~components/Avatar';
+import {useSelector} from 'react-redux';
+import {getDictionaryStatuses} from '~redux/dictionary/dictionary.selectors';
 
-const {Name, Description, Image} = NewDictionaryFields;
+const {Name, Description} = NewDictionaryFields;
 
 const NewDictionary: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigation = useAppNavigation();
+  const imagePicker = useImagePicker();
+  const statuses = useSelector(getDictionaryStatuses);
 
   const handleSubmit = async (values: NewDictionaryValues) => {
-    await dispatch(createDictionary(values));
+    const dictionary = await dispatch(createDictionary(values)).unwrap();
+    if (imagePicker.image) {
+      const args = {dictionaryId: dictionary?._id, image: imagePicker.image};
+      await dispatch(uploadDictionaryImage(args));
+    }
+
     navigation.goBack();
   };
 
@@ -37,9 +51,19 @@ const NewDictionary: React.FC = () => {
 
   const screenHeader = useMemo(() => <Header left={<BackButton />} />, []);
 
+  const isImageUploading = statuses[uploadDictionaryImage.typePrefix].pending;
+
   return (
     <Layout withScroll customHeader={screenHeader}>
       <View style={styles.container}>
+        <Avatar
+          style={styles.avatar}
+          size={128}
+          label="+"
+          onPress={imagePicker.pickFromGallery}
+          src={imagePicker.image?.path}
+          loading={isImageUploading}
+        />
         <Input
           placeholder="Name"
           onChangeText={formik.handleChange(Name)}
@@ -51,7 +75,7 @@ const NewDictionary: React.FC = () => {
           value={formik.values[Description]}
         />
       </View>
-      <Button label={ButtonStrings.Create} onPress={formik.handleSubmit} />
+      <Button title={ButtonStrings.Create} onPress={formik.handleSubmit} />
     </Layout>
   );
 };

@@ -2,9 +2,15 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from '~utils/api';
 import {DICTIONARY_ENDPOINTS} from '~config/api';
 import {Dictionary} from '~types/dictionary';
-import {EditDictionaryArgs} from '~redux/dictionary/types';
+import {
+  EditDictionaryArgs,
+  UploadDictionaryImageArgs,
+} from '~redux/dictionary/types';
+import {Word} from '~types/word';
+import {UploadWordImageArgs} from '~redux/word/types';
 
-const {MY_DICTIONARIES, CREATE, EDIT, GET_BY_ID} = DICTIONARY_ENDPOINTS;
+const {MY_DICTIONARIES, CREATE, EDIT, GET_BY_ID, UPLOAD_IMAGE} =
+  DICTIONARY_ENDPOINTS;
 
 export const fetchMyDictionaries = createAsyncThunk<Dictionary[], undefined>(
   'dictionary/fetchMyDictionaries',
@@ -67,3 +73,27 @@ export const editDictionary = createAsyncThunk<Dictionary, EditDictionaryArgs>(
     }
   },
 );
+
+export const uploadDictionaryImage = createAsyncThunk<
+  Dictionary,
+  UploadDictionaryImageArgs
+>('word/uploadWordImage', async ({dictionaryId, image}, {rejectWithValue}) => {
+  try {
+    const form = new FormData();
+
+    form.append('dictionaryId', dictionaryId);
+    form.append('image', {
+      uri: image.path,
+      type: image.mime,
+      name: image.filename,
+    });
+
+    const {data} = await api.post(UPLOAD_IMAGE, form, {
+      headers: {'Content-Type': 'multipart/form-data'},
+    });
+
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.error);
+  }
+});

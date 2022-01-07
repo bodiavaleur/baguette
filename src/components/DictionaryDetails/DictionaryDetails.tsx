@@ -3,15 +3,22 @@ import {Text, View} from 'react-native';
 import styles from './styles';
 import {useSelector} from 'react-redux';
 import {getCurrentDictionary} from '~redux/dictionary/dictionary.selectors';
-import {Avatar, Button} from 'react-native-ui-lib';
+import {Button} from 'react-native-ui-lib';
 import Divider from '~components/Divider';
+import Avatar from '~components/Avatar';
 
 const DictionaryDetails: React.FC = () => {
   const dictionary = useSelector(getCurrentDictionary);
 
   return (
     <View style={styles.container}>
-      <Avatar containerStyle={styles.avatar} size={128} label="A" />
+      <Avatar
+        style={styles.avatar}
+        size={128}
+        label={dictionary?.name}
+        src={dictionary?.image}
+      />
+
       <View style={styles.details}>
         <Text style={styles.name}>{dictionary?.name}</Text>
         {!!dictionary?.description && (

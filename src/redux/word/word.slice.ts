@@ -6,6 +6,7 @@ import {
   createNewWord,
   editWord,
   deleteWord,
+  uploadWordImage,
 } from './word.thunks';
 import {WordSliceState} from './types';
 
@@ -16,6 +17,7 @@ const statuses = [
   createNewWord.typePrefix,
   editWord.typePrefix,
   deleteWord.typePrefix,
+  uploadWordImage.typePrefix,
 ];
 
 const initialState: WordSliceState = {
@@ -97,6 +99,21 @@ const wordSlice = createSlice({
           StatusGenerator.setStatus(Fulfilled);
 
         state.currentWord = null;
+      })
+
+      .addCase(uploadWordImage.pending, state => {
+        state.statuses[uploadWordImage.typePrefix] =
+          StatusGenerator.setStatus(Pending);
+      })
+      .addCase(uploadWordImage.rejected, (state, {payload}) => {
+        state.statuses[uploadWordImage.typePrefix] = StatusGenerator.setStatus(
+          Rejected,
+          payload,
+        );
+      })
+      .addCase(uploadWordImage.fulfilled, state => {
+        state.statuses[uploadWordImage.typePrefix] =
+          StatusGenerator.setStatus(Fulfilled);
       });
   },
 });
