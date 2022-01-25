@@ -38,7 +38,7 @@ const WordDetails: React.FC = () => {
   );
 
   return (
-    <Layout style={styles.container} customHeader={header}>
+    <Layout withScroll style={styles.container} customHeader={header}>
       <WordDetailsFrame word={currentWord} />
     </Layout>
   );

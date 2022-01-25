@@ -1,34 +1,37 @@
 import React from 'react';
-import {Text} from 'react-native';
 import styles from './styles';
 import Animated from 'react-native-reanimated';
 import {useFlashcardAnimation} from '~hooks/animations/useFlashcardAnimation';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import {useFlipCard} from '~hooks/animations/useFlipCard';
+import {Word} from '~types/word';
+import FlashcardBack from '~components/FlashcardBack';
+import FlashcardFront from '~components/FlashcardFront';
 
 interface FlashcardProps {
-  title: string;
+  word: Word;
   index: number;
 }
 
-const Flashcard: React.FC<FlashcardProps> = ({title, index}) => {
-  const {cardGestureHandler, animatedStyle} = useFlashcardAnimation(index);
+const Flashcard: React.FC<FlashcardProps> = ({word, index}) => {
+  const animatedFlashcard = useFlashcardAnimation(index);
   const {flipGestureHandler, flipStyle, frontSideStyle, backSideStyle} =
-    useFlipCard();
+    useFlipCard(animatedFlashcard.isCardOpen);
 
   return (
-    <PanGestureHandler onGestureEvent={cardGestureHandler}>
-      <Animated.View style={[styles.container, animatedStyle]}>
+    <PanGestureHandler onGestureEvent={animatedFlashcard.cardGestureHandler}>
+      <Animated.View
+        style={[styles.container, animatedFlashcard.animatedStyle]}>
         <PanGestureHandler onGestureEvent={flipGestureHandler}>
           <Animated.View style={[styles.snap, styles.left]} />
         </PanGestureHandler>
 
         <Animated.View style={flipStyle}>
           <Animated.View style={[styles.card, frontSideStyle]}>
-            <Text style={styles.title}>{title}</Text>
+            <FlashcardFront word={word} />
           </Animated.View>
           <Animated.View style={[styles.card, backSideStyle]}>
-            <Text style={styles.title}>BACK SIDE</Text>
+            <FlashcardBack word={word} />
           </Animated.View>
         </Animated.View>
 

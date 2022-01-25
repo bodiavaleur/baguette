@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useMemo} from 'react';
 import Layout from '~containers/Layout/Layout';
 import WordListItem from '~components/WordListItem';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
-import {DictionaryRoutes, WordRoutes} from '~navigation/routes';
+import {WordRoutes} from '~navigation/routes';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
 import {useAppDispatch} from '~hooks/redux/useAppDispatch';
 import {useSelector} from 'react-redux';

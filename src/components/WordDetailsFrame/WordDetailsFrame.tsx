@@ -2,12 +2,12 @@ import React, {useMemo} from 'react';
 import {Text, View} from 'react-native';
 import styles from './styles';
 import Blur from '~components/Blur';
-import {Avatar} from 'react-native-ui-lib';
 import ActionIcon from '~components/ActionIcon';
 import SoundIcon from '~assets/icons/sound.svg';
 import Divider from '~components/Divider';
 import {Word} from '~types/word';
 import useTextToSpeech from '~hooks/useTextToSpeech';
+import Avatar from '~components/Avatar';
 
 interface WordDetailsFrameProps {
   word: Word;
@@ -41,12 +41,10 @@ const WordDetailsFrame: React.FC<WordDetailsFrameProps> = ({word}) => {
       <Blur style={styles.blur} />
       <View style={styles.details}>
         <Avatar
-          containerStyle={styles.avatar}
+          style={styles.avatar}
           size={128}
-          label={word?.word.charAt(0)}
-          source={{
-            uri: word?.image,
-          }}
+          label={word?.word}
+          src={word?.image}
         />
         <View style={styles.heading}>
           <ActionIcon

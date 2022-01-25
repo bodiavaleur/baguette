@@ -1,12 +1,13 @@
 import {StyleSheet} from 'react-native';
 import {theme} from '~config/theme';
-import {fontSize, typography} from '~config/typography';
 
 const styles = StyleSheet.create({
   container: {
+    alignSelf: 'center',
     position: 'absolute',
     width: 256,
-    height: 360,
+    height: 400,
+    top: -400 / 2,
   },
   card: {
     flex: 1,
@@ -19,12 +20,14 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 3,
+      height: 2,
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 12,
+    borderWidth: 1,
     borderRadius: 16,
+    borderColor: 'rgba(50,50,50,0.1)',
     backgroundColor: theme.colors.white,
   },
   snap: {
@@ -38,13 +41,6 @@ const styles = StyleSheet.create({
   },
   right: {
     right: 0,
-  },
-
-  title: {
-    ...typography.text,
-    fontSize: fontSize.h2,
-    fontWeight: '600',
-    color: theme.colors.text,
   },
 });
 

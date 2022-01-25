@@ -11,11 +11,10 @@ type GestureContext = {
   y: number;
 };
 
-export function useFlipCard() {
+export function useFlipCard(enableFlip = false) {
   const x = useSharedValue(0);
   const rotationY = useSharedValue(0);
   const frontSideIndex = useSharedValue(1);
-  const backSideIndex = useSharedValue(0);
 
   const flipGestureHandler = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
@@ -25,13 +24,16 @@ export function useFlipCard() {
       ctx.x = x.value;
     },
     onActive: (evt, ctx) => {
-      x.value = ctx.x + evt.translationX;
+      if (enableFlip) {
+        x.value = ctx.x + evt.translationX;
+      }
     },
-    onEnd: evt => {
-      frontSideIndex.value = frontSideIndex.value ? 0 : 1;
-      backSideIndex.value = backSideIndex.value ? 1 : 0;
+    onEnd: () => {
+      if (enableFlip) {
+        frontSideIndex.value = frontSideIndex.value ? 0 : 1;
 
-      rotationY.value = withTiming(rotationY.value === 180 ? 0 : 180);
+        rotationY.value = withTiming(rotationY.value === 180 ? 0 : 180);
+      }
     },
   });
 
@@ -47,8 +49,7 @@ export function useFlipCard() {
   }));
 
   const backSideStyle = useAnimatedStyle(() => ({
-    zIndex: backSideIndex.value,
-    transform: [{rotateY: '180deg'}],
+    transform: [{scaleX: -1}],
   }));
 
   return {

@@ -5,41 +5,30 @@ import {fontSize, typography} from '~config/typography';
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    alignSelf: 'flex-start',
-  },
-  blur: {
-    borderRadius: 16,
-  },
-  details: {
-    width: '100%',
-    padding: theme.spacing.medium,
+    height: '100%',
   },
   avatar: {
     alignSelf: 'center',
     marginBottom: theme.spacing.medium,
   },
-  soundIcon: {
-    marginRight: theme.spacing.regular,
-  },
-  heading: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
   word: {
-    flex: 1,
     ...typography.title,
-    fontSize: fontSize.h2,
+    fontSize: fontSize.h4,
+    marginBottom: theme.spacing.medium,
+  },
+  translations: {
+    flex: 1,
   },
   translation: {
     ...typography.text,
+    fontSize: fontSize.h5,
   },
   example: {
     ...typography.description,
-    alignSelf: 'center',
-    marginVertical: theme.spacing.medium,
+    marginVertical: theme.spacing.small,
+    fontSize: fontSize.h6,
     fontWeight: '500',
+    textAlign: 'center',
   },
 });
 
