@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TokenStorage} from '~types/token';
+
 function makeStorage<T>(key: string) {
   return {
     get: async () => {
@@ -12,4 +13,7 @@ function makeStorage<T>(key: string) {
   };
 }
 
-export const tokenStorage = makeStorage<TokenStorage>('token');
+export const storage = {
+  token: makeStorage<TokenStorage>('token'),
+  lastUsedDictionary: makeStorage<string>('lastUsedDictionary'),
+};
