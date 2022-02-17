@@ -1,6 +1,5 @@
 import {StatusesCollection} from '~types/statuses';
 import {Word} from '~types/word';
-import {RootState} from '~redux/index';
 import {Image} from 'react-native-image-crop-picker';
 
 export interface WordSliceState {
@@ -23,8 +22,4 @@ export interface EditWordArgs extends Partial<Word> {
 export interface UploadWordImageArgs {
   wordId: string;
   image: Image;
-}
-
-export interface ThunkState {
-  state: RootState;
 }

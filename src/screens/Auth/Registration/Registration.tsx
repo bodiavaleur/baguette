@@ -11,12 +11,13 @@ import {useSelector} from 'react-redux';
 import {getAuthStatuses} from '~redux/auth/auth.selectors';
 import {useStatusAlert} from '~hooks/useStatusAlert';
 import {authRegister} from '~redux/auth/auth.thunks';
-import {AuthRoutes, DashboardRoutes} from '~navigation/routes';
+import {AuthRoutes} from '~navigation/routes';
 import {useFormik} from 'formik';
 import Layout from '~containers/Layout';
 import {Button, TextField, Text, View} from 'react-native-ui-lib';
 import styles from './styles';
 import {fetchMyDictionaries} from '~redux/dictionary/dictionary.thunks';
+import {authenticateUser} from '~redux/app/app.slice';
 
 const {Username, Email, Password} = RegistrationFields;
 
@@ -37,8 +38,7 @@ const Registration: React.FC = ({}) => {
   const handleSubmit = useCallback(async (values: RegistrationValues) => {
     await dispatch(authRegister(values)).unwrap();
     await dispatch(fetchMyDictionaries());
-
-    navigation.navigate(DashboardRoutes.Root);
+    dispatch(authenticateUser());
   }, []);
 
   const formik = useFormik({

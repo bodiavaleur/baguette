@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import Layout from '~containers/Layout/Layout';
 import {Button, Text, TextField, View} from 'react-native-ui-lib';
-import {AuthRoutes, DashboardRoutes} from '~navigation/routes';
+import {AuthRoutes} from '~navigation/routes';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
 import {useFormik} from 'formik';
 import {
@@ -17,6 +17,7 @@ import {getAuthStatuses} from '~redux/auth/auth.selectors';
 import {useStatusAlert} from '~hooks/useStatusAlert';
 import styles from './styles';
 import {fetchMyDictionaries} from '~redux/dictionary/dictionary.thunks';
+import {authenticateUser} from '~redux/app/app.slice';
 
 const {Email, Password} = LogInFields;
 
@@ -37,8 +38,7 @@ const Login: React.FC = ({}) => {
   const handleSubmit = useCallback(async ({email, password}: LogInValues) => {
     await dispatch(authLogIn({email, password})).unwrap();
     await dispatch(fetchMyDictionaries());
-
-    navigation.navigate(DashboardRoutes.Root);
+    dispatch(authenticateUser());
   }, []);
 
   const formik = useFormik({

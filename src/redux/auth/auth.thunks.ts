@@ -4,6 +4,8 @@ import {api} from '~utils/api';
 import {storage} from '~helpers/storage';
 import {AUTH_ENDPOINTS} from '~config/api';
 import {Token} from '~types/token';
+import {ThunkState} from '~redux/index';
+import {removeAuthentication} from '~redux/app/app.slice';
 
 export const authLogIn = createAsyncThunk(
   'auth/logIn',
@@ -40,8 +42,15 @@ export const authRegister = createAsyncThunk(
   },
 );
 
-export const authLogout = createAsyncThunk('auth/logout', async () => {
-  try {
-    await storage.token.clear();
-  } catch (err) {}
-});
+export const authLogout = createAsyncThunk<undefined, undefined, ThunkState>(
+  'auth/logout',
+  async (_, {dispatch, rejectWithValue}) => {
+    try {
+      await storage.token.clear();
+      await storage.lastUsedDictionary.clear();
+      dispatch(removeAuthentication());
+    } catch (err) {
+      return rejectWithValue(err.error);
+    }
+  },
+);

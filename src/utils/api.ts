@@ -1,8 +1,6 @@
 import axios from 'axios';
 import {API_URL} from '~config/api';
 import {storage} from '~helpers/storage';
-import {Navigation} from '~helpers/Navigation';
-import {AuthRoutes} from '~navigation/routes';
 
 const defaultConfig = {
   baseURL: API_URL,
@@ -25,8 +23,6 @@ api.interceptors.response.use(
   err => {
     if (err.response.status === 401) {
       storage.token.clear();
-
-      Navigation.reset(AuthRoutes.Root);
     }
 
     return Promise.reject(err.response?.data ?? err.message);
