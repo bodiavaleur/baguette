@@ -1,9 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ScrollView, View} from 'react-native';
 import Blur from '~components/Blur';
 import styles from './styles';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {Picker} from 'react-native-ui-lib';
 import {InputPlaceholderStrings} from '~config/strings/inputs';
 import ActionIcon from '~components/ActionIcon';
 import CloseIcon from '~assets/icons/close.svg';
@@ -35,6 +34,8 @@ import Button from '~components/Button';
 import useImagePicker from '~hooks/useImagePicker';
 import {getWordStatuses} from '~redux/word/word.selectors';
 import Avatar from '~components/Avatar';
+import DictionaryPicker from '~components/DictionaryPicker';
+import {storage} from '~helpers/storage';
 
 const {DictionaryId, Word, Example} = NewWordFields;
 
@@ -55,6 +56,7 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
   const handleHideModal = () => {
     imagePicker.clearImage();
     translations.clear();
+    formik.resetForm();
   };
 
   const handleSubmitWord = async (values: NewWordValues) => {
@@ -82,7 +84,16 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
     initialValues,
     validationSchema,
     onSubmit: handleSubmitWord,
+    enableReinitialize: true,
   });
+
+  useEffect(() => {
+    if (isOpen) {
+      storage.lastUsedDictionary.get().then(savedId => {
+        formik.setFieldValue(DictionaryId, savedId);
+      });
+    }
+  }, [isOpen]);
 
   const isImageUploading = statuses[uploadWordImage.typePrefix].pending;
 
@@ -111,24 +122,12 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
                   label="+"
                 />
 
-                <View style={styles.picker}>
-                  <Picker
-                    placeholder="Dictionary"
-                    floatingPlaceholder
-                    value={formik.values[DictionaryId]}
-                    enableModalBlur={false}
-                    onChange={item =>
-                      formik.setFieldValue(DictionaryId, item.value)
-                    }>
-                    {dictionaries?.map(dictionary => (
-                      <Picker.Item
-                        key={dictionary._id}
-                        value={dictionary._id}
-                        label={dictionary.name}
-                      />
-                    ))}
-                  </Picker>
-                </View>
+                <DictionaryPicker
+                  style={styles.picker}
+                  data={dictionaries}
+                  selectedDictionaryId={formik.values[DictionaryId]}
+                  onChange={value => formik.setFieldValue(DictionaryId, value)}
+                />
               </View>
 
               <Input

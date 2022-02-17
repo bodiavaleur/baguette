@@ -30,7 +30,7 @@ const TranslationInputs: React.FC<TranslationInputsProps> = ({
         const placeholder = `${InputPlaceholderStrings.WordTranslation} ${numOfTranslation}`;
 
         return (
-          <View style={styles.inputRow}>
+          <View style={styles.inputRow} key={index}>
             <Input
               style={styles.input}
               placeholder={placeholder}

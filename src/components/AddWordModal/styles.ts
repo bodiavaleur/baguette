@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   picker: {
-    flex: 1,
     marginLeft: theme.spacing.medium,
   },
   inputs: {
