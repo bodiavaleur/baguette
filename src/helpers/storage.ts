@@ -16,4 +16,5 @@ function makeStorage<T>(key: string) {
 export const storage = {
   token: makeStorage<TokenStorage>('token'),
   lastUsedDictionary: makeStorage<string>('lastUsedDictionary'),
+  trainingDictionary: makeStorage<string>('trainingDictionary'),
 };

@@ -3,6 +3,9 @@ import {theme} from '~config/theme';
 
 const styles = StyleSheet.create({
   container: {
+    width: 150,
+    height: 150,
+    margin: theme.spacing.small,
     padding: theme.spacing.medium,
     borderRadius: 16,
     shadowColor: '#000',

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {ScrollView, View} from 'react-native';
 import Blur from '~components/Blur';
 import styles from './styles';
@@ -80,6 +80,11 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
     onCancel();
   };
 
+  const onChangeDictionary = useCallback((value: string) => {
+    storage.lastUsedDictionary.set(value);
+    formik.setFieldValue(DictionaryId, value);
+  }, []);
+
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -124,9 +129,8 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
 
                 <DictionaryPicker
                   style={styles.picker}
-                  data={dictionaries}
                   selectedDictionaryId={formik.values[DictionaryId]}
-                  onChange={value => formik.setFieldValue(DictionaryId, value)}
+                  onChange={onChangeDictionary}
                 />
               </View>
 

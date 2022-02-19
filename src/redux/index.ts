@@ -4,6 +4,7 @@ import authSlice from './auth/auth.slice';
 import dictionarySlice from './dictionary/dictionary.slice';
 import wordSlice from './word/word.slice';
 import {authMiddleware} from '~redux/middleware/auth.middleware';
+import trainingSlice from '~redux/training/training.slice';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     auth: authSlice.reducer,
     dictionary: dictionarySlice.reducer,
     word: wordSlice.reducer,
+    training: trainingSlice.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(authMiddleware),

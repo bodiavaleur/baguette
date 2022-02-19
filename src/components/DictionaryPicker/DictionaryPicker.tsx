@@ -3,27 +3,24 @@ import {FlatList, StyleProp, View, ViewStyle} from 'react-native';
 import styles from './styles';
 import {Picker} from 'react-native-ui-lib';
 import {PickerItemLabeledValue} from 'react-native-ui-lib/typings';
-import {Dictionary} from '~types/dictionary';
 import {InputPlaceholderStrings} from '~config/strings/inputs';
-import {storage} from '~helpers/storage';
+import {useSelector} from 'react-redux';
+import {getMyDictionaries} from '~redux/dictionary/dictionary.selectors';
 
 interface DictionaryPickerProps {
   style?: StyleProp<ViewStyle>;
-  data: Dictionary[];
   selectedDictionaryId: string;
   onChange: (value: string) => void;
 }
 
 const DictionaryPicker: React.FC<DictionaryPickerProps> = ({
   style,
-  data,
   selectedDictionaryId,
   onChange,
 }) => {
-  const handleChange = (item: PickerItemLabeledValue) => {
-    storage.lastUsedDictionary.set(item.value);
-    onChange(item.value);
-  };
+  const dictionaries = useSelector(getMyDictionaries);
+
+  const handleChange = (item: PickerItemLabeledValue) => onChange(item.value);
 
   const renderDictionary = useCallback(
     ({item}) => (
@@ -34,11 +31,11 @@ const DictionaryPicker: React.FC<DictionaryPickerProps> = ({
 
   const renderLabel = useCallback(
     (value: string) => {
-      const dictionary = data.find(({_id}) => _id === value);
+      const dictionary = dictionaries.find(({_id}) => _id === value);
 
       return dictionary?.name;
     },
-    [data],
+    [dictionaries],
   );
 
   return (
@@ -51,7 +48,7 @@ const DictionaryPicker: React.FC<DictionaryPickerProps> = ({
         enableModalBlur={false}
         onChange={handleChange}>
         <FlatList
-          data={data}
+          data={dictionaries}
           keyExtractor={item => item._id}
           renderItem={renderDictionary}
         />

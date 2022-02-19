@@ -48,6 +48,7 @@ export const authLogout = createAsyncThunk<undefined, undefined, ThunkState>(
     try {
       await storage.token.clear();
       await storage.lastUsedDictionary.clear();
+      await storage.trainingDictionary.clear();
       dispatch(removeAuthentication());
     } catch (err) {
       return rejectWithValue(err.error);
