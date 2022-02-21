@@ -3,4 +3,6 @@ export enum InputPlaceholderStrings {
   WordTranslation = 'Translation',
   WordExample = 'Example (optional)',
   Dictionary = 'Dictionary',
+  Name = 'Name',
+  Description = 'Description',
 }

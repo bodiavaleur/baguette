@@ -14,10 +14,13 @@ import {authRegister} from '~redux/auth/auth.thunks';
 import {AuthRoutes} from '~navigation/routes';
 import {useFormik} from 'formik';
 import Layout from '~containers/Layout';
-import {Button, TextField, Text, View} from 'react-native-ui-lib';
+import {Text, View} from 'react-native-ui-lib';
 import styles from './styles';
 import {fetchMyDictionaries} from '~redux/dictionary/dictionary.thunks';
 import {authenticateUser} from '~redux/app/app.slice';
+import {AuthStrings} from '~config/strings/auth';
+import Input from '~components/Input';
+import Button from '~components/Button';
 
 const {Username, Email, Password} = RegistrationFields;
 
@@ -53,30 +56,30 @@ const Registration: React.FC = ({}) => {
 
   return (
     <Layout withScroll>
-      <TextField
-        floatingPlaceholder
-        placeholder="Username"
+      <Input
+        placeholder={AuthStrings.Username}
         onChangeText={formik.handleChange(Username)}
         error={usernameError}
       />
-      <TextField
-        floatingPlaceholder
-        placeholder="Login"
+      <Input
+        placeholder={AuthStrings.Email}
         keyboardType="email-address"
         onChangeText={formik.handleChange(Email)}
         error={emailError}
       />
-      <TextField
-        floatingPlaceholder
+      <Input
         secureTextEntry
-        placeholder="Password"
+        placeholder={AuthStrings.Password}
         onChangeText={formik.handleChange(Password)}
         error={passwordError}
       />
-      <Button white label="Create account" onPress={formik.handleSubmit} />
+
+      <Button title={AuthStrings.CreateAccount} onPress={formik.handleSubmit} />
       <View style={styles.toggleAuthContainer}>
-        <Text style={styles.toggleAuthText}>Don't have an account?</Text>
-        <Button link label="Sign up" onPress={goToLogin} />
+        <Text style={styles.toggleAuthText}>
+          {AuthStrings.AlreadyHaveAccount}
+        </Text>
+        <Button variant="text" title={AuthStrings.SignIn} onPress={goToLogin} />
       </View>
     </Layout>
   );

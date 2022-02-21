@@ -1,8 +1,8 @@
 import {StyleSheet} from 'react-native';
 import {theme} from '~config/theme';
+import {typography} from '~config/typography';
 
 const styles = StyleSheet.create({
-  container: {},
   toggleAuthContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     paddingVertical: theme.spacing.medium,
   },
   toggleAuthText: {
-    fontSize: 16,
+    ...typography.text,
     marginRight: theme.spacing.xs,
   },
 });

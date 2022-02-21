@@ -23,10 +23,7 @@ import {
   fetchMyDictionaries,
 } from '~redux/dictionary/dictionary.thunks';
 import {useSelector} from 'react-redux';
-import {
-  getCurrentDictionary,
-  getMyDictionaries,
-} from '~redux/dictionary/dictionary.selectors';
+import {getCurrentDictionary} from '~redux/dictionary/dictionary.selectors';
 import AvoidKeyboard from '~containers/AvoidKeyboard';
 import TranslationInputs from '~components/TranslationInputs';
 import useMultipleInputs from '~hooks/useMultipleInputs';
@@ -47,7 +44,6 @@ interface AddWordModalProps {
 const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
   const dispatch = useAppDispatch();
   const insets = useSafeAreaInsets();
-  const dictionaries = useSelector(getMyDictionaries);
   const currentDictionary = useSelector(getCurrentDictionary);
   const statuses = useSelector(getWordStatuses);
   const translations = useMultipleInputs();

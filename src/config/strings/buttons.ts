@@ -3,4 +3,5 @@ export enum ButtonStrings {
   Create = 'Create',
   Cancel = 'Cancel',
   Delete = 'Delete',
+  Train = 'Train',
 }

@@ -24,6 +24,7 @@ import Button from '~components/Button';
 import Avatar from '~components/Avatar';
 import {useSelector} from 'react-redux';
 import {getDictionaryStatuses} from '~redux/dictionary/dictionary.selectors';
+import {InputPlaceholderStrings} from '~config/strings/inputs';
 
 const {Name, Description} = NewDictionaryFields;
 
@@ -65,12 +66,12 @@ const NewDictionary: React.FC = () => {
           loading={isImageUploading}
         />
         <Input
-          placeholder="Name"
+          placeholder={InputPlaceholderStrings.Name}
           onChangeText={formik.handleChange(Name)}
           value={formik.values[Name]}
         />
         <Input
-          placeholder="Description"
+          placeholder={InputPlaceholderStrings.Description}
           onChangeText={formik.handleChange(Description)}
           value={formik.values[Description]}
         />

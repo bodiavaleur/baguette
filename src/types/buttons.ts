@@ -1,4 +1,4 @@
-export type ButtonVariants = 'regular' | 'action';
+export type ButtonVariants = 'regular' | 'action' | 'text';
 
 export type ButtonActions =
   | 'default'

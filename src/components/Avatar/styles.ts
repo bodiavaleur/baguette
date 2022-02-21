@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {theme} from '~config/theme';
+import {typography} from '~config/typography';
 
 const styles = StyleSheet.create({
   container: {
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.placeholderGray,
   },
   placeholderText: {
-    fontWeight: '500',
+    ...typography.text,
     color: theme.colors.white,
   },
 });

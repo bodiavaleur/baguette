@@ -8,6 +8,7 @@ import Avatar from '~components/Avatar';
 import Button from '~components/Button';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
 import {TrainingRoutes} from '~navigation/routes';
+import {ButtonStrings} from '~config/strings/buttons';
 
 const DictionaryDetails: React.FC = () => {
   const navigation = useAppNavigation();
@@ -38,14 +39,14 @@ const DictionaryDetails: React.FC = () => {
         <Button
           variant="action"
           action="text"
-          title="Train"
+          title={ButtonStrings.Train}
           style={[styles.button, styles.buttonLeft]}
           onPress={onTrainDictionary}
         />
         <Button
           variant="action"
           action="text"
-          title="Test"
+          title={ButtonStrings.Train}
           style={styles.button}
         />
       </View>

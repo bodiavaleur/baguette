@@ -4,16 +4,14 @@ import {
   StyleProp,
   Text,
   TouchableOpacity,
-  View,
   ViewStyle,
 } from 'react-native';
 import {theme} from '~config/theme';
 import {ButtonActions, ButtonVariants} from '~types/buttons';
-import {regular, action} from './variants';
-import Blur from '~components/Blur';
+import {regular, action, text} from './variants';
 import {titleColors} from './config';
 
-const styles = {regular, action};
+const styles = {regular, action, text};
 
 interface ButtonProps {
   title: string;
@@ -29,7 +27,7 @@ const Button: React.FC<ButtonProps> = ({
   style,
   title,
   variant = 'regular',
-  action = 'default',
+  action,
   onPress,
   loading,
   disabled,
@@ -42,7 +40,10 @@ const Button: React.FC<ButtonProps> = ({
     isDisabled ? buttonStyle.disabled : null,
   ];
 
-  const titleStyle = [buttonStyle.title, {color: titleColors[action]}];
+  const titleStyle = [
+    buttonStyle.title,
+    action ? {color: titleColors[action]} : null,
+  ];
 
   return (
     <TouchableOpacity

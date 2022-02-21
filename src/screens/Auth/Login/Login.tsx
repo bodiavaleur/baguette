@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import Layout from '~containers/Layout/Layout';
-import {Button, Text, TextField, View} from 'react-native-ui-lib';
+import {Text, TextField, View} from 'react-native-ui-lib';
 import {AuthRoutes} from '~navigation/routes';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
 import {useFormik} from 'formik';
@@ -18,6 +18,9 @@ import {useStatusAlert} from '~hooks/useStatusAlert';
 import styles from './styles';
 import {fetchMyDictionaries} from '~redux/dictionary/dictionary.thunks';
 import {authenticateUser} from '~redux/app/app.slice';
+import Input from '~components/Input';
+import Button from '~components/Button';
+import {AuthStrings} from '~config/strings/auth';
 
 const {Email, Password} = LogInFields;
 
@@ -52,27 +55,29 @@ const Login: React.FC = ({}) => {
 
   return (
     <Layout withScroll>
-      <TextField
-        floatingPlaceholder
-        placeholder="Email"
+      <Input
+        placeholder={AuthStrings.Email}
         keyboardType="email-address"
         value={formik.values[Email]}
         onChangeText={formik.handleChange(Email)}
         error={emailError}
       />
-      <TextField
-        floatingPlaceholder
+      <Input
         secureTextEntry
-        placeholder="Password"
+        placeholder={AuthStrings.Password}
         value={formik.values[Password]}
         onChangeText={formik.handleChange(Password)}
         error={passwordError}
       />
-      <Button white label="Login" onPress={formik.handleSubmit} />
+      <Button title={AuthStrings.SignIn} onPress={formik.handleSubmit} />
 
       <View style={styles.toggleAuthContainer}>
-        <Text style={styles.toggleAuthText}>Don't have an account?</Text>
-        <Button link label="Sign up" onPress={goToRegistration} />
+        <Text style={styles.toggleAuthText}>{AuthStrings.DontHaveAccount}</Text>
+        <Button
+          variant="text"
+          title={AuthStrings.SignUp}
+          onPress={goToRegistration}
+        />
       </View>
     </Layout>
   );

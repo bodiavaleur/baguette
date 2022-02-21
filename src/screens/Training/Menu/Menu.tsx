@@ -11,6 +11,7 @@ import {useAppDispatch} from '~hooks/redux/useAppDispatch';
 import {storage} from '~helpers/storage';
 import {fetchTrainingDictionary} from '~redux/training/training.thunks';
 import ScreenList from '~containers/ScreenList';
+import {TrainingMenuStrings} from '~config/strings/training';
 
 const Menu: React.FC = () => {
   const [dictionaryId, setDictionaryId] = useState('');
@@ -57,8 +58,11 @@ const Menu: React.FC = () => {
         }
         ListFooterComponent={
           <View style={styles.trainingMenu}>
-            <MenuBox title="Flashcards" onPress={navigateToFlashcards} />
-            <MenuBox title="Matches" />
+            <MenuBox
+              title={TrainingMenuStrings.Flashcards}
+              onPress={navigateToFlashcards}
+            />
+            <MenuBox title={TrainingMenuStrings.Matches} />
           </View>
         }
         numColumns={2}

@@ -3,7 +3,6 @@ import {theme} from '~config/theme';
 import {fontSize, typography} from '~config/typography';
 
 const styles = StyleSheet.create({
-  container: {},
   avatar: {
     alignSelf: 'center',
   },
