@@ -10,6 +10,7 @@ import Header from '~components/Header';
 import BackButton from '~components/Header/plugins/BackButton';
 import {getTrainingDictionary} from '~redux/training/training.selectors';
 import {fetchTrainingDictionary} from '~redux/training/training.thunks';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const Flashcards: React.FC = () => {
   const route = useRoute();
@@ -38,14 +39,16 @@ const Flashcards: React.FC = () => {
 
   return (
     <Layout withoutPaddings withoutSafeBottom customHeader={screenHeader}>
-      <FlatList
-        style={styles.container}
-        scrollEnabled={false}
-        contentContainerStyle={styles.content}
-        data={listData}
-        renderItem={renderItem}
-        keyExtractor={item => item._id}
-      />
+      <GestureHandlerRootView>
+        <FlatList
+          style={styles.container}
+          scrollEnabled={false}
+          contentContainerStyle={styles.content}
+          data={listData}
+          renderItem={renderItem}
+          keyExtractor={item => item._id}
+        />
+      </GestureHandlerRootView>
     </Layout>
   );
 };
