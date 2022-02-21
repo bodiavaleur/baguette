@@ -1,7 +1,6 @@
 import React from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity} from 'react-native';
 import styles from './styles';
-import Blur from '~components/Blur';
 import {Dictionary} from '~types/dictionary';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
 import {DictionaryRoutes} from '~navigation/routes';
@@ -33,19 +32,16 @@ const DictionaryWidget: React.FC<DictionaryWidgetProps> = ({
 
   return (
     <TouchableOpacity style={containerStyle} onPress={onWidgetPress}>
-      <Blur style={styles.blur} />
-      <View style={styles.content}>
-        <Avatar
-          style={styles.image}
-          size={avatarSize}
-          label={dictionary?.name}
-          src={dictionary?.image}
-        />
-        <Text style={nameStyle}>{dictionary?.name}</Text>
-        {!!dictionary.description && (
-          <Text style={styles.description}>{dictionary.description}</Text>
-        )}
-      </View>
+      <Avatar
+        style={styles.image}
+        size={avatarSize}
+        label={dictionary?.name}
+        src={dictionary?.image}
+      />
+      <Text style={nameStyle}>{dictionary?.name}</Text>
+      {!!dictionary.description && (
+        <Text style={styles.description}>{dictionary.description}</Text>
+      )}
     </TouchableOpacity>
   );
 };

@@ -6,10 +6,11 @@ const action = StyleSheet.create({
   ...regular,
   container: {
     ...regular.container,
-    backgroundColor: 'none',
+    backgroundColor: theme.colors.action,
   },
   title: {
     ...regular.title,
+    fontWeight: '700',
     color: theme.colors.text,
   },
 });

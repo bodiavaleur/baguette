@@ -36,7 +36,6 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   const isDisabled = loading || disabled;
   const buttonStyle = styles[variant];
-  const isAction = variant === 'action';
 
   const containerStyle = [
     buttonStyle.container,
@@ -46,15 +45,15 @@ const Button: React.FC<ButtonProps> = ({
   const titleStyle = [buttonStyle.title, {color: titleColors[action]}];
 
   return (
-    <TouchableOpacity style={style} onPress={onPress} disabled={isDisabled}>
-      {isAction && <Blur style={buttonStyle.blur} />}
-      <View style={containerStyle}>
-        {loading ? (
-          <ActivityIndicator color={theme.colors.white} />
-        ) : (
-          <Text style={titleStyle}>{title}</Text>
-        )}
-      </View>
+    <TouchableOpacity
+      style={[containerStyle, style]}
+      onPress={onPress}
+      disabled={isDisabled}>
+      {loading ? (
+        <ActivityIndicator color={theme.colors.white} />
+      ) : (
+        <Text style={titleStyle}>{title}</Text>
+      )}
     </TouchableOpacity>
   );
 };

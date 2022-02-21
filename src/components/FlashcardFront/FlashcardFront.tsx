@@ -21,7 +21,6 @@ const FlashcardFront: React.FC<FlashcardFrontProps> = ({word}) => {
   return (
     <View style={styles.container}>
       <Avatar
-        blurred
         style={styles.avatar}
         size={96}
         label={word?.word}

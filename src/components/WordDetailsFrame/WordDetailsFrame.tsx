@@ -1,7 +1,6 @@
 import React, {useMemo} from 'react';
 import {Text, View} from 'react-native';
 import styles from './styles';
-import Blur from '~components/Blur';
 import ActionIcon from '~components/ActionIcon';
 import SoundIcon from '~assets/icons/sound.svg';
 import Divider from '~components/Divider';
@@ -38,26 +37,23 @@ const WordDetailsFrame: React.FC<WordDetailsFrameProps> = ({word}) => {
 
   return (
     <View style={styles.container}>
-      <Blur style={styles.blur} />
-      <View style={styles.details}>
-        <Avatar
-          style={styles.avatar}
-          size={128}
-          label={word?.word}
-          src={word?.image}
+      <Avatar
+        style={styles.avatar}
+        size={128}
+        label={word?.word}
+        src={word?.image}
+      />
+      <View style={styles.heading}>
+        <ActionIcon
+          style={styles.soundIcon}
+          icon={SoundIcon}
+          onPress={speakWord}
         />
-        <View style={styles.heading}>
-          <ActionIcon
-            style={styles.soundIcon}
-            icon={SoundIcon}
-            onPress={speakWord}
-          />
-          <Text style={styles.word}>{word?.word}</Text>
-        </View>
-        <Divider />
-        {showTranslations}
-        {!!word?.example && <Text style={styles.example}>{word?.example}</Text>}
+        <Text style={styles.word}>{word?.word}</Text>
       </View>
+      <Divider />
+      {showTranslations}
+      {!!word?.example && <Text style={styles.example}>{word?.example}</Text>}
     </View>
   );
 };

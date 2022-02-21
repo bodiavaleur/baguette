@@ -8,16 +8,12 @@ const styles = StyleSheet.create({
     maxWidth: 148,
     height: 148,
     margin: theme.spacing.small,
+    padding: theme.spacing.medium,
+    borderRadius: 28,
+    backgroundColor: theme.colors.action,
   },
   fullWidth: {
     maxWidth: undefined,
-  },
-  blur: {
-    borderRadius: 28,
-  },
-  content: {
-    flex: 1,
-    padding: theme.spacing.medium,
   },
   image: {
     marginBottom: theme.spacing.small,

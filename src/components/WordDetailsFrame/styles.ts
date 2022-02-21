@@ -6,12 +6,6 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     alignSelf: 'flex-start',
-  },
-  blur: {
-    borderRadius: 16,
-  },
-  details: {
-    width: '100%',
     padding: theme.spacing.medium,
   },
   avatar: {

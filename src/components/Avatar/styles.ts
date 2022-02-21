@@ -32,9 +32,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: theme.colors.white,
   },
-  blur: {
-    zIndex: 1,
-  },
 });
 
 export default styles;

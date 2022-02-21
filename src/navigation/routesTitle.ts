@@ -16,6 +16,8 @@ export const ROUTES_TITLE: RouteTitle = {
   [AuthRoutes.Registration]: RouteStrings.AppName,
 
   [DashboardRoutes.Home]: RouteStrings.Home,
+  [DashboardRoutes.Dictionary]: RouteStrings.Dictionary,
+  [DashboardRoutes.Training]: RouteStrings.Training,
   [DashboardRoutes.Account]: RouteStrings.Account,
 
   [DictionaryRoutes.Dictionary]: RouteStrings.Dictionary,

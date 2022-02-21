@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import styles from './styles';
 import {theme} from '~config/theme';
-import Blur from '~components/Blur';
 
 interface AvatarProps {
   style?: StyleProp<ViewStyle>;
@@ -19,7 +18,6 @@ interface AvatarProps {
   src?: string;
   loading?: boolean;
   onPress?: () => void;
-  blurred?: boolean;
 }
 
 const Avatar: React.FC<AvatarProps> = ({
@@ -29,7 +27,6 @@ const Avatar: React.FC<AvatarProps> = ({
   src,
   loading,
   onPress,
-  blurred,
 }) => {
   const labelSymbol = label?.charAt(0) ?? '';
 
@@ -45,8 +42,6 @@ const Avatar: React.FC<AvatarProps> = ({
 
   const avatar = (
     <>
-      {blurred && <Blur blurRadius={6} blurAmount={6} style={styles.blur} />}
-
       {loading && (
         <View style={styles.overlay}>
           <ActivityIndicator color={theme.colors.text} />

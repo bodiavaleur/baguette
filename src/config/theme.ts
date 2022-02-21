@@ -14,6 +14,7 @@ export const theme = {
     white: '#FFFFFF',
     shadow: '#000000',
 
+    action: 'rgba(200,200,200,0.25)',
     primaryGray: '#ccc',
     placeholderGray: '#b8b5b5',
     disabledGray: '#a7a7a7',

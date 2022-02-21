@@ -2,11 +2,10 @@ import {StyleSheet} from 'react-native';
 import {theme} from '~config/theme';
 
 const styles = StyleSheet.create({
-  blur: {
-    borderRadius: 8,
-  },
   iconContainer: {
     padding: theme.spacing.small,
+    borderRadius: 8,
+    backgroundColor: theme.colors.action,
   },
   icon: {
     width: 24,
