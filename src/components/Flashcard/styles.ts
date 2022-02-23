@@ -42,6 +42,10 @@ const styles = StyleSheet.create({
   right: {
     right: 0,
   },
+  label: {
+    position: 'absolute',
+    zIndex: 2,
+  },
 });
 
 export default styles;

@@ -20,6 +20,7 @@ export const theme = {
     disabledGray: '#a7a7a7',
     divider: 'rgba(217,217,217,0.65)',
 
+    acceptGreen: 'green',
     dangerRed: '#ff2931',
     warning: '#ff792b',
   },

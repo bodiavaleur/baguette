@@ -1,4 +1,5 @@
 import {
+  interpolate,
   runOnJS,
   useAnimatedGestureHandler,
   useAnimatedStyle,
@@ -23,6 +24,7 @@ const {Left, Middle, Right} = FlashcardSwipeState;
 const OPEN_CARD_THRESHOLD = DEVICE_WINDOW_HEIGHT - 360;
 const SNAP_POINTS_X = [-DEVICE_WINDOW_WIDTH, 0, DEVICE_WINDOW_WIDTH];
 const SNAP_POINTS_Y = [0, OPEN_CARD_THRESHOLD];
+const LABEL_VISIBILITY_THRESHOLD = DEVICE_WINDOW_WIDTH - 150;
 const DURATION = 200;
 
 export function useFlashcardAnimation(index: number) {
@@ -96,6 +98,18 @@ export function useFlashcardAnimation(index: number) {
     },
   });
 
+  const leftLabel = useAnimatedStyle(() => ({
+    left: -16,
+    top: -16,
+    opacity: interpolate(x.value, [0, LABEL_VISIBILITY_THRESHOLD], [0, 1]),
+  }));
+
+  const rightLabel = useAnimatedStyle(() => ({
+    right: -16,
+    top: -16,
+    opacity: interpolate(x.value, [-LABEL_VISIBILITY_THRESHOLD, 0], [1, 0]),
+  }));
+
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [
       {translateX: x.value},
@@ -107,6 +121,8 @@ export function useFlashcardAnimation(index: number) {
 
   return {
     cardGestureHandler,
+    leftLabel,
+    rightLabel,
     animatedStyle,
     isCardOpen,
     swipeDirection,

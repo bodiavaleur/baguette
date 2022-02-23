@@ -5,3 +5,7 @@ export interface TrainingSliceState {
   statuses: StatusesCollection;
   trainingDictionary: Dictionary | null;
 }
+
+export interface FlashcardTrainingArgs {
+  wordId: string;
+}

@@ -1,4 +1,5 @@
 export interface Word {
+  _id: string;
   word: string;
   translations: string[];
   image: string;
