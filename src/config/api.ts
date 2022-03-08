@@ -1,5 +1,4 @@
-export const API_URL = 'http://207.154.244.29:6565/api/v1/';
-// export const API_URL = 'http://192.168.1.101:6565/api/v1/';
+export const API_URL = 'http://192.168.1.103:6565/api/v1/';
 
 export const AUTH_ENDPOINTS = {
   LOGIN: `${API_URL}auth/login/`,
@@ -20,6 +19,7 @@ export const DICTIONARY_ENDPOINTS = {
   EDIT: `${API_URL}dictionary/edit/`,
   GET_BY_ID: `${API_URL}dictionary/`,
   UPLOAD_IMAGE: `${API_URL}dictionary/image/`,
+  GET_STATS: `${API_URL}dictionary/stats/`,
 };
 
 export const TRAINING_ENDPOINTS = {

@@ -17,3 +17,8 @@ export const getCurrentDictionary = createSelector(
   dictionaryState,
   ({currentDictionary}) => currentDictionary,
 );
+
+export const getDictionaryStats = createSelector(
+  dictionaryState,
+  ({currentDictionaryStats}) => currentDictionaryStats,
+);

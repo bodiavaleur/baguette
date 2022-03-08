@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import Layout from '~containers/Layout/Layout';
-import {Text, TextField, View} from 'react-native-ui-lib';
+import {Text, View} from 'react-native-ui-lib';
 import {AuthRoutes} from '~navigation/routes';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
 import {useFormik} from 'formik';

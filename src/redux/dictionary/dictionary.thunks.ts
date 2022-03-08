@@ -1,15 +1,15 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from '~utils/api';
 import {DICTIONARY_ENDPOINTS} from '~config/api';
-import {Dictionary} from '~types/dictionary';
+import {Dictionary, DictionaryStats} from '~types/dictionary';
 import {
   EditDictionaryArgs,
+  GetDictionaryStatsArgs,
   UploadDictionaryImageArgs,
 } from '~redux/dictionary/types';
-import {Word} from '~types/word';
-import {UploadWordImageArgs} from '~redux/word/types';
+import {ThunkState} from '~redux/index';
 
-const {MY_DICTIONARIES, CREATE, EDIT, GET_BY_ID, UPLOAD_IMAGE} =
+const {MY_DICTIONARIES, CREATE, EDIT, GET_BY_ID, UPLOAD_IMAGE, GET_STATS} =
   DICTIONARY_ENDPOINTS;
 
 export const fetchMyDictionaries = createAsyncThunk<Dictionary[], undefined>(
@@ -77,20 +77,40 @@ export const editDictionary = createAsyncThunk<Dictionary, EditDictionaryArgs>(
 export const uploadDictionaryImage = createAsyncThunk<
   Dictionary,
   UploadDictionaryImageArgs
->('word/uploadWordImage', async ({dictionaryId, image}, {rejectWithValue}) => {
+>(
+  'dictionary/uploadDictionaryImage',
+  async ({dictionaryId, image}, {rejectWithValue}) => {
+    try {
+      const form = new FormData();
+
+      form.append('dictionaryId', dictionaryId);
+      form.append('image', {
+        uri: image.path,
+        type: image.mime,
+        name: image.filename,
+      });
+
+      const {data} = await api.post(UPLOAD_IMAGE, form, {
+        headers: {'Content-Type': 'multipart/form-data'},
+      });
+
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.error);
+    }
+  },
+);
+
+export const fetchDictionaryStats = createAsyncThunk<
+  DictionaryStats,
+  undefined,
+  ThunkState
+>('dictionary/dictionaryStats', async (_, {getState, rejectWithValue}) => {
   try {
-    const form = new FormData();
+    const {currentDictionary} = getState().dictionary;
+    const params = {params: {dictionaryId: currentDictionary?._id}};
 
-    form.append('dictionaryId', dictionaryId);
-    form.append('image', {
-      uri: image.path,
-      type: image.mime,
-      name: image.filename,
-    });
-
-    const {data} = await api.post(UPLOAD_IMAGE, form, {
-      headers: {'Content-Type': 'multipart/form-data'},
-    });
+    const {data} = await api.get(GET_STATS, params);
 
     return data;
   } catch (err) {

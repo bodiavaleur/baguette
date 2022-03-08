@@ -10,3 +10,9 @@ export interface Dictionary {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface DictionaryStats {
+  newCount: number;
+  studyingCount: number;
+  learnedCount: number;
+}

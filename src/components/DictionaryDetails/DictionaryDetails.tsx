@@ -9,6 +9,8 @@ import Button from '~components/Button';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
 import {TrainingRoutes} from '~navigation/routes';
 import {ButtonStrings} from '~config/strings/buttons';
+import StatBadge from '~components/StatBadge';
+import DictionaryStats from '~components/DictionaryStats';
 
 const DictionaryDetails: React.FC = () => {
   const navigation = useAppNavigation();
@@ -34,7 +36,11 @@ const DictionaryDetails: React.FC = () => {
           <Text style={styles.description}>{dictionary?.description}</Text>
         )}
       </View>
+
+      <DictionaryStats />
+
       <Divider />
+
       <View style={styles.buttons}>
         <Button
           variant="action"

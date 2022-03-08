@@ -5,6 +5,7 @@ import {
   createDictionary,
   editDictionary,
   fetchDictionaryById,
+  fetchDictionaryStats,
   fetchMyDictionaries,
   uploadDictionaryImage,
 } from './dictionary.thunks';
@@ -18,12 +19,14 @@ const statuses = [
   editDictionary.typePrefix,
   fetchDictionaryById.typePrefix,
   uploadDictionaryImage.typePrefix,
+  fetchDictionaryStats.typePrefix,
 ];
 
 const initialState: DictionarySliceState = {
   statuses: StatusGenerator.generateStatuses(statuses),
   myDictionaries: [],
   currentDictionary: null,
+  currentDictionaryStats: null,
 };
 
 const dictionarySlice = createSlice({
@@ -107,6 +110,21 @@ const dictionarySlice = createSlice({
       .addCase(uploadDictionaryImage.fulfilled, (state, {payload}) => {
         state.statuses[uploadDictionaryImage.typePrefix] =
           StatusGenerator.setStatus(Fulfilled);
+      })
+
+      .addCase(fetchDictionaryStats.pending, state => {
+        state.statuses[fetchDictionaryStats.typePrefix] =
+          StatusGenerator.setStatus(Pending);
+      })
+      .addCase(fetchDictionaryStats.rejected, (state, {payload}) => {
+        state.statuses[fetchDictionaryStats.typePrefix] =
+          StatusGenerator.setStatus(Rejected, payload);
+      })
+      .addCase(fetchDictionaryStats.fulfilled, (state, {payload}) => {
+        state.statuses[fetchDictionaryStats.typePrefix] =
+          StatusGenerator.setStatus(Fulfilled);
+
+        state.currentDictionaryStats = payload;
       });
   },
 });
