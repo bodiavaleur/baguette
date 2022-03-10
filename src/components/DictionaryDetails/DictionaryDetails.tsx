@@ -2,19 +2,21 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import styles from './styles';
 import {useSelector} from 'react-redux';
-import {getCurrentDictionary} from '~redux/dictionary/dictionary.selectors';
+import {selectCurrentDictionary} from '~redux/dictionary/dictionary.selectors';
 import Divider from '~components/Divider';
 import Avatar from '~components/Avatar';
 import Button from '~components/Button';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
 import {TrainingRoutes} from '~navigation/routes';
 import {ButtonStrings} from '~config/strings/buttons';
-import StatBadge from '~components/StatBadge';
 import DictionaryStats from '~components/DictionaryStats';
+import {useGetDictionaryByIdQuery} from '~services/api/dictionary';
 
 const DictionaryDetails: React.FC = () => {
   const navigation = useAppNavigation();
-  const dictionary = useSelector(getCurrentDictionary);
+  const currentDictionary = useSelector(selectCurrentDictionary);
+  const dictionaryById = useGetDictionaryByIdQuery(currentDictionary);
+  const dictionary = dictionaryById.data;
 
   const onTrainDictionary = () => {
     const params = {dictionaryId: dictionary?._id};

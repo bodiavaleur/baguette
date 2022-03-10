@@ -3,7 +3,7 @@ import {RootState} from '../index';
 
 const authState = (state: RootState) => state.auth;
 
-export const getAuthStatuses = createSelector(
+export const getIsAuthenticated = createSelector(
   authState,
-  ({statuses}) => statuses,
+  ({isAuthenticated}) => isAuthenticated,
 );

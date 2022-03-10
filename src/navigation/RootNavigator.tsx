@@ -8,11 +8,10 @@ import DashboardNavigator from '~navigation/navigators/Dashboard';
 import {storage} from '~helpers/storage';
 import {navigationRef} from '~helpers/Navigation';
 import {useAppDispatch} from '~hooks/redux/useAppDispatch';
-import {fetchMyDictionaries} from '~redux/dictionary/dictionary.thunks';
 import Flashcards from '~screens/Training/Flashcards';
-import {authenticateUser} from '~redux/app/app.slice';
 import {useSelector} from 'react-redux';
-import {getIsAuthenticated} from '~redux/app/app.selectors';
+import {getIsAuthenticated} from '~redux/auth/auth.selectors';
+import {authenticateUser} from '~redux/auth/auth.slice';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,7 +24,6 @@ const RootNavigator: React.FC = () => {
 
     if (tokens) {
       dispatch(authenticateUser());
-      dispatch(fetchMyDictionaries());
     }
   }, []);
 

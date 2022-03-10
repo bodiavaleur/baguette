@@ -1,23 +1,14 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {AppSliceState} from './types';
 
-const initialState: AppSliceState = {
-  isAuthenticated: false,
-};
+const initialState: AppSliceState = {};
 
 const appSlice = createSlice({
   name: 'app',
   initialState,
-  reducers: {
-    authenticateUser: state => {
-      state.isAuthenticated = true;
-    },
-    removeAuthentication: state => {
-      state.isAuthenticated = false;
-    },
-  },
+  reducers: {},
 });
 
-export const {authenticateUser, removeAuthentication} = appSlice.actions;
+export const {} = appSlice.actions;
 
 export default appSlice;

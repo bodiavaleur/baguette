@@ -7,29 +7,23 @@ import {useFormik} from 'formik';
 import {
   initialValues,
   validationSchema,
-  LogInValues,
   LogInFields,
+  LogInValues,
 } from './config';
-import {useAppDispatch} from '~hooks/redux/useAppDispatch';
-import {authLogIn} from '~redux/auth/auth.thunks';
-import {useSelector} from 'react-redux';
-import {getAuthStatuses} from '~redux/auth/auth.selectors';
-import {useStatusAlert} from '~hooks/useStatusAlert';
 import styles from './styles';
-import {fetchMyDictionaries} from '~redux/dictionary/dictionary.thunks';
-import {authenticateUser} from '~redux/app/app.slice';
 import Input from '~components/Input';
 import Button from '~components/Button';
 import {AuthStrings} from '~config/strings/auth';
+import {useAppDispatch} from '~hooks/redux/useAppDispatch';
+import {useLoginMutation} from '~services/api/auth';
+import {authenticateUser} from '~redux/auth/auth.slice';
 
 const {Email, Password} = LogInFields;
 
-const Login: React.FC = ({}) => {
+const Login: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigation = useAppNavigation();
-  const statuses = useSelector(getAuthStatuses);
-
-  useStatusAlert(statuses[authLogIn.typePrefix], 'Log in failed');
+  const [loginUser] = useLoginMutation();
 
   const goToRegistration = useCallback(() => {
     navigation.reset({
@@ -38,9 +32,8 @@ const Login: React.FC = ({}) => {
     });
   }, []);
 
-  const handleSubmit = useCallback(async ({email, password}: LogInValues) => {
-    await dispatch(authLogIn({email, password})).unwrap();
-    await dispatch(fetchMyDictionaries());
+  const handleSubmit = useCallback(async (values: LogInValues) => {
+    await loginUser(values).unwrap();
     dispatch(authenticateUser());
   }, []);
 

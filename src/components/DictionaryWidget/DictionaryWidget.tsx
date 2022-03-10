@@ -5,6 +5,8 @@ import {Dictionary} from '~types/dictionary';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
 import {DictionaryRoutes} from '~navigation/routes';
 import Avatar from '~components/Avatar';
+import {useAppDispatch} from '~hooks/redux/useAppDispatch';
+import {setCurrentDictionary} from '~redux/dictionary/dictionary.slice';
 
 interface DictionaryWidgetProps {
   fullWidth?: boolean;
@@ -16,11 +18,11 @@ const DictionaryWidget: React.FC<DictionaryWidgetProps> = ({
   dictionary,
 }) => {
   const navigation = useAppNavigation();
+  const dispatch = useAppDispatch();
 
   const onWidgetPress = () => {
-    navigation.navigate(DictionaryRoutes.Dictionary, {
-      dictionaryId: dictionary?._id,
-    });
+    dispatch(setCurrentDictionary(dictionary._id));
+    navigation.navigate(DictionaryRoutes.Dictionary);
   };
 
   const avatarSize = fullWidth ? 76 : 48;

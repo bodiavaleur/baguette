@@ -8,7 +8,6 @@ import ActionIcon from '~components/ActionIcon';
 import CloseIcon from '~assets/icons/close.svg';
 import Input from '~components/Input';
 import {ButtonStrings} from '~config/strings/buttons';
-import {useAppDispatch} from '~hooks/redux/useAppDispatch';
 import {useFormik} from 'formik';
 import {
   initialValues,
@@ -17,22 +16,18 @@ import {
   validationSchema,
 } from './config';
 import Modal from 'react-native-modal';
-import {createNewWord, uploadWordImage} from '~redux/word/word.thunks';
-import {
-  fetchDictionaryById,
-  fetchMyDictionaries,
-} from '~redux/dictionary/dictionary.thunks';
-import {useSelector} from 'react-redux';
-import {getCurrentDictionary} from '~redux/dictionary/dictionary.selectors';
 import AvoidKeyboard from '~containers/AvoidKeyboard';
 import TranslationInputs from '~components/TranslationInputs';
 import useMultipleInputs from '~hooks/useMultipleInputs';
 import Button from '~components/Button';
 import useImagePicker from '~hooks/useImagePicker';
-import {getWordStatuses} from '~redux/word/word.selectors';
 import Avatar from '~components/Avatar';
 import DictionaryPicker from '~components/DictionaryPicker';
 import {storage} from '~helpers/storage';
+import {
+  useCreateWordMutation,
+  useUploadWordImageMutation,
+} from '~services/api/word';
 
 const {DictionaryId, Word, Example} = NewWordFields;
 
@@ -42,12 +37,11 @@ interface AddWordModalProps {
 }
 
 const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
-  const dispatch = useAppDispatch();
   const insets = useSafeAreaInsets();
-  const currentDictionary = useSelector(getCurrentDictionary);
-  const statuses = useSelector(getWordStatuses);
   const translations = useMultipleInputs();
   const imagePicker = useImagePicker();
+  const [createWord] = useCreateWordMutation();
+  const [uploadWordImage, imageResult] = useUploadWordImageMutation();
 
   const handleHideModal = () => {
     imagePicker.clearImage();
@@ -56,20 +50,12 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
   };
 
   const handleSubmitWord = async (values: NewWordValues) => {
-    const isCurrentDictionaryOpen =
-      currentDictionary?._id === values[DictionaryId];
     const newWordArgs = {...values, translations: translations.inputs};
-    const word = await dispatch(createNewWord(newWordArgs)).unwrap();
+    const word = await createWord(newWordArgs).unwrap();
 
     if (imagePicker.image) {
       const uploadArgs = {wordId: word._id, image: imagePicker.image};
-      await dispatch(uploadWordImage(uploadArgs));
-    }
-
-    dispatch(fetchMyDictionaries());
-
-    if (isCurrentDictionaryOpen) {
-      dispatch(fetchDictionaryById(values[DictionaryId]));
+      await uploadWordImage(uploadArgs).unwrap();
     }
 
     formik.resetForm();
@@ -96,8 +82,6 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
     }
   }, [isOpen]);
 
-  const isImageUploading = statuses[uploadWordImage.typePrefix].pending;
-
   return (
     <Modal
       deviceWidth={1}
@@ -118,7 +102,7 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
                 <Avatar
                   size={64}
                   onPress={imagePicker.pickFromGallery}
-                  loading={isImageUploading}
+                  loading={imageResult.isLoading}
                   src={imagePicker.image?.path}
                   label="+"
                 />

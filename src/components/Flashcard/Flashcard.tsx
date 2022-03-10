@@ -11,11 +11,10 @@ import AcceptIcon from '~assets/icons/accept-round.svg';
 import CancelIcon from '~assets/icons/cancel-round.svg';
 import {theme} from '~config/theme';
 import {FlashcardSwipeState} from '~types/flashcards';
-import {useAppDispatch} from '~hooks/redux/useAppDispatch';
 import {
-  decreaseFlashcardIntensity,
-  increaseFlashcardIntensity,
-} from '~redux/training/training.thunks';
+  useDecreaseFlashcardIntensityMutation,
+  useIncreaseFlashcardIntensityMutation,
+} from '~services/api/training';
 
 const {Left, Right} = FlashcardSwipeState;
 
@@ -25,8 +24,10 @@ interface FlashcardProps {
 }
 
 const Flashcard: React.FC<FlashcardProps> = ({word, index}) => {
-  const dispatch = useAppDispatch();
   const flashcard = useFlashcardAnimation(index);
+  const [increaseFlashcardIntensity] = useIncreaseFlashcardIntensityMutation();
+  const [decreaseFlashcardIntensity] = useDecreaseFlashcardIntensityMutation();
+
   const {flipGestureHandler, flipStyle, frontSideStyle, backSideStyle} =
     useFlipCard(flashcard.isCardOpen);
 
@@ -35,11 +36,11 @@ const Flashcard: React.FC<FlashcardProps> = ({word, index}) => {
     const isSwipeRight = flashcard.swipeDirection === Right;
 
     if (isSwipeLeft) {
-      dispatch(decreaseFlashcardIntensity({wordId: word._id}));
+      decreaseFlashcardIntensity(word._id).unwrap();
     }
 
     if (isSwipeRight) {
-      dispatch(increaseFlashcardIntensity({wordId: word._id}));
+      increaseFlashcardIntensity(word._id).unwrap();
     }
   }, [flashcard.swipeDirection]);
 

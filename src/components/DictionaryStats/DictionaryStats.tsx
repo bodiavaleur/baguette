@@ -1,30 +1,20 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {View} from 'react-native';
 import styles from './styles';
 import StatBadge from '~components/StatBadge';
+import {useGetDictionaryStatsQuery} from '~services/api/dictionary';
 import {useSelector} from 'react-redux';
-import {
-  getCurrentDictionary,
-  getDictionaryStats,
-} from '~redux/dictionary/dictionary.selectors';
-import {useAppDispatch} from '~hooks/redux/useAppDispatch';
-import {fetchDictionaryStats} from '~redux/dictionary/dictionary.thunks';
-import {theme} from '~config/theme';
+import {selectCurrentDictionary} from '~redux/dictionary/dictionary.selectors';
 
 const DictionaryStats: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const dictionary = useSelector(getCurrentDictionary);
-  const dictionaryStats = useSelector(getDictionaryStats);
-
-  useEffect(() => {
-    dispatch(fetchDictionaryStats());
-  }, [dictionary]);
+  const currentDictionary = useSelector(selectCurrentDictionary);
+  const dictionaryStats = useGetDictionaryStatsQuery(currentDictionary);
 
   return (
     <View style={styles.container}>
-      <StatBadge label="New" count={dictionaryStats?.newCount} />
-      <StatBadge label="Studying" count={dictionaryStats?.studyingCount} />
-      <StatBadge label="Learned" count={dictionaryStats?.learnedCount} />
+      <StatBadge label="New" count={dictionaryStats.data?.newCount} />
+      <StatBadge label="Studying" count={dictionaryStats.data?.studyingCount} />
+      <StatBadge label="Learned" count={dictionaryStats.data?.learnedCount} />
     </View>
   );
 };

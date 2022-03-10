@@ -1,12 +1,11 @@
 import React, {useMemo} from 'react';
-import {Alert, TouchableOpacity, View} from 'react-native';
+import {Alert, View} from 'react-native';
 import styles from './styles';
 import Layout from '~containers/Layout';
 import Header from '~components/Header';
 import CloseButton from '~components/Header/plugins/CloseButton';
 import SaveButton from '~components/Header/plugins/SaveButton';
 import {useSelector} from 'react-redux';
-import {getCurrentWord, getWordStatuses} from '~redux/word/word.selectors';
 import {useFormik} from 'formik';
 import {
   EditWordFields,
@@ -19,9 +18,7 @@ import TranslationInputs from '~components/TranslationInputs';
 import Input from '~components/Input';
 import {InputPlaceholderStrings} from '~config/strings/inputs';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
-import {getCurrentDictionary} from '~redux/dictionary/dictionary.selectors';
 import {useAppDispatch} from '~hooks/redux/useAppDispatch';
-import {deleteWord, editWord, uploadWordImage} from '~redux/word/word.thunks';
 import {
   ModalMessageStrings,
   ModalStatusStrings,
@@ -32,31 +29,46 @@ import {DictionaryRoutes} from '~navigation/routes';
 import {ButtonStrings} from '~config/strings/buttons';
 import useImagePicker from '~hooks/useImagePicker';
 import Avatar from '~components/Avatar';
+import {selectCurrentDictionary} from '~redux/dictionary/dictionary.selectors';
+import {useGetDictionaryByIdQuery} from '~services/api/dictionary';
+import {selectCurrentWord} from '~redux/word/word.selectors';
+import {
+  useDeleteWordMutation,
+  useEditWordMutation,
+  useGetWordByIdQuery,
+  useUploadWordImageMutation,
+} from '~services/api/word';
 
 const {Word, Example} = EditWordFields;
 
 const EditWord: React.FC = () => {
   const navigation = useAppNavigation();
   const dispatch = useAppDispatch();
-  const dictionary = useSelector(getCurrentDictionary);
-  const word = useSelector(getCurrentWord);
-  const statuses = useSelector(getWordStatuses);
-  const translations = useMultipleInputs(word?.translations);
+
+  const currentDictionary = useSelector(selectCurrentDictionary);
+  const currentWord = useSelector(selectCurrentWord);
+  const dictionary = useGetDictionaryByIdQuery(currentDictionary);
+  const word = useGetWordByIdQuery(currentWord);
+  const [editWord] = useEditWordMutation();
+  const [deleteWord] = useDeleteWordMutation();
+  const [uploadWordImage, imageResult] = useUploadWordImageMutation();
+
+  const translations = useMultipleInputs(word.data?.translations);
   const imagePicker = useImagePicker();
 
   const handleSaveWord = async (values: EditWordValues) => {
     const updatedWord = {
       ...values,
       translations: translations.inputs,
-      wordId: word?._id,
+      wordId: word.data?._id,
     };
 
     if (imagePicker.image) {
-      const args = {wordId: word?._id, image: imagePicker.image};
-      await dispatch(uploadWordImage(args));
+      const args = {wordId: word.data?._id, image: imagePicker.image};
+      await dispatch(uploadWordImage(args)).unwrap();
     }
 
-    await dispatch(editWord(updatedWord));
+    await editWord(updatedWord).unwrap();
 
     Alert.alert(ModalStatusStrings.Success, ModalMessageStrings.WordUpdated);
     navigation.goBack();
@@ -64,9 +76,9 @@ const EditWord: React.FC = () => {
 
   const handleDeleteWord = async () => {
     const onDeleteWord = async () => {
-      await dispatch(deleteWord(word?._id));
+      await deleteWord(word.data?._id).unwrap();
       navigation.navigate(DictionaryRoutes.Dictionary, {
-        dictionaryId: dictionary?._id,
+        dictionaryId: dictionary.data?._id,
       });
     };
 
@@ -85,7 +97,7 @@ const EditWord: React.FC = () => {
   };
 
   const formik = useFormik({
-    initialValues: initialValues(word),
+    initialValues: initialValues(word.data),
     validationSchema,
     onSubmit: handleSaveWord,
     enableReinitialize: true,
@@ -101,8 +113,6 @@ const EditWord: React.FC = () => {
     [formik],
   );
 
-  const isImageUploading = statuses[uploadWordImage.typePrefix].pending;
-
   return (
     <Layout withScroll customHeader={screenHeader}>
       <View style={styles.container}>
@@ -111,7 +121,7 @@ const EditWord: React.FC = () => {
           src={imagePicker.image?.path ?? word?.image}
           onPress={imagePicker.pickFromGallery}
           size={128}
-          loading={isImageUploading}
+          loading={imageResult.isLoading}
           label={word?.word}
         />
 

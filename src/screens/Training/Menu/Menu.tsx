@@ -9,36 +9,37 @@ import DictionaryPicker from '~components/DictionaryPicker';
 import {useFocusEffect} from '@react-navigation/native';
 import {useAppDispatch} from '~hooks/redux/useAppDispatch';
 import {storage} from '~helpers/storage';
-import {fetchTrainingDictionary} from '~redux/training/training.thunks';
 import ScreenList from '~containers/ScreenList';
 import {TrainingMenuStrings} from '~config/strings/training';
+import {setTrainingDictionary} from '~redux/training/training.slice';
 
 const Menu: React.FC = () => {
+  const dispatch = useAppDispatch();
   const [dictionaryId, setDictionaryId] = useState('');
   const navigation = useAppNavigation();
-  const dispatch = useAppDispatch();
+
+  const updateTrainingDictionary = (id: string) => {
+    dispatch(setTrainingDictionary(id));
+    setDictionaryId(id);
+  };
 
   const loadSavedDictionary = async () => {
     const savedId = await storage.trainingDictionary.get();
 
     if (savedId) {
-      setDictionaryId(savedId);
+      updateTrainingDictionary(savedId);
     }
   };
 
   useFocusEffect(
     useCallback(() => {
       loadSavedDictionary();
-
-      if (dictionaryId) {
-        dispatch(fetchTrainingDictionary(dictionaryId));
-      }
     }, [dictionaryId]),
   );
 
   const onDictionaryChange = useCallback((id: string) => {
     storage.trainingDictionary.set(id);
-    setDictionaryId(id);
+    updateTrainingDictionary(id);
   }, []);
 
   const navigateToFlashcards = () => {

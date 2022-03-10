@@ -7,29 +7,23 @@ import {
 } from './config';
 import {useAppDispatch} from '~hooks/redux/useAppDispatch';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
-import {useSelector} from 'react-redux';
-import {getAuthStatuses} from '~redux/auth/auth.selectors';
-import {useStatusAlert} from '~hooks/useStatusAlert';
-import {authRegister} from '~redux/auth/auth.thunks';
 import {AuthRoutes} from '~navigation/routes';
 import {useFormik} from 'formik';
 import Layout from '~containers/Layout';
 import {Text, View} from 'react-native-ui-lib';
 import styles from './styles';
-import {fetchMyDictionaries} from '~redux/dictionary/dictionary.thunks';
-import {authenticateUser} from '~redux/app/app.slice';
 import {AuthStrings} from '~config/strings/auth';
 import Input from '~components/Input';
 import Button from '~components/Button';
+import {useRegisterMutation} from '~services/api/auth';
+import {authenticateUser} from '~redux/auth/auth.slice';
 
 const {Username, Email, Password} = RegistrationFields;
 
 const Registration: React.FC = ({}) => {
   const dispatch = useAppDispatch();
   const navigation = useAppNavigation();
-  const statuses = useSelector(getAuthStatuses);
-
-  useStatusAlert(statuses[authRegister.typePrefix], 'Registration failed');
+  const [registerUser] = useRegisterMutation();
 
   const goToLogin = useCallback(() => {
     navigation.reset({
@@ -39,8 +33,7 @@ const Registration: React.FC = ({}) => {
   }, []);
 
   const handleSubmit = useCallback(async (values: RegistrationValues) => {
-    await dispatch(authRegister(values)).unwrap();
-    await dispatch(fetchMyDictionaries());
+    await registerUser(values).unwrap();
     dispatch(authenticateUser());
   }, []);
 

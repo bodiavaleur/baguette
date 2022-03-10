@@ -3,24 +3,20 @@ import Layout from '~containers/Layout';
 import Header from '~components/Header';
 import AddButton from '~components/Header/plugins/AddButton';
 import {useFocusEffect} from '@react-navigation/native';
-import {useAppDispatch} from '~hooks/redux/useAppDispatch';
-import {useSelector} from 'react-redux';
-import {getMyDictionaries} from '~redux/dictionary/dictionary.selectors';
-import {fetchMyDictionaries} from '~redux/dictionary/dictionary.thunks';
 import DictionaryWidget from '~components/DictionaryWidget';
 import ScreenList from '~containers/ScreenList';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
 import {DictionaryRoutes} from '~navigation/routes';
+import {useGetMyDictionariesQuery} from '~services/api/dictionary';
 
 const MyDictionaries: React.FC = () => {
-  const dispatch = useAppDispatch();
   const navigation = useAppNavigation();
-  const myDictionaries = useSelector(getMyDictionaries);
-  const [firstDictionary, ...dictionaries] = myDictionaries;
+  const myDictionaries = useGetMyDictionariesQuery();
+  const [firstDictionary, ...dictionaries] = myDictionaries.data ?? [];
 
   useFocusEffect(
     useCallback(() => {
-      dispatch(fetchMyDictionaries());
+      myDictionaries.refetch();
     }, []),
   );
 

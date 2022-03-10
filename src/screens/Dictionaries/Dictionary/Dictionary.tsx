@@ -1,59 +1,39 @@
 import React, {useCallback, useEffect, useMemo} from 'react';
 import Layout from '~containers/Layout/Layout';
 import WordListItem from '~components/WordListItem';
-import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
-import {WordRoutes} from '~navigation/routes';
-import {useFocusEffect, useRoute} from '@react-navigation/native';
-import {useAppDispatch} from '~hooks/redux/useAppDispatch';
-import {useSelector} from 'react-redux';
-import {getCurrentDictionary} from '~redux/dictionary/dictionary.selectors';
-import {fetchDictionaryById} from '~redux/dictionary/dictionary.thunks';
+import {useFocusEffect} from '@react-navigation/native';
 import ScreenList from '~containers/ScreenList';
 import Header from '~components/Header';
 import BackButton from '~components/Header/plugins/BackButton';
-import {clearCurrentDictionary} from '~redux/dictionary/dictionary.slice';
 import DictionaryDetails from '~components/DictionaryDetails';
+import {useGetDictionaryByIdQuery} from '~services/api/dictionary';
+import {useAppDispatch} from '~hooks/redux/useAppDispatch';
+import {clearCurrentDictionary} from '~redux/dictionary/dictionary.slice';
+import {useSelector} from 'react-redux';
+import {selectCurrentDictionary} from '~redux/dictionary/dictionary.selectors';
 
 const Dictionary: React.FC = () => {
-  const navigation = useAppNavigation();
-  const route = useRoute();
-  const {dictionaryId} = route.params;
-
   const dispatch = useAppDispatch();
-  const dictionary = useSelector(getCurrentDictionary);
-
-  const loadDictionary = () => dispatch(fetchDictionaryById(dictionaryId));
-
-  useFocusEffect(
-    useCallback(() => {
-      loadDictionary();
-    }, []),
-  );
+  const currentDictionary = useSelector(selectCurrentDictionary);
+  const dictionaryById = useGetDictionaryByIdQuery(currentDictionary);
 
   useEffect(() => {
-    loadDictionary();
-
     return () => {
       dispatch(clearCurrentDictionary());
     };
   }, []);
 
-  const openWordDetails = (wordId: string) =>
-    navigation.navigate(WordRoutes.Root, {
-      screen: WordRoutes.Word,
-      params: {wordId},
-    });
-
-  const renderWord = useCallback(
-    ({item}) => (
-      <WordListItem word={item} onPress={() => openWordDetails(item._id)} />
-    ),
-    [],
+  useFocusEffect(
+    useCallback(() => {
+      dictionaryById.refetch();
+    }, []),
   );
+
+  const renderWord = useCallback(({item}) => <WordListItem word={item} />, []);
 
   const screenHeader = useMemo(() => <Header left={<BackButton />} />, []);
 
-  const data = dictionary?.dictionary ?? [];
+  const data = dictionaryById.data?.dictionary ?? [];
 
   return (
     <Layout withoutPaddings withoutSafeBottom customHeader={screenHeader}>

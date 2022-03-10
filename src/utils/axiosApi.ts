@@ -6,9 +6,9 @@ const defaultConfig = {
   baseURL: API_URL,
 };
 
-export const api = axios.create(defaultConfig);
+export const axiosApi = axios.create(defaultConfig);
 
-api.interceptors.request.use(async config => {
+axiosApi.interceptors.request.use(async config => {
   const tokens = await storage.token.get();
 
   if (tokens) {
@@ -18,7 +18,7 @@ api.interceptors.request.use(async config => {
   return config;
 });
 
-api.interceptors.response.use(
+axiosApi.interceptors.response.use(
   res => res,
   err => {
     if (err.response.status === 401) {

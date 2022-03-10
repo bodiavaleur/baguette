@@ -1,3 +1,1 @@
-export interface AppSliceState {
-  isAuthenticated: boolean;
-}
+export interface AppSliceState {}

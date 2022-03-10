@@ -1,11 +1,12 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {FlatList, StyleProp, View, ViewStyle} from 'react-native';
 import styles from './styles';
 import {Picker} from 'react-native-ui-lib';
 import {PickerItemLabeledValue} from 'react-native-ui-lib/typings';
 import {InputPlaceholderStrings} from '~config/strings/inputs';
 import {useSelector} from 'react-redux';
-import {getMyDictionaries} from '~redux/dictionary/dictionary.selectors';
+import {selectCurrentDictionary} from '~redux/dictionary/dictionary.selectors';
+import {useGetMyDictionariesQuery} from '~services/api/dictionary';
 
 interface DictionaryPickerProps {
   style?: StyleProp<ViewStyle>;
@@ -18,7 +19,12 @@ const DictionaryPicker: React.FC<DictionaryPickerProps> = ({
   selectedDictionaryId,
   onChange,
 }) => {
-  const dictionaries = useSelector(getMyDictionaries);
+  const currentDictionary = useSelector(selectCurrentDictionary);
+  const myDictionaries = useGetMyDictionariesQuery(currentDictionary);
+  const dictionaries = useMemo(
+    () => myDictionaries.data ?? [],
+    [myDictionaries],
+  );
 
   const handleChange = (item: PickerItemLabeledValue) => onChange(item.value);
 

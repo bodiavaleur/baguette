@@ -1,7 +1,7 @@
 import {Middleware} from '@reduxjs/toolkit';
 import {storage} from '~helpers/storage';
+import {removeAuthentication} from '~redux/auth/auth.slice';
 import {authLogout} from '~redux/auth/auth.thunks';
-import {removeAuthentication} from '~redux/app/app.slice';
 
 export const authMiddleware: Middleware = store => next => async action => {
   const isRejected = action.meta?.requestStatus === 'rejected';

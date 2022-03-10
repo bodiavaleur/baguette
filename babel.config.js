@@ -12,6 +12,7 @@ module.exports = {
           '~config': './src/config',
           '~screens': './src/screens',
           '~redux': './src/redux',
+          '~services': './src/services',
           '~navigation': './src/navigation',
           '~helpers': './src/helpers',
           '~types': './src/types',

@@ -1,54 +1,36 @@
 import {createSlice} from '@reduxjs/toolkit';
-import StatusGenerator from '~helpers/StatusGenerator';
-import {SliceStatuses, StatusesCollection} from '~types/statuses';
-import {authLogIn, authRegister} from '~redux/auth/auth.thunks';
+import authApi from '~services/api/auth';
+import {Token} from '~types/token';
+import {storage} from '~helpers/storage';
+import {AuthSliceState} from './types';
 
-const {Pending, Rejected, Fulfilled} = SliceStatuses;
-
-const statuses = [authLogIn.typePrefix, authRegister.typePrefix];
-
-export interface AuthSliceState {
-  statuses: StatusesCollection;
-}
+const {login, register} = authApi.endpoints;
 
 const initialState: AuthSliceState = {
-  statuses: StatusGenerator.generateStatuses(statuses),
+  isAuthenticated: false,
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    authenticateUser: state => {
+      state.isAuthenticated = true;
+    },
+    removeAuthentication: state => {
+      state.isAuthenticated = false;
+    },
+  },
   extraReducers: builder => {
-    builder
-      .addCase(authLogIn.pending, state => {
-        state.statuses[authLogIn.typePrefix] =
-          StatusGenerator.setStatus(Pending);
-      })
-      .addCase(authLogIn.rejected, (state, {payload}) => {
-        state.statuses[authLogIn.typePrefix] = StatusGenerator.setStatus(
-          Rejected,
-          payload,
-        );
-      })
-      .addCase(authLogIn.fulfilled, state => {
-        state.statuses[authLogIn.typePrefix] =
-          StatusGenerator.setStatus(Fulfilled);
-      })
-
-      .addCase(authRegister.pending, state => {
-        state.statuses[authRegister.typePrefix] =
-          StatusGenerator.setStatus(Pending);
-      })
-      .addCase(authRegister.rejected, state => {
-        state.statuses[authRegister.typePrefix] =
-          StatusGenerator.setStatus(Rejected);
-      })
-      .addCase(authRegister.fulfilled, state => {
-        state.statuses[authRegister.typePrefix] =
-          StatusGenerator.setStatus(Fulfilled);
-      });
+    builder.addMatcher(login.matchFulfilled, (state, {payload}) => {
+      storage.token.set({[Token.Access]: payload.accessToken});
+    });
+    builder.addMatcher(register.matchFulfilled, (state, {payload}) => {
+      storage.token.set({[Token.Access]: payload.accessToken});
+    });
   },
 });
+
+export const {authenticateUser, removeAuthentication} = authSlice.actions;
 
 export default authSlice;

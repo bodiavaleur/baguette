@@ -5,6 +5,7 @@ import dictionarySlice from './dictionary/dictionary.slice';
 import wordSlice from './word/word.slice';
 import {authMiddleware} from '~redux/middleware/auth.middleware';
 import trainingSlice from '~redux/training/training.slice';
+import api from '~services/api';
 
 export const store = configureStore({
   reducer: {
@@ -13,9 +14,10 @@ export const store = configureStore({
     dictionary: dictionarySlice.reducer,
     word: wordSlice.reducer,
     training: trainingSlice.reducer,
+    [api.reducerPath]: api.reducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(authMiddleware),
+    getDefaultMiddleware().concat(api.middleware).concat(authMiddleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

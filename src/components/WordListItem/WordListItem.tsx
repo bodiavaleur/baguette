@@ -7,16 +7,29 @@ import {theme} from '~config/theme';
 import {Word} from '~types/word';
 import Divider from '~components/Divider';
 import Avatar from '~components/Avatar';
+import {useAppDispatch} from '~hooks/redux/useAppDispatch';
+import {setCurrentWord} from '~redux/word/word.slice';
+import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
+import {WordRoutes} from '~navigation/routes';
 
 interface WordListItemProps {
   word: Word;
-  onPress: () => void;
 }
 
-const WordListItem: React.FC<WordListItemProps> = ({word, onPress}) => {
+const WordListItem: React.FC<WordListItemProps> = ({word}) => {
+  const navigation = useAppNavigation();
+  const dispatch = useAppDispatch();
+
+  const openWordDetails = () => {
+    dispatch(setCurrentWord(word._id));
+    navigation.navigate(WordRoutes.Root, {
+      screen: WordRoutes.Word,
+    });
+  };
+
   return (
     <>
-      <TouchableOpacity style={styles.container} onPress={onPress}>
+      <TouchableOpacity style={styles.container} onPress={openWordDetails}>
         <View style={styles.item}>
           <View style={styles.avatar}>
             <Avatar label={word?.word} src={word?.image} />

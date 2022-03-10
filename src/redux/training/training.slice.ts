@@ -1,45 +1,24 @@
 import {createSlice} from '@reduxjs/toolkit';
-import StatusGenerator from '~helpers/StatusGenerator';
-import {SliceStatuses} from '~types/statuses';
-import {fetchTrainingDictionary} from './training.thunks';
 import {TrainingSliceState} from './types';
 
-const {Pending, Rejected, Fulfilled} = SliceStatuses;
-
-const statuses = [fetchTrainingDictionary.typePrefix];
-
 const initialState: TrainingSliceState = {
-  statuses: StatusGenerator.generateStatuses(statuses),
-  trainingDictionary: null,
+  trainingDictionary: '',
 };
 
 const trainingSlice = createSlice({
   name: 'training',
   initialState,
   reducers: {
-    clearTrainingDictionary: state => {
-      state.trainingDictionary = null;
+    setTrainingDictionary: (state, {payload}) => {
+      state.trainingDictionary = payload;
     },
-  },
-  extraReducers: builder => {
-    builder
-      .addCase(fetchTrainingDictionary.pending, state => {
-        state.statuses[fetchTrainingDictionary.typePrefix] =
-          StatusGenerator.setStatus(Pending);
-      })
-      .addCase(fetchTrainingDictionary.rejected, (state, {payload}) => {
-        state.statuses[fetchTrainingDictionary.typePrefix] =
-          StatusGenerator.setStatus(Rejected, payload);
-      })
-      .addCase(fetchTrainingDictionary.fulfilled, (state, {payload}) => {
-        state.statuses[fetchTrainingDictionary.typePrefix] =
-          StatusGenerator.setStatus(Fulfilled);
-
-        state.trainingDictionary = payload;
-      });
+    clearTrainingDictionary: state => {
+      state.trainingDictionary = '';
+    },
   },
 });
 
-export const {clearTrainingDictionary} = trainingSlice.actions;
+export const {setTrainingDictionary, clearTrainingDictionary} =
+  trainingSlice.actions;
 
 export default trainingSlice;

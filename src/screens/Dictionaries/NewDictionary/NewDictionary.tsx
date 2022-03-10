@@ -13,32 +13,31 @@ import {
   NewDictionaryValues,
   NewDictionaryFields,
 } from './config';
-import {useAppDispatch} from '~hooks/redux/useAppDispatch';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
-import {
-  createDictionary,
-  uploadDictionaryImage,
-} from '~redux/dictionary/dictionary.thunks';
 import useImagePicker from '~hooks/useImagePicker';
 import Button from '~components/Button';
 import Avatar from '~components/Avatar';
-import {useSelector} from 'react-redux';
-import {getDictionaryStatuses} from '~redux/dictionary/dictionary.selectors';
 import {InputPlaceholderStrings} from '~config/strings/inputs';
+import {
+  useCreateDictionaryMutation,
+  useUploadDictionaryImageMutation,
+} from '~services/api/dictionary';
 
 const {Name, Description} = NewDictionaryFields;
 
 const NewDictionary: React.FC = () => {
-  const dispatch = useAppDispatch();
   const navigation = useAppNavigation();
   const imagePicker = useImagePicker();
-  const statuses = useSelector(getDictionaryStatuses);
+  const [createDictionary] = useCreateDictionaryMutation();
+  const [uploadDictionaryImage, imageResult] =
+    useUploadDictionaryImageMutation();
 
   const handleSubmit = async (values: NewDictionaryValues) => {
-    const dictionary = await dispatch(createDictionary(values)).unwrap();
+    const dictionary = await createDictionary(values).unwrap();
+
     if (imagePicker.image) {
       const args = {dictionaryId: dictionary?._id, image: imagePicker.image};
-      await dispatch(uploadDictionaryImage(args));
+      await uploadDictionaryImage(args).unwrap();
     }
 
     navigation.goBack();
@@ -52,8 +51,6 @@ const NewDictionary: React.FC = () => {
 
   const screenHeader = useMemo(() => <Header left={<BackButton />} />, []);
 
-  const isImageUploading = statuses[uploadDictionaryImage.typePrefix].pending;
-
   return (
     <Layout withScroll customHeader={screenHeader}>
       <View style={styles.container}>
@@ -63,7 +60,7 @@ const NewDictionary: React.FC = () => {
           label="+"
           onPress={imagePicker.pickFromGallery}
           src={imagePicker.image?.path}
-          loading={isImageUploading}
+          loading={imageResult.isLoading}
         />
         <Input
           placeholder={InputPlaceholderStrings.Name}
