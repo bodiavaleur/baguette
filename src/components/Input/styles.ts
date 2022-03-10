@@ -5,7 +5,7 @@ import {theme} from '~config/theme';
 const styles = StyleSheet.create({
   container: {
     ...typography.title,
-    height: 40,
+    paddingVertical: theme.spacing.small,
     color: theme.colors.text,
   },
 });

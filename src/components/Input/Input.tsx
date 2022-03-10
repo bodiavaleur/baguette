@@ -4,6 +4,7 @@ import styles from './styles';
 import {TextInput} from 'react-native';
 import {theme} from '~config/theme';
 import {Spacing} from '~types/theme';
+import {INPUT_DEFAULT_LENGTH} from '~config/inputs';
 
 interface InputProps extends TextInputProps {
   style?: StyleProp<TextStyle>;
@@ -15,6 +16,7 @@ const Input: React.FC<InputProps> = ({style, margin = 'medium', ...props}) => {
 
   return (
     <TextInput
+      maxLength={INPUT_DEFAULT_LENGTH}
       style={[styles.container, marginVertical, style]}
       placeholderTextColor={theme.colors.placeholderGray}
       returnKeyType="done"

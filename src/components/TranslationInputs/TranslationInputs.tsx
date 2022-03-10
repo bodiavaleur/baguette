@@ -7,6 +7,7 @@ import styles from './styles';
 import ActionIcon from '~components/ActionIcon';
 import DeleteIcon from '~assets/icons/delete.svg';
 import PlusIcon from '~assets/icons/plus.svg';
+import {INPUT_MEDIUM_LENGTH} from '~config/inputs';
 
 interface TranslationInputsProps {
   useInputs: MultipleInputs;
@@ -32,6 +33,8 @@ const TranslationInputs: React.FC<TranslationInputsProps> = ({
         return (
           <View style={styles.inputRow} key={index}>
             <Input
+              multiline
+              maxLength={INPUT_MEDIUM_LENGTH}
               style={styles.input}
               placeholder={placeholder}
               onChangeText={text => onChange(index, text)}

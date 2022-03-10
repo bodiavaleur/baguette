@@ -32,6 +32,7 @@ import Avatar from '~components/Avatar';
 import {selectCurrentDictionary} from '~redux/dictionary/dictionary.selectors';
 import {useGetDictionaryByIdQuery} from '~services/api/dictionary';
 import {selectCurrentWord} from '~redux/word/word.selectors';
+import {INPUT_MEDIUM_LENGTH, INPUT_LARGE_LENGTH} from '~config/inputs';
 import {
   useDeleteWordMutation,
   useEditWordMutation,
@@ -126,6 +127,8 @@ const EditWord: React.FC = () => {
         />
 
         <Input
+          multiline
+          maxLength={INPUT_MEDIUM_LENGTH}
           placeholder={InputPlaceholderStrings.AddWord}
           onChangeText={formik.handleChange(Word)}
           value={formik.values[Word]}
@@ -134,6 +137,8 @@ const EditWord: React.FC = () => {
         <TranslationInputs useInputs={translations} />
 
         <Input
+          multiline
+          maxLength={INPUT_LARGE_LENGTH}
           placeholder={InputPlaceholderStrings.WordExample}
           onChangeText={formik.handleChange(Example)}
           value={formik.values[Example]}

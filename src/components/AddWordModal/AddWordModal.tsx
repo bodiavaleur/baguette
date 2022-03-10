@@ -24,6 +24,7 @@ import useImagePicker from '~hooks/useImagePicker';
 import Avatar from '~components/Avatar';
 import DictionaryPicker from '~components/DictionaryPicker';
 import {storage} from '~helpers/storage';
+import {INPUT_LARGE_LENGTH, INPUT_MEDIUM_LENGTH} from '~config/inputs';
 import {
   useCreateWordMutation,
   useUploadWordImageMutation,
@@ -116,6 +117,8 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
 
               <Input
                 autoFocus
+                multiline
+                maxLength={INPUT_MEDIUM_LENGTH}
                 placeholder={InputPlaceholderStrings.AddWord}
                 onChangeText={formik.handleChange(Word)}
                 value={formik.values[Word]}
@@ -124,6 +127,8 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
               <TranslationInputs useInputs={translations} />
 
               <Input
+                multiline
+                maxLength={INPUT_LARGE_LENGTH}
                 placeholder={InputPlaceholderStrings.WordExample}
                 onChangeText={formik.handleChange(Example)}
                 value={formik.values[Example]}

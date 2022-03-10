@@ -18,6 +18,7 @@ import useImagePicker from '~hooks/useImagePicker';
 import Button from '~components/Button';
 import Avatar from '~components/Avatar';
 import {InputPlaceholderStrings} from '~config/strings/inputs';
+import {INPUT_LARGE_LENGTH} from '~config/inputs';
 import {
   useCreateDictionaryMutation,
   useUploadDictionaryImageMutation,
@@ -68,6 +69,8 @@ const NewDictionary: React.FC = () => {
           value={formik.values[Name]}
         />
         <Input
+          multiline
+          maxLength={INPUT_LARGE_LENGTH}
           placeholder={InputPlaceholderStrings.Description}
           onChangeText={formik.handleChange(Description)}
           value={formik.values[Description]}
