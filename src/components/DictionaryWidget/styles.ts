@@ -5,8 +5,8 @@ import {fontSize, typography} from '~config/typography';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    maxWidth: 148,
-    height: 148,
+    minWidth: 148,
+    minHeight: 148,
     margin: theme.spacing.small,
     padding: theme.spacing.medium,
     borderRadius: 28,
