@@ -9,14 +9,10 @@ import {useAppDispatch} from '~hooks/redux/useAppDispatch';
 import {setCurrentDictionary} from '~redux/dictionary/dictionary.slice';
 
 interface DictionaryWidgetProps {
-  fullWidth?: boolean;
   dictionary: Dictionary;
 }
 
-const DictionaryWidget: React.FC<DictionaryWidgetProps> = ({
-  fullWidth,
-  dictionary,
-}) => {
+const DictionaryWidget: React.FC<DictionaryWidgetProps> = ({dictionary}) => {
   const navigation = useAppNavigation();
   const dispatch = useAppDispatch();
 
@@ -25,22 +21,15 @@ const DictionaryWidget: React.FC<DictionaryWidgetProps> = ({
     navigation.navigate(DictionaryRoutes.Dictionary);
   };
 
-  const avatarSize = fullWidth ? 76 : 48;
-  const containerStyle = [
-    styles.container,
-    fullWidth ? styles.fullWidth : null,
-  ];
-  const nameStyle = [styles.name, fullWidth ? styles.largeName : null];
-
   return (
-    <TouchableOpacity style={containerStyle} onPress={onWidgetPress}>
+    <TouchableOpacity style={styles.container} onPress={onWidgetPress}>
       <Avatar
         style={styles.image}
-        size={avatarSize}
+        size={48}
         label={dictionary?.name}
         src={dictionary?.image}
       />
-      <Text style={nameStyle}>{dictionary?.name}</Text>
+      <Text style={styles.name}>{dictionary?.name}</Text>
       {!!dictionary.description && (
         <Text style={styles.description}>{dictionary.description}</Text>
       )}

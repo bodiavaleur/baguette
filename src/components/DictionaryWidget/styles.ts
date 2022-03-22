@@ -12,20 +12,12 @@ const styles = StyleSheet.create({
     borderRadius: 28,
     backgroundColor: theme.colors.action,
   },
-  fullWidth: {
-    maxWidth: undefined,
-  },
   image: {
     marginBottom: theme.spacing.small,
   },
   name: {
     ...typography.title,
     fontSize: fontSize.h5,
-    marginBottom: theme.spacing.xs,
-  },
-  largeName: {
-    ...typography.title,
-    fontSize: fontSize.h3,
     marginBottom: theme.spacing.xs,
   },
   description: {

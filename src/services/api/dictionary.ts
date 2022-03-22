@@ -3,19 +3,36 @@ import {Dictionary, DictionaryStats} from '~types/dictionary';
 import {DictionaryTags} from '~types/rtk/api';
 import {
   EditDictionaryArgs,
+  GetDictionaryWordsArgs,
   UploadDictionaryImageArgs,
 } from '~types/rtk/dictionary';
 import api from '.';
+import {Pagination} from '~types/pagination';
 
-const {MyDictionaries, CurrentDictionary} = DictionaryTags;
-const {MY_DICTIONARIES, CREATE, EDIT, GET_BY_ID, UPLOAD_IMAGE, GET_STATS} =
-  DICTIONARY_ENDPOINTS;
+const {MyDictionaries, CurrentDictionary, DictionaryWords} = DictionaryTags;
+const {
+  MY_DICTIONARIES,
+  CREATE,
+  EDIT,
+  GET_BY_ID,
+  UPLOAD_IMAGE,
+  GET_STATS,
+  GET_WORDS,
+} = DICTIONARY_ENDPOINTS;
 
 const dictionaryApi = api.injectEndpoints({
   endpoints: build => ({
     getMyDictionaries: build.query<Dictionary[], void>({
       providesTags: [MyDictionaries],
       query: () => ({url: MY_DICTIONARIES, method: 'GET'}),
+    }),
+
+    getDictionaryWords: build.query<
+      Pagination<Dictionary>,
+      GetDictionaryWordsArgs
+    >({
+      providesTags: [DictionaryWords],
+      query: params => ({url: GET_WORDS, method: 'GET', params}),
     }),
 
     getDictionaryById: build.query<Dictionary, string>({
@@ -67,6 +84,7 @@ const dictionaryApi = api.injectEndpoints({
 
 export const {
   useGetMyDictionariesQuery,
+  useGetDictionaryWordsQuery,
   useGetDictionaryByIdQuery,
   useCreateDictionaryMutation,
   useEditDictionaryMutation,

@@ -5,6 +5,7 @@ export enum WordTags {
 export enum DictionaryTags {
   MyDictionaries = 'MyDictionaries',
   CurrentDictionary = 'CurrentDictionary',
+  DictionaryWords = 'DictionaryWords',
 }
 
 export enum TrainingTags {

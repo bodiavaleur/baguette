@@ -12,7 +12,7 @@ import {useGetMyDictionariesQuery} from '~services/api/dictionary';
 const MyDictionaries: React.FC = () => {
   const navigation = useAppNavigation();
   const myDictionaries = useGetMyDictionariesQuery();
-  const [firstDictionary, ...dictionaries] = myDictionaries.data ?? [];
+  const dictionaries = myDictionaries.data ?? [];
 
   useFocusEffect(
     useCallback(() => {
@@ -34,18 +34,9 @@ const MyDictionaries: React.FC = () => {
     [],
   );
 
-  const listHeader = firstDictionary ? (
-    <DictionaryWidget fullWidth dictionary={firstDictionary} />
-  ) : null;
-
   return (
     <Layout withoutPaddings withoutSafeBottom customHeader={screenHeader}>
-      <ScreenList
-        data={dictionaries}
-        ListHeaderComponent={listHeader}
-        renderItem={renderItem}
-        numColumns={2}
-      />
+      <ScreenList data={dictionaries} renderItem={renderItem} numColumns={2} />
     </Layout>
   );
 };

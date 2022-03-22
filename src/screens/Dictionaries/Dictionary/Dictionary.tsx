@@ -1,21 +1,25 @@
 import React, {useCallback, useEffect, useMemo} from 'react';
 import Layout from '~containers/Layout/Layout';
 import WordListItem from '~components/WordListItem';
-import {useFocusEffect} from '@react-navigation/native';
 import ScreenList from '~containers/ScreenList';
 import Header from '~components/Header';
 import BackButton from '~components/Header/plugins/BackButton';
 import DictionaryDetails from '~components/DictionaryDetails';
-import {useGetDictionaryByIdQuery} from '~services/api/dictionary';
+import dictionaryApi from '~services/api/dictionary';
 import {useAppDispatch} from '~hooks/redux/useAppDispatch';
 import {clearCurrentDictionary} from '~redux/dictionary/dictionary.slice';
 import {useSelector} from 'react-redux';
 import {selectCurrentDictionary} from '~redux/dictionary/dictionary.selectors';
+import useInfinityScroll from '~hooks/useInfinityScroll';
+
+const {getDictionaryWords} = dictionaryApi.endpoints;
 
 const Dictionary: React.FC = () => {
   const dispatch = useAppDispatch();
   const currentDictionary = useSelector(selectCurrentDictionary);
-  const dictionaryById = useGetDictionaryByIdQuery(currentDictionary);
+  const words = useInfinityScroll(getDictionaryWords, {
+    dictionaryId: currentDictionary,
+  });
 
   useEffect(() => {
     return () => {
@@ -23,24 +27,21 @@ const Dictionary: React.FC = () => {
     };
   }, []);
 
-  useFocusEffect(
-    useCallback(() => {
-      dictionaryById.refetch();
-    }, []),
-  );
-
   const renderWord = useCallback(({item}) => <WordListItem word={item} />, []);
 
   const screenHeader = useMemo(() => <Header left={<BackButton />} />, []);
 
-  const data = dictionaryById.data?.dictionary ?? [];
-
   return (
     <Layout withoutPaddings withoutSafeBottom customHeader={screenHeader}>
       <ScreenList
-        data={data}
+        refreshing={words.isRefreshing}
+        onRefresh={words.refreshList}
+        data={words.dataset}
         ListHeaderComponent={DictionaryDetails}
         renderItem={renderWord}
+        keyExtractor={item => item._id}
+        onEndReachedThreshold={0.2}
+        onEndReached={words.loadMoreItems}
       />
     </Layout>
   );
