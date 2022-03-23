@@ -2,22 +2,22 @@ import {TRAINING_ENDPOINTS, DICTIONARY_ENDPOINTS} from '~config/api';
 import {TrainingTags} from '~types/rtk/tags';
 import {Word} from '~types/word';
 import api from '.';
-import {Dictionary} from '~types/dictionary';
 import {TrainingIntensity} from '~types/training';
+import {Pagination} from '~types/pagination';
+import {GetDictionaryWordsArgs} from '~types/rtk/dictionary';
 
 const {TrainingDictionary} = TrainingTags;
 const {FLASHCARD} = TRAINING_ENDPOINTS;
-const {GET_BY_ID} = DICTIONARY_ENDPOINTS;
+const {GET_WORDS} = DICTIONARY_ENDPOINTS;
 
 export const trainingApi = api.injectEndpoints({
   endpoints: build => ({
-    getTrainingDictionary: build.query<Dictionary, string>({
+    getTrainingDictionary: build.query<
+      Pagination<Word>,
+      GetDictionaryWordsArgs
+    >({
       providesTags: [TrainingDictionary],
-      query: dictionaryId => {
-        const params = {dictionaryId};
-
-        return {url: GET_BY_ID, method: 'GET', params};
-      },
+      query: params => ({url: GET_WORDS, method: 'GET', params}),
     }),
     increaseFlashcardIntensity: build.mutation<Word, string>({
       query: wordId => {

@@ -8,6 +8,7 @@ import {
 } from '~types/rtk/dictionary';
 import api from '.';
 import {Pagination} from '~types/pagination';
+import {Word} from '~types/word';
 
 const {MyDictionaries, CurrentDictionary, DictionaryWords} = DictionaryTags;
 const {
@@ -27,10 +28,7 @@ const dictionaryApi = api.injectEndpoints({
       query: () => ({url: MY_DICTIONARIES, method: 'GET'}),
     }),
 
-    getDictionaryWords: build.query<
-      Pagination<Dictionary>,
-      GetDictionaryWordsArgs
-    >({
+    getDictionaryWords: build.query<Pagination<Word>, GetDictionaryWordsArgs>({
       providesTags: [DictionaryWords],
       query: params => ({url: GET_WORDS, method: 'GET', params}),
     }),

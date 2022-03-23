@@ -3,7 +3,7 @@ import {RootState} from '../index';
 
 const trainingState = (state: RootState) => state.training;
 
-export const getTrainingDictionary = createSelector(
+export const selectTrainingDictionary = createSelector(
   trainingState,
   ({trainingDictionary}) => trainingDictionary,
 );
