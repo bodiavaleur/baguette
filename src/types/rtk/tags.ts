@@ -1,5 +1,6 @@
 export enum WordTags {
   Word = 'Word',
+  MyWords = 'MyWords',
 }
 
 export enum DictionaryTags {

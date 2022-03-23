@@ -6,11 +6,11 @@ import usePullToRefresh from '~hooks/usePullToRefresh';
 // TODO: add types for arguments
 // endpoint - rtk query endpoint
 // args - query arguments for given endpoint
-function useInfinityScroll(endpoint: any, args: any) {
+function useInfinityScroll(endpoint: any, args?: any) {
   const [dataset, setDataset] = useState<Pagination<any>[]>([]);
   const pagination = usePagination();
   const refresh = usePullToRefresh();
-  const query = endpoint.useQuery({page: pagination.page, ...args});
+  const query = endpoint.useQuery({page: pagination.page, ...(args ?? {})});
 
   useEffect(() => {
     refresh.hide();

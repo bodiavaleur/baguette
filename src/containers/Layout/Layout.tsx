@@ -3,15 +3,13 @@ import {ScrollView, View} from 'react-native';
 import type {StyleProp, ViewStyle} from 'react-native';
 import styles from './styles';
 import Header from '~components/Header';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {BOTTOM_BAR_HEIGHT} from '~config/device';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 interface LayoutProps {
   style?: StyleProp<ViewStyle>;
   safeAreaStyle?: StyleProp<ViewStyle>;
   withScroll?: boolean;
   withoutPaddings?: boolean;
-  withoutSafeBottom?: boolean;
   customHeader?: React.ReactNode;
   children: React.ReactNode;
 }
@@ -23,31 +21,22 @@ const Layout: React.FC<LayoutProps> = ({
   withoutPaddings,
   customHeader,
   children,
-  withoutSafeBottom,
 }) => {
-  const insets = useSafeAreaInsets();
-
   const containerStyle = useMemo(
     () => [
       styles.contentContainer,
       withoutPaddings ? styles.noPadding : null,
       style,
     ],
-    [withoutPaddings, style, insets],
-  );
-
-  const safeContainerStyle = useMemo(
-    () => ({
-      paddingTop: insets.top,
-      paddingBottom: withoutSafeBottom ? 0 : insets.bottom + BOTTOM_BAR_HEIGHT,
-    }),
-    [insets, withoutSafeBottom],
+    [withoutPaddings, style],
   );
 
   const defaultHeader = <Header />;
 
   return (
-    <View style={[styles.container, safeContainerStyle, safeAreaStyle]}>
+    <SafeAreaView
+      style={[styles.container, safeAreaStyle]}
+      edges={['top', 'right', 'left']}>
       {customHeader !== undefined ? customHeader : defaultHeader}
       {withScroll ? (
         <ScrollView contentContainerStyle={containerStyle}>
@@ -56,7 +45,7 @@ const Layout: React.FC<LayoutProps> = ({
       ) : (
         <View style={[containerStyle, styles.withFlex]}>{children}</View>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

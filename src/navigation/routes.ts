@@ -13,6 +13,7 @@ export const WordRoutes = {
 export const DictionaryRoutes = {
   Root: 'DictionaryRoot',
   MyDictionaries: 'DictionaryMyDictionaries',
+  MyWords: 'DictionaryMyWords',
   NewDictionary: 'DictionaryNewDictionary',
   Dictionary: 'DictionaryDictionary',
   WordDetails: WordRoutes.Root,

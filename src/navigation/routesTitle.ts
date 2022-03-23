@@ -23,6 +23,7 @@ export const ROUTES_TITLE: RouteTitle = {
   [DictionaryRoutes.Dictionary]: RouteStrings.Dictionary,
   [DictionaryRoutes.MyDictionaries]: RouteStrings.MyDictionaries,
   [DictionaryRoutes.NewDictionary]: RouteStrings.NewDictionary,
+  [DictionaryRoutes.MyWords]: RouteStrings.MyWords,
 
   [TrainingRoutes.Menu]: RouteStrings.TrainingMenu,
   [TrainingRoutes.Flashcards]: RouteStrings.Flashcards,

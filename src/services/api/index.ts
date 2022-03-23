@@ -1,5 +1,5 @@
 import {createApi} from '@reduxjs/toolkit/query/react';
-import {DictionaryTags, WordTags, TrainingTags} from '~types/rtk/api';
+import {DictionaryTags, WordTags, TrainingTags} from '~types/rtk/tags';
 import {axiosBaseQuery} from '~utils/axiosBaseQuery';
 
 const wordTags = Object.values(WordTags);

@@ -1,5 +1,5 @@
 import {TRAINING_ENDPOINTS, DICTIONARY_ENDPOINTS} from '~config/api';
-import {TrainingTags} from '~types/rtk/api';
+import {TrainingTags} from '~types/rtk/tags';
 import {Word} from '~types/word';
 import api from '.';
 import {Dictionary} from '~types/dictionary';

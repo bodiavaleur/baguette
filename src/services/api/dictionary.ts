@@ -1,6 +1,6 @@
 import {DICTIONARY_ENDPOINTS} from '~config/api';
 import {Dictionary, DictionaryStats} from '~types/dictionary';
-import {DictionaryTags} from '~types/rtk/api';
+import {DictionaryTags} from '~types/rtk/tags';
 import {
   EditDictionaryArgs,
   GetDictionaryWordsArgs,

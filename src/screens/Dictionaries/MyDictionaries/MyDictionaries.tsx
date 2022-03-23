@@ -8,6 +8,7 @@ import ScreenList from '~containers/ScreenList';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
 import {DictionaryRoutes} from '~navigation/routes';
 import {useGetMyDictionariesQuery} from '~services/api/dictionary';
+import DictionaryButton from '~components/Header/plugins/DictionaryButton';
 
 const MyDictionaries: React.FC = () => {
   const navigation = useAppNavigation();
@@ -24,8 +25,17 @@ const MyDictionaries: React.FC = () => {
     navigation.navigate(DictionaryRoutes.NewDictionary);
   };
 
+  const openUserDictionary = () => {
+    navigation.navigate(DictionaryRoutes.MyWords);
+  };
+
   const screenHeader = useMemo(
-    () => <Header right={<AddButton onAdd={onAddPress} />} />,
+    () => (
+      <Header
+        left={<DictionaryButton onPress={openUserDictionary} />}
+        right={<AddButton onAdd={onAddPress} />}
+      />
+    ),
     [],
   );
 
@@ -35,7 +45,7 @@ const MyDictionaries: React.FC = () => {
   );
 
   return (
-    <Layout withoutPaddings withoutSafeBottom customHeader={screenHeader}>
+    <Layout withoutPaddings customHeader={screenHeader}>
       <ScreenList data={dictionaries} renderItem={renderItem} numColumns={2} />
     </Layout>
   );

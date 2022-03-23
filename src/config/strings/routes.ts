@@ -5,6 +5,7 @@ export enum RouteStrings {
 
   Dictionary = 'Dictionary',
   MyDictionaries = 'My dictionaries',
+  MyWords = 'My words',
   NewDictionary = 'Create new dictionary',
 
   Account = 'Account',

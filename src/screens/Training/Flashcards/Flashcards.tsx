@@ -23,7 +23,7 @@ const Flashcards: React.FC = () => {
   const listData = dictionary.data?.dictionary ?? [];
 
   return (
-    <Layout withoutPaddings withoutSafeBottom customHeader={screenHeader}>
+    <Layout withoutPaddings customHeader={screenHeader}>
       <GestureHandlerRootView>
         <FlatList
           style={styles.container}

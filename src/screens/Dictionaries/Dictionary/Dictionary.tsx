@@ -32,7 +32,7 @@ const Dictionary: React.FC = () => {
   const screenHeader = useMemo(() => <Header left={<BackButton />} />, []);
 
   return (
-    <Layout withoutPaddings withoutSafeBottom customHeader={screenHeader}>
+    <Layout withoutPaddings customHeader={screenHeader}>
       <ScreenList
         refreshing={words.isRefreshing}
         onRefresh={words.refreshList}
