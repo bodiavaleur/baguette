@@ -46,6 +46,13 @@ const Menu: React.FC = () => {
     navigation.navigate(TrainingRoutes.Flashcards);
   };
 
+  const isDictionarySelected = Boolean(dictionaryId);
+  const hasMenuEvents = isDictionarySelected ? undefined : 'none';
+  const menuStyle = [
+    styles.trainingMenu,
+    !isDictionarySelected ? styles.disabled : null,
+  ];
+
   return (
     <Layout withoutPaddings style={styles.container}>
       <ScreenList
@@ -58,7 +65,7 @@ const Menu: React.FC = () => {
           />
         }
         ListFooterComponent={
-          <View style={styles.trainingMenu}>
+          <View style={menuStyle} pointerEvents={hasMenuEvents}>
             <MenuBox
               title={TrainingMenuStrings.Flashcards}
               onPress={navigateToFlashcards}

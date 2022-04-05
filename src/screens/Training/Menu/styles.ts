@@ -7,6 +7,9 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
   },
+  disabled: {
+    opacity: 0.25,
+  },
 });
 
 export default styles;
