@@ -4,6 +4,7 @@ import {MultipleInputs} from '~types/hooks';
 const DEFAULT_INPUTS = [''];
 function useMultipleInputs(customInputs = DEFAULT_INPUTS): MultipleInputs {
   const [inputs, setInputs] = useState<string[]>(customInputs);
+  const isEmpty = inputs.filter(Boolean).length === 0;
 
   const onChange = (index: number, text: string) => {
     const prevInputs = [...inputs];
@@ -24,7 +25,7 @@ function useMultipleInputs(customInputs = DEFAULT_INPUTS): MultipleInputs {
     setInputs(DEFAULT_INPUTS);
   };
 
-  return {inputs, onChange, add, remove, clear};
+  return {inputs, isEmpty, onChange, add, remove, clear};
 }
 
 export default useMultipleInputs;

@@ -83,6 +83,8 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
     }
   }, [isOpen]);
 
+  const isSubmitDisabled = !formik.isValid || translations.isEmpty;
+
   return (
     <Modal
       deviceWidth={1}
@@ -136,6 +138,7 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
             </View>
 
             <Button
+              disabled={isSubmitDisabled}
               title={ButtonStrings.AddWord}
               onPress={formik.handleSubmit}
             />
