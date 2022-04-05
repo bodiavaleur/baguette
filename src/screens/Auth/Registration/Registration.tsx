@@ -41,11 +41,14 @@ const Registration: React.FC = ({}) => {
     initialValues,
     validationSchema,
     onSubmit: handleSubmit,
+    validateOnMount: true,
   });
 
   const usernameError = formik.touched[Username] && formik.errors[Username];
   const emailError = formik.touched[Email] && formik.errors[Email];
   const passwordError = formik.touched[Password] && formik.errors[Password];
+
+  const isSubmitDisabled = !formik.isValid;
 
   return (
     <Layout withScroll>
@@ -67,7 +70,11 @@ const Registration: React.FC = ({}) => {
         error={passwordError}
       />
 
-      <Button title={AuthStrings.CreateAccount} onPress={formik.handleSubmit} />
+      <Button
+        disabled={isSubmitDisabled}
+        title={AuthStrings.CreateAccount}
+        onPress={formik.handleSubmit}
+      />
       <View style={styles.toggleAuthContainer}>
         <Text style={styles.toggleAuthText}>
           {AuthStrings.AlreadyHaveAccount}

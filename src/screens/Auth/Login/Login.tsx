@@ -41,10 +41,13 @@ const Login: React.FC = () => {
     initialValues,
     validationSchema,
     onSubmit: handleSubmit,
+    validateOnMount: true,
   });
 
   const emailError = formik.touched[Email] && formik.errors[Email];
   const passwordError = formik.touched[Password] && formik.errors[Password];
+
+  const isSubmitDisabled = !formik.isValid;
 
   return (
     <Layout withScroll>
@@ -62,7 +65,12 @@ const Login: React.FC = () => {
         onChangeText={formik.handleChange(Password)}
         error={passwordError}
       />
-      <Button title={AuthStrings.SignIn} onPress={formik.handleSubmit} />
+
+      <Button
+        title={AuthStrings.SignIn}
+        onPress={formik.handleSubmit}
+        disabled={isSubmitDisabled}
+      />
 
       <View style={styles.toggleAuthContainer}>
         <Text style={styles.toggleAuthText}>{AuthStrings.DontHaveAccount}</Text>
