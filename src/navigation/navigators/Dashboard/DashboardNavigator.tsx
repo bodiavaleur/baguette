@@ -15,6 +15,7 @@ import {dashboardPanelConfig} from '~navigation/navigators/Dashboard/config';
 import {ROUTES_TITLE} from '~navigation/routesTitle';
 import {View} from 'react-native';
 import styles from './styles';
+import Account from '~screens/Account';
 
 const Tab = createBottomTabNavigator();
 
@@ -63,7 +64,7 @@ const DashboardNavigator: React.FC = () => {
         />
         <Tab.Screen
           name={DashboardRoutes.Account}
-          component={Home}
+          component={Account}
           options={makeTabIcon(DashboardRoutes.Account, AccountIcon)}
         />
       </Tab.Navigator>

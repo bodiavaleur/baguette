@@ -1,4 +1,4 @@
-export const API_URL = 'http://192.168.1.103:6565/api/v1/';
+export const API_URL = 'https://mysterious-tor-84331.herokuapp.com/api/v1/';
 
 export const AUTH_ENDPOINTS = {
   LOGIN: `${API_URL}auth/login/`,
