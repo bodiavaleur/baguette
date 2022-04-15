@@ -29,8 +29,10 @@ import {
   useCreateWordMutation,
   useUploadWordImageMutation,
 } from '~services/api/word';
+import WordTypeDropdown from '~components/WordTypeDropdown';
+import {WordType} from '~config/words';
 
-const {DictionaryId, Word, Example} = NewWordFields;
+const {DictionaryId, Word, Example, Type} = NewWordFields;
 
 interface AddWordModalProps {
   isOpen: boolean;
@@ -59,13 +61,17 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
       await uploadWordImage(uploadArgs).unwrap();
     }
 
-    formik.resetForm();
     onCancel();
   };
 
   const onChangeDictionary = useCallback((value: string) => {
     storage.lastUsedDictionary.set(value);
     formik.setFieldValue(DictionaryId, value);
+  }, []);
+
+  const onSelectType = useCallback((type: WordType) => {
+    storage.lastUsedWordType.set(type);
+    formik.setFieldValue(Type, type);
   }, []);
 
   const formik = useFormik({
@@ -75,11 +81,17 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
     enableReinitialize: true,
   });
 
+  const loadSavedFields = async () => {
+    const savedDictionaryId = await storage.lastUsedDictionary.get();
+    const savedWordType = await storage.lastUsedWordType.get();
+
+    formik.setFieldValue(DictionaryId, savedDictionaryId);
+    formik.setFieldValue(Type, savedWordType);
+  };
+
   useEffect(() => {
     if (isOpen) {
-      storage.lastUsedDictionary.get().then(savedId => {
-        formik.setFieldValue(DictionaryId, savedId);
-      });
+      loadSavedFields();
     }
   }, [isOpen]);
 
@@ -110,11 +122,18 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
                   label="+"
                 />
 
-                <DictionaryPicker
-                  style={styles.picker}
-                  selectedDictionaryId={formik.values[DictionaryId]}
-                  onChange={onChangeDictionary}
-                />
+                <View style={styles.pickers}>
+                  <DictionaryPicker
+                    style={styles.dictionaryPicker}
+                    selectedDictionaryId={formik.values[DictionaryId]}
+                    onChange={onChangeDictionary}
+                  />
+
+                  <WordTypeDropdown
+                    onSelectType={onSelectType}
+                    value={formik.values[Type]}
+                  />
+                </View>
               </View>
 
               <Input

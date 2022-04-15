@@ -47,6 +47,7 @@ const DictionaryPicker: React.FC<DictionaryPickerProps> = ({
   return (
     <View style={[styles.container, style]}>
       <Picker
+        containerStyle={styles.picker}
         floatingPlaceholder
         placeholder={InputPlaceholderStrings.Dictionary}
         getLabel={renderLabel}

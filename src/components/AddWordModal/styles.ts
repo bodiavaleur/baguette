@@ -19,11 +19,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  picker: {
-    marginLeft: theme.spacing.medium,
-  },
   inputs: {
     paddingVertical: theme.spacing.medium,
+  },
+  pickers: {
+    flex: 1,
+    marginLeft: theme.spacing.medium,
   },
 });
 

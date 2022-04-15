@@ -5,4 +5,5 @@ export enum InputPlaceholderStrings {
   Dictionary = 'Dictionary',
   Name = 'Name',
   Description = 'Description',
+  SelectType = 'Select a type...',
 }

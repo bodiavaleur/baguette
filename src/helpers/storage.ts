@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TokenStorage} from '~types/token';
+import {WordType} from '~config/words';
 
 function makeStorage<T>(key: string) {
   return {
@@ -16,5 +17,6 @@ function makeStorage<T>(key: string) {
 export const storage = {
   token: makeStorage<TokenStorage>('token'),
   lastUsedDictionary: makeStorage<string>('lastUsedDictionary'),
+  lastUsedWordType: makeStorage<WordType>('lastUsedWordType'),
   trainingDictionary: makeStorage<string>('trainingDictionary'),
 };
