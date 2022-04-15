@@ -27,7 +27,10 @@ const Dictionary: React.FC = () => {
     };
   }, []);
 
-  const renderWord = useCallback(({item}) => <WordListItem word={item} />, []);
+  const renderWord = useCallback(
+    ({item, index}) => <WordListItem word={item} index={index} />,
+    [],
+  );
 
   const screenHeader = useMemo(() => <Header left={<BackButton />} />, []);
 

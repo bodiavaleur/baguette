@@ -11,12 +11,19 @@ import {useAppDispatch} from '~hooks/redux/useAppDispatch';
 import {setCurrentWord} from '~redux/word/word.slice';
 import {useAppNavigation} from '~hooks/navigation/useAppNavigation';
 import {WordRoutes} from '~navigation/routes';
+import Animated, {
+  FadeInRight,
+  FadeOutLeft,
+  Layout,
+} from 'react-native-reanimated';
+import {LIST_ITEM_ANIMATION_DURATION} from '~components/WordListItem/config';
 
 interface WordListItemProps {
   word: Word;
+  index: number;
 }
 
-const WordListItem: React.FC<WordListItemProps> = ({word}) => {
+const WordListItem: React.FC<WordListItemProps> = ({word, index}) => {
   const navigation = useAppNavigation();
   const dispatch = useAppDispatch();
 
@@ -28,7 +35,10 @@ const WordListItem: React.FC<WordListItemProps> = ({word}) => {
   };
 
   return (
-    <>
+    <Animated.View
+      entering={FadeInRight.delay(LIST_ITEM_ANIMATION_DURATION * index)}
+      exiting={FadeOutLeft}
+      layout={Layout}>
       <TouchableOpacity style={styles.container} onPress={openWordDetails}>
         <View style={styles.item}>
           <View style={styles.avatar}>
@@ -41,7 +51,7 @@ const WordListItem: React.FC<WordListItemProps> = ({word}) => {
         </View>
       </TouchableOpacity>
       <Divider spacing="none" />
-    </>
+    </Animated.View>
   );
 };
 

@@ -9,7 +9,10 @@ const {getMyWords} = wordApi.endpoints;
 const MyWordsList: React.FC = () => {
   const words = useInfinityScroll(getMyWords);
 
-  const renderWord = useCallback(({item}) => <WordListItem word={item} />, []);
+  const renderWord = useCallback(
+    ({item, index}) => <WordListItem word={item} index={index} />,
+    [],
+  );
 
   return (
     <ScreenList
