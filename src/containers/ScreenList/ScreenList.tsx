@@ -1,7 +1,8 @@
 import React, {useMemo} from 'react';
-import {FlatList, FlatListProps} from 'react-native';
+import {FlatListProps} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {theme} from '~config/theme';
+import Animated, {Layout} from 'react-native-reanimated';
 
 // TODO: type list item
 const ScreenList: React.FC<FlatListProps<any>> = props => {
@@ -14,8 +15,13 @@ const ScreenList: React.FC<FlatListProps<any>> = props => {
     }),
     [insets],
   );
-
-  return <FlatList contentContainerStyle={safeAreaStyle} {...props} />;
+  return (
+    <Animated.FlatList
+      layout={Layout}
+      contentContainerStyle={safeAreaStyle}
+      {...props}
+    />
+  );
 };
 
 export default ScreenList;

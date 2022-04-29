@@ -31,6 +31,8 @@ import {
 } from '~services/api/word';
 import WordTypeDropdown from '~components/WordTypeDropdown';
 import {WordType} from '~config/words';
+import {useSelector} from 'react-redux';
+import {selectLanguage} from '~redux/app/app.selectors';
 
 const {DictionaryId, Word, Example, Type} = NewWordFields;
 
@@ -43,6 +45,7 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
   const insets = useSafeAreaInsets();
   const translations = useMultipleInputs();
   const imagePicker = useImagePicker();
+  const language = useSelector(selectLanguage);
   const [createWord] = useCreateWordMutation();
   const [uploadWordImage, imageResult] = useUploadWordImageMutation();
 
@@ -53,7 +56,11 @@ const AddWordModal: React.FC<AddWordModalProps> = ({isOpen, onCancel}) => {
   };
 
   const handleSubmitWord = async (values: NewWordValues) => {
-    const newWordArgs = {...values, translations: translations.inputs};
+    const newWordArgs = {
+      ...values,
+      language,
+      translations: translations.inputs,
+    };
     const word = await createWord(newWordArgs).unwrap();
 
     if (imagePicker.image) {

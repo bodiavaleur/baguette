@@ -1,9 +1,9 @@
 import React, {useMemo} from 'react';
-import {ScrollView, View} from 'react-native';
 import type {StyleProp, ViewStyle} from 'react-native';
 import styles from './styles';
 import Header from '~components/Header';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import Animated, {Layout as ReanimatedLayout} from 'react-native-reanimated';
 
 interface LayoutProps {
   style?: StyleProp<ViewStyle>;
@@ -36,14 +36,20 @@ const Layout: React.FC<LayoutProps> = ({
   return (
     <SafeAreaView
       style={[styles.container, safeAreaStyle]}
-      edges={['top', 'right', 'left']}>
+      edges={['right', 'left']}>
       {customHeader !== undefined ? customHeader : defaultHeader}
       {withScroll ? (
-        <ScrollView contentContainerStyle={containerStyle}>
+        <Animated.ScrollView
+          layout={ReanimatedLayout}
+          contentContainerStyle={containerStyle}>
           {children}
-        </ScrollView>
+        </Animated.ScrollView>
       ) : (
-        <View style={[containerStyle, styles.withFlex]}>{children}</View>
+        <Animated.View
+          layout={ReanimatedLayout}
+          style={[containerStyle, styles.withFlex]}>
+          {children}
+        </Animated.View>
       )}
     </SafeAreaView>
   );

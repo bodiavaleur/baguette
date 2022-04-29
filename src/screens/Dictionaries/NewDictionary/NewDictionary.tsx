@@ -23,18 +23,21 @@ import {
   useCreateDictionaryMutation,
   useUploadDictionaryImageMutation,
 } from '~services/api/dictionary';
+import {useSelector} from 'react-redux';
+import {selectLanguage} from '~redux/app/app.selectors';
 
 const {Name, Description} = NewDictionaryFields;
 
 const NewDictionary: React.FC = () => {
   const navigation = useAppNavigation();
   const imagePicker = useImagePicker();
+  const language = useSelector(selectLanguage);
   const [createDictionary] = useCreateDictionaryMutation();
   const [uploadDictionaryImage, imageResult] =
     useUploadDictionaryImageMutation();
 
   const handleSubmit = async (values: NewDictionaryValues) => {
-    const dictionary = await createDictionary(values).unwrap();
+    const dictionary = await createDictionary({...values, language}).unwrap();
 
     if (imagePicker.image) {
       const args = {dictionaryId: dictionary?._id, image: imagePicker.image};

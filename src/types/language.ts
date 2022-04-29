@@ -1,5 +1,5 @@
 import {Language} from '~config/language';
 
-export interface AppSliceState {
+export type LanguageQuery = {
   language: Language;
-}
+};

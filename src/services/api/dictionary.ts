@@ -4,6 +4,7 @@ import {DictionaryTags} from '~types/rtk/tags';
 import {
   EditDictionaryArgs,
   GetDictionaryWordsArgs,
+  GetMyDictionariesArgs,
   UploadDictionaryImageArgs,
 } from '~types/rtk/dictionary';
 import api from '.';
@@ -23,9 +24,9 @@ const {
 
 const dictionaryApi = api.injectEndpoints({
   endpoints: build => ({
-    getMyDictionaries: build.query<Dictionary[], void>({
+    getMyDictionaries: build.query<Dictionary[], GetMyDictionariesArgs>({
       providesTags: [MyDictionaries],
-      query: () => ({url: MY_DICTIONARIES, method: 'GET'}),
+      query: params => ({url: MY_DICTIONARIES, method: 'GET', params}),
     }),
 
     getDictionaryWords: build.query<Pagination<Word>, GetDictionaryWordsArgs>({

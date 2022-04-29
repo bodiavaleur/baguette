@@ -12,6 +12,7 @@ import Flashcards from '~screens/Training/Flashcards';
 import {useSelector} from 'react-redux';
 import {getIsAuthenticated} from '~redux/auth/auth.selectors';
 import {authenticateUser} from '~redux/auth/auth.slice';
+import {changeLanguage} from '~redux/app/app.slice';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,9 +22,11 @@ const RootNavigator: React.FC = () => {
 
   const checkAuth = useCallback(async () => {
     const tokens = await storage.token.get();
+    const language = await storage.language.get();
 
     if (tokens) {
       dispatch(authenticateUser());
+      dispatch(changeLanguage(language));
     }
   }, []);
 

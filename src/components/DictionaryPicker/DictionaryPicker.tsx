@@ -1,12 +1,13 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback} from 'react';
 import {FlatList, StyleProp, View, ViewStyle} from 'react-native';
 import styles from './styles';
 import {Picker} from 'react-native-ui-lib';
 import {PickerItemLabeledValue} from 'react-native-ui-lib/typings';
 import {InputPlaceholderStrings} from '~config/strings/inputs';
+import dictionaryApi from '~services/api/dictionary';
+import useInfinityScroll from '~hooks/useInfinityScroll';
 import {useSelector} from 'react-redux';
-import {selectCurrentDictionary} from '~redux/dictionary/dictionary.selectors';
-import {useGetMyDictionariesQuery} from '~services/api/dictionary';
+import {selectLanguage} from '~redux/app/app.selectors';
 
 interface DictionaryPickerProps {
   style?: StyleProp<ViewStyle>;
@@ -14,17 +15,15 @@ interface DictionaryPickerProps {
   onChange: (value: string) => void;
 }
 
+const {getMyDictionaries} = dictionaryApi.endpoints;
+
 const DictionaryPicker: React.FC<DictionaryPickerProps> = ({
   style,
   selectedDictionaryId,
   onChange,
 }) => {
-  const currentDictionary = useSelector(selectCurrentDictionary);
-  const myDictionaries = useGetMyDictionariesQuery(currentDictionary);
-  const dictionaries = useMemo(
-    () => myDictionaries.data ?? [],
-    [myDictionaries],
-  );
+  const language = useSelector(selectLanguage);
+  const dictionaries = useInfinityScroll(getMyDictionaries, {language});
 
   const handleChange = (item: PickerItemLabeledValue) => onChange(item.value);
 
@@ -37,7 +36,7 @@ const DictionaryPicker: React.FC<DictionaryPickerProps> = ({
 
   const renderLabel = useCallback(
     (value: string) => {
-      const dictionary = dictionaries.find(({_id}) => _id === value);
+      const dictionary = dictionaries.dataset.find(({_id}) => _id === value);
 
       return dictionary?.name;
     },
@@ -55,9 +54,13 @@ const DictionaryPicker: React.FC<DictionaryPickerProps> = ({
         enableModalBlur={false}
         onChange={handleChange}>
         <FlatList
-          data={dictionaries}
+          data={dictionaries.dataset}
+          refreshing={dictionaries.isRefreshing}
+          onRefresh={dictionaries.refreshList}
           keyExtractor={item => item._id}
           renderItem={renderDictionary}
+          onEndReachedThreshold={0.2}
+          onEndReached={dictionaries.loadMoreItems}
         />
       </Picker>
     </View>

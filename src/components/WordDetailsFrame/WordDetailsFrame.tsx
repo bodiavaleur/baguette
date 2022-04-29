@@ -24,12 +24,12 @@ const WordDetailsFrame: React.FC<WordDetailsFrameProps> = ({word}) => {
       word?.translations?.map((translation: string, index) => {
         const numOfTranslation = `${index + 1}. `;
         return (
-          <>
+          <React.Fragment key={numOfTranslation}>
             <Text style={styles.translation}>
               {numOfTranslation} {translation}
             </Text>
             <Divider />
-          </>
+          </React.Fragment>
         );
       }),
     [word],

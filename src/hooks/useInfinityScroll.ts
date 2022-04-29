@@ -46,6 +46,7 @@ function useInfinityScroll(endpoint: any, args?: any) {
     isRefreshing,
     refreshList,
     loadMoreItems,
+    refetch: query.refetch,
   };
 }
 

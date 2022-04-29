@@ -4,6 +4,7 @@ import styles from './styles';
 import {useRoute} from '@react-navigation/native';
 import HeaderTitle from '~components/Header/plugins/HeaderTitle';
 import {ROUTES_TITLE} from '~navigation/routesTitle';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface HeaderProps {
   style?: StyleProp<ViewStyle>;
@@ -21,10 +22,11 @@ const Header: React.FC<HeaderProps> = ({
   withoutMiddle,
 }) => {
   const route = useRoute();
+  const insets = useSafeAreaInsets();
   const routeTitle = ROUTES_TITLE[route.name];
 
   return (
-    <View style={[styles.container, style]}>
+    <View style={[styles.container, {paddingTop: insets.top}, style]}>
       <View style={styles.leftPlugins}>{left}</View>
       {!withoutMiddle && (
         <View style={styles.middlePlugins}>

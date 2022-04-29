@@ -28,6 +28,8 @@ const Menu: React.FC = () => {
 
     if (savedId) {
       updateTrainingDictionary(savedId);
+    } else {
+      setDictionaryId('');
     }
   };
 
